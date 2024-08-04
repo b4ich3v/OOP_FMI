@@ -24,6 +24,7 @@ int countOfLines(const char* fileName)
 
 	}
 
+	file.close();
 	return count;
 
 }

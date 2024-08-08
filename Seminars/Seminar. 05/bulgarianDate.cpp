@@ -1,4 +1,4 @@
-#include "dada.h"
+#include "bulgarianDate.h"
 #include <iostream>
 
 BulgarianDate::BulgarianDate(int day, int month, int year)

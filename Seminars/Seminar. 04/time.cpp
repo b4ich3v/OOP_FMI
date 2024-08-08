@@ -6,25 +6,25 @@ class Time
 {
 private:
 
-	int secondsFromMidnight ;
+    int secondsFromMidnight;
 
 public:
 
-	Time(): secondsFromMidnight(0) {}
+    Time() : secondsFromMidnight(0) {}
 
     Time(int hours, int mins, int seconds)
     {
-       
+
         if (hours < 0 || hours >= 24 || mins < 0 || mins >= 60 || seconds < 0 || seconds >= 60)
         {
 
-            this->secondsFromMidnight = 0; 
+            this->secondsFromMidnight = 0;
             return;
 
         }
 
-        this->secondsFromMidnight = hours * 3600;    
-        this->secondsFromMidnight += mins * 60;      
+        this->secondsFromMidnight = hours * 3600;
+        this->secondsFromMidnight += mins * 60;
         this->secondsFromMidnight += seconds;
 
     }
@@ -57,7 +57,7 @@ public:
 
     }
 
-    int timeLeftToMidnight() const 
+    int timeLeftToMidnight() const
     {
 
         int secondsLeft = SECONDS_IN_ONE_DAY - secondsFromMidnight;
@@ -65,10 +65,10 @@ public:
 
     }
 
-    void addingOneSecond() 
+    void addingOneSecond()
     {
 
-         ++secondsFromMidnight %= DAY_SECONDS;
+        ++secondsFromMidnight %= SECONDS_IN_ONE_DAY;
 
     }
 
@@ -79,9 +79,9 @@ public:
         int mins = getMinutes();
         int seconds = getSeconds();
 
-        if ((hours == 20 && mins >= 30) ||   
-            (hours == 21) ||                 
-            (hours == 22 && mins == 0 && seconds == 0)) 
+        if ((hours == 20 && mins >= 30) ||
+            (hours == 21) ||
+            (hours == 22 && mins == 0 && seconds == 0))
         {
 
             return true;
@@ -96,7 +96,7 @@ public:
     {
         int hours = getHours();
 
-        
+
         if (hours >= 23 || hours < 6)
         {
 
@@ -110,7 +110,7 @@ public:
 
     Time diff(const Time& other) const
     {
-        
+
         int thisTotalSeconds = this->secondsFromMidnight;
         int otherTotalSeconds = other.secondsFromMidnight;
 
@@ -127,7 +127,7 @@ public:
 
     bool compareWithOther(const Time& other) const
     {
-        
+
         int thisTotalSeconds = this->secondsFromMidnight;
         int otherTotalSeconds = other.secondsFromMidnight;
 
@@ -150,13 +150,13 @@ public:
 int main()
 {
 
-    Time t1(21, 45, 30);  
-    Time t2(22, 30, 15); 
+    Time t1(21, 45, 30);
+    Time t2(22, 30, 15);
 
-    t1.displayTime();  
-    t2.displayTime();  
+    t1.displayTime();
+    t2.displayTime();
 
-    if (t1.isDinnerTime()) 
+    if (t1.isDinnerTime())
     {
 
         std::cout << "t1 is dinner time" << std::endl;
@@ -174,13 +174,13 @@ int main()
     std::cout << "The diff is: ";
     diff.displayTime();
 
-    if (t1.compareWithOther(t2)) 
+    if (t1.compareWithOther(t2))
     {
 
         std::cout << "later" << std::endl;
 
     }
-    else 
+    else
     {
 
         std::cout << "sooner" << std::endl;
@@ -193,4 +193,3 @@ int main()
     return 0;
 
 }
-

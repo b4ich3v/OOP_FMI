@@ -68,14 +68,7 @@ public:
     void addingOneSecond() 
     {
 
-        if (secondsFromMidnight == SECONDS_IN_ONE_DAY)
-        {
-
-            return;
-
-        }
-
-        secondsFromMidnight++;
+         ++secondsFromMidnight %= DAY_SECONDS;
 
     }
 

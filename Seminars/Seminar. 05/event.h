@@ -1,7 +1,7 @@
 #pragma once
 
-#include "dada.h"
-#include "dada1.h"
+#include "bulgarianDate.h"
+#include "time.h"
 
 typedef BulgarianDate Date;
 

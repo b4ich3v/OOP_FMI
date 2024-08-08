@@ -1,4 +1,4 @@
-#include "header.h"
+#include "event.h"
 #pragma warning(disable : 4996)
 
 Event::Event(const char* name, const Date& date, const Time& startTime, const Time& endTime) : _date(date), _startTime(startTime), _endTime(endTime)

@@ -32,6 +32,13 @@ int Bitset::getIndex(int number) const
 Bitset::Bitset(int number) : capacity(8)
 {
 
+    if (number < 0) 
+    {
+
+        return;
+
+    }
+    
     buckets = getBucket(number) + 1;
     data = new char[buckets](); 
 
@@ -94,6 +101,13 @@ void Bitset::resize()
 void Bitset::addNumber(int number)
 {
 
+    if (number < 0) 
+    {
+
+        return;
+
+    }
+    
     int bucketForNumber = getBucket(number);
 
     if (bucketForNumber >= buckets)

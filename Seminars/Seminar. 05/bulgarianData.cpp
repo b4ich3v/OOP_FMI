@@ -306,39 +306,3 @@ int compareBulgarianDates(const BulgarianDate& lhs, const BulgarianDate& rhs)
 	}
 
 }
-
-int main()
-{
-
-	BulgarianDate date1(31, 3, 1916);
-
-	date1.goToNextDay();
-
-	date1.print();
-
-	BulgarianDate date2(15, 4, 1916);
-
-	int result = compareBulgarianDates(date1, date2);
-
-	if (result == -1)
-	{
-
-		std::cout << "date1 is earlier than date2." << std::endl;
-
-	}
-	else if (result == 1)
-	{
-
-		std::cout << "date1 is later than date2." << std::endl;
-
-	}
-	else
-	{
-
-		std::cout << "date1 and date2 are the same." << std::endl;
-
-	}
-
-	return 0;
-
-}

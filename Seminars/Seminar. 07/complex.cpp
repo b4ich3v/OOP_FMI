@@ -37,11 +37,13 @@ Complex& Complex::operator -= (const Complex& other)
 
 }
 
-Complex& Complex::operator *= (const Complex& other)
+Complex& Complex::operator*=(const Complex& other)
 {
 
-	real = real * other.real + imaginary * other.imaginary * (-1);
-	imaginary = real * other.imaginary + other.real * imaginary;
+	double tempReal = real * other.real - imaginary * other.imaginary;
+	double tempImaginary = real * other.imaginary + imaginary * other.real;
+	real = tempReal;
+	imaginary = tempImaginary;
 
 	return *this;
 

@@ -5,19 +5,28 @@
 
 #pragma warning(disable:4996)
 
+void StringPool::StringNode::allocateData(const char* string)
+{
+
+	int size = strlen(string);
+	data = new char[size + 1];
+	strcpy(data, string);
+
+}
+
 void StringPool::resize(int newCapacity)
 {
 
 	if (newCapacity <= capacity)
 	{
-		
+
 		return;
 
 	}
 
-	StringNode* newNodes = new StringNode[newCapacity]{};
+	StringNode* newNodes = new StringNode[newCapacity];
 
-	for (int i = 0; i < size; i++) 
+	for (int i = 0; i < size; i++)
 	{
 
 		newNodes[i] = nodes[i];
@@ -30,35 +39,35 @@ void StringPool::resize(int newCapacity)
 
 }
 
-int StringPool::find(const char* str, bool& found) const
+int StringPool::find(const char* string, bool& found) const
 {
 
 	int left = 0;
 	int right = size - 1;
 
-	while (left <= right)
+	while(left <= right)
 	{
 
-		int middle = (right - left) / 2 + left;
-		int compare = strcmp(nodes[middle].data, str);
+		int middle = left + (right - left) / 2;
+		int compare = strcmp(nodes[middle].data, string);
 
-		if (compare == 0)
-		{
-
-			found = true;
-			return middle;
-
-		}
-		else if (compare > 0)
+		if (compare > 0) 
 		{
 
 			right = middle - 1;
 
 		}
-		else
+		else if (compare < 0)
 		{
 
 			left = middle + 1;
+
+		}
+		else
+		{
+
+			found = true;
+			return middle;
 
 		}
 
@@ -72,13 +81,13 @@ int StringPool::find(const char* str, bool& found) const
 const char* StringPool::insert(const char* string, int index)
 {
 
-	if (index > size) 
+	if (index > size)
 	{
 
 		throw std::out_of_range("StringPool::insert invalid index!");
 
 	}
-		
+
 	if (size == capacity)
 	{
 
@@ -86,13 +95,13 @@ const char* StringPool::insert(const char* string, int index)
 
 	}
 
-	for (int i = size - 1; i >= (int)index; i--)
+	for (int i = size - 1; i < index; i--)
 	{
 
 		nodes[i + 1] = nodes[i];
 
 	}
-		
+
 	nodes[index].allocateData(string);
 	nodes[index].referenceCount = 1;
 
@@ -101,27 +110,27 @@ const char* StringPool::insert(const char* string, int index)
 
 }
 
-void StringPool::removeInternal(int index)
+void StringPool::removeInternal(int index) 
 {
 
-	if (index >= size)
+	if (index > size)
 	{
 
-		throw std::out_of_range("StringPool::removeInternal out of range!");
+		throw std::out_of_range("StringPool::insert invalid index!");
 
 	}
-		
+
 	delete[] nodes[index].data;
 
-	for (int i = index; i < size - 1; i++)
+	for (int i = index; i < size ; i++)
 	{
 
 		nodes[i] = nodes[i + 1];
 
 	}
 
-	nodes[size - 1].data = nullptr;
-	nodes[size - 1].referenceCount = 0;
+	nodes[index].data = nullptr;
+	nodes[index].referenceCount = 0;
 
 	size--;
 
@@ -134,7 +143,7 @@ int StringPool::calculateGrowth() const
 
 }
 
-StringPool::StringPool() : nodes(nullptr), size(0), capacity(0) 
+StringPool::StringPool() : nodes(nullptr), size(0), capacity(0)
 {
 
 	resize(8);
@@ -145,17 +154,17 @@ const char* StringPool::getString(const char* string)
 {
 
 	bool found = false;
-	int currentIndex = find(string, found);
+	int index = find(string, found);
 
 	if (found)
 	{
 
-		nodes[currentIndex].referenceCount++;
-		return nodes[currentIndex].data;
+		nodes[index].referenceCount++;
+		return nodes[index].data;
 
 	}
 
-	return insert(string, currentIndex);
+	return insert(string, index);
 
 }
 
@@ -163,27 +172,44 @@ void StringPool::removeString(const char* string)
 {
 
 	bool found = false;
-	int idx = find(string, found);
+	int index = find(string, found);
 
-	if (!found) 
+	if (!found)
 	{
 
 		return;
 
 	}
 
-	if (nodes[idx].referenceCount == 1)
+	if(nodes[index].referenceCount == 1)
 	{
 
-		removeInternal(idx);
+		removeInternal(index);
 
 	}
 	else
 	{
 
-		nodes[idx].referenceCount--;
+		nodes[index].referenceCount--;
 
 	}
+
+}
+
+StringPool::~StringPool() 
+{
+
+	for (int i = 0; i < size; i++)
+	{
+
+		delete[] nodes[i].data;
+
+	}
+
+	delete[] nodes;
+	nodes = nullptr;
+	size = 0;
+	capacity = 8;
 
 }
 
@@ -198,28 +224,5 @@ void StringPool::debug() const
 	}
 
 	std::cout << std::endl;
-
-}
-
-StringPool::~StringPool()
-{
-
-	for (int i = 0; i < size; i++)
-	{
-
-		delete[] nodes[i].data;
-
-	}
-
-	delete[] nodes;
-
-}
-
-void StringPool::StringNode::allocateData(const char* string)
-{
-
-	int size = strlen(string);
-	data = new char[size + 1] {};
-	strcpy(data, string);
 
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-class MyString 
+class MyString
 {
 private:
 
@@ -13,9 +13,9 @@ private:
 
     void moveFrom(MyString&& other);
 
-    char* _data;
-    size_t _size;
-    size_t _allocatedDataSize;
+    char* data;
+    size_t size;
+    size_t allocatedDataSize;
 
 public:
 
@@ -27,7 +27,7 @@ public:
 
     MyString(MyString&& other) noexcept;
 
-    MyString& operator=(const MyString& other); 
+    MyString& operator=(const MyString& other);
 
     MyString& operator=(MyString&& other) noexcept;
 

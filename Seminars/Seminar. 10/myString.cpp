@@ -3,7 +3,6 @@
 #include <algorithm>
 #pragma warning (disable : 4996)
 
-
 static unsigned roundToPowerOfTwo(unsigned v)
 {
 

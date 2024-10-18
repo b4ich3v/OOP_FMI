@@ -4,6 +4,7 @@
 class MyString
 {
 public:
+
 	MyString();
 	MyString(const char* data);
 
@@ -31,6 +32,7 @@ public:
 	MyString substr(size_t begin, size_t howMany) const;
 
 private:
+
 	explicit MyString(size_t stringLength);
 	void resize(unsigned newAllocatedDataSize);
 
@@ -41,6 +43,7 @@ private:
 	char* _data;
 	size_t _size;
 	size_t _allocatedDataSize;
+
 };
 
 bool operator==(const MyString& lhs, const MyString& rhs);

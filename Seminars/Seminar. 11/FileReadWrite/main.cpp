@@ -10,60 +10,82 @@
 
 void selectionSort(int* arr, size_t size)
 {
+    
     for (int i = 0; i < size - 1; i++)
     {
+        
         int minElIndex = i;
+        
         for (int j = i + 1; j < size; j++)
         {
+            
             if (arr[j] < arr[minElIndex])
                 minElIndex = j;
+            
         }
 
         if (minElIndex != i)
             std::swap(arr[minElIndex], arr[i]);
+        
     }
+    
 }
 
 FileReader* getFileReader(const MyString& str)
 {
+    
     FilePath path(str);
 
     if (path.getExtension() == ".dat")
     {
+        
         return new BinaryFileReader(str);
+        
     }
 
     else if (path.getExtension() == ".csv")
     {
+        
         return new CSVFileReader(str);
+        
     }
 
     else if (path.getExtension() == ".arr")
     {
+        
         return new ArrFileReader(str);
+        
     }
 
 
     throw std::exception();
+    
 }
 
 FileWriter* getFileWriter(const MyString& str)
 {
+    
     FilePath path(str);
 
     if (path.getExtension() == ".dat")
     {
+        
         return new BinaryFileWriter(str);
+        
     }
 
     else if (path.getExtension() == ".csv")
     {
+        
         return new CSVFileWriter(str);
+        
     }
 
     else if (path.getExtension() == ".arr")
     {
+        
         return new ArrFileWriter(str);
+        
     }
 
     throw std::exception();
@@ -72,6 +94,7 @@ FileWriter* getFileWriter(const MyString& str)
 
 void transfer(const MyString& in, const MyString& out)
 {
+    
     size_t size;
     
     FileReader* reader = getFileReader(in);
@@ -85,9 +108,12 @@ void transfer(const MyString& in, const MyString& out)
     delete[] arr;
     delete reader;
     delete writer;
+    
 }
 
 int main()
 {
+    
     transfer("numbers.dat", "numbers2.arr");
+    
 }

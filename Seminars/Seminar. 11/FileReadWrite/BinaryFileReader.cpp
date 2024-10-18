@@ -3,6 +3,7 @@
 
 int BinaryFileReader::getFileSize(std::ifstream& ifs)
 {
+	
 	size_t curr = ifs.tellg();
 	ifs.seekg(0, std::ios::end);
 	size_t size = ifs.tellg();
@@ -16,11 +17,14 @@ BinaryFileReader::BinaryFileReader(const MyString& filePath): FileReader(filePat
 
 int* BinaryFileReader::read(size_t& size) const
 {
+	
 	std::ifstream ifs(filePath.c_str(), std::ios::binary);
 	
 	if (!ifs.is_open())
 	{
+		
 		throw std::exception("Cannot open file");
+		
 	}
 
 	size = getFileSize(ifs) / sizeof(int);
@@ -30,4 +34,5 @@ int* BinaryFileReader::read(size_t& size) const
 	ifs.close();
 
 	return arr;
+	
 }

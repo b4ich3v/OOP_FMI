@@ -1,6 +1,6 @@
 #include <iostream>
 
-enum class Age 
+enum class Age: uint8_t 
 {
 
 	freshman,
@@ -20,11 +20,11 @@ public:
 
 };
 
-Student readStudent(const char* name, const char* egn, Age age) 
+Student readStudent(const char* name, const char* egn, Age age)
 {
 
 	Student result;
-	
+
 	result.name = new char[strlen(name) + 1];
 	strncpy(result.name, name, strlen(name));
 
@@ -37,7 +37,7 @@ Student readStudent(const char* name, const char* egn, Age age)
 
 }
 
-void printStudent(const Student& st) 
+void printStudent(const Student& st)
 {
 
 	std::cout << st.name << " " << st.egn << " ";
@@ -48,14 +48,14 @@ void printStudent(const Student& st)
 	case Age::freshman: std::cout << "freshman"; break;
 	case Age::junior: std::cout << "junior"; break;
 	case Age::senior: std::cout << "senior"; break;
-	case Age::sophomore: std::cout<<"sophomore"; break;
+	case Age::sophomore: std::cout << "sophomore"; break;
 	default: break;
 
 	}
 
 }
 
-struct University 
+struct University
 {
 public:
 
@@ -85,13 +85,13 @@ public:
 	{
 
 		if (hasStudent(st)) return;
-		
+
 		students[size] = st;
 		size += 1;
 
 	}
 
-	void removeStudent(const char* egn) 
+	void removeStudent(const char* egn)
 	{
 
 		if (size == 0) return;
@@ -122,13 +122,13 @@ public:
 
 	}
 
-	void printStudents(Age age) 
+	void printStudents(Age age)
 	{
 
 		for (int i = 0; i < size; i++)
 		{
 
-			if ((int)students[i].age == (int)age) 
+			if ((int)students[i].age == (int)age)
 			{
 
 				printStudent(students[i]);
@@ -141,4 +141,3 @@ public:
 	}
 
 };
-

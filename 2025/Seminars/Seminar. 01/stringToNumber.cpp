@@ -110,7 +110,7 @@ ResultPair parse(const char* str)
 int main()
 {
 
-	char str[17] = "123";
+	char str[5] = "123";
 	ResultPair result = parse(str);
 
 	std::cout << result.number << " ";

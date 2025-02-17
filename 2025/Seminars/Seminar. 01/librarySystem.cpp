@@ -1,6 +1,6 @@
 #include <iostream>
 
-enum class Status: uint8_t
+enum class Status : uint8_t
 {
 
 	Available,
@@ -45,7 +45,7 @@ public:
 
 	}
 
-	void free() 
+	void free()
 	{
 
 		delete[] tittle;
@@ -122,6 +122,13 @@ public:
 
 	}
 
+	~Book() 
+	{
+
+		free();
+
+	}
+
 	bool operator == (const Book& other) const
 	{
 
@@ -131,13 +138,111 @@ public:
 
 };
 
-struct Library 
+struct Library
 {
 public:
-	
-	char* name = nullptr;
-	int bookCount = 0;
+
+	char* name;
+	int bookCount;
 	Book books[10];
+
+	void copyFrom(const Library& other) 
+	{
+
+		name = new char[strlen(other.name) + 1];
+		strncpy(name, other.name, strlen(other.name));
+
+		bookCount = other.bookCount;
+
+		for (int i = 0; i < bookCount; i++)
+		{
+
+			books[i] = other.books[i];
+
+		}
+
+	}
+
+	void moveTo(Library&& other) 
+	{
+
+		name = other.name;
+
+		bookCount = other.bookCount;
+
+		for (int i = 0; i < bookCount; i++)
+		{
+
+			books[i] = other.books[i];
+
+		}
+
+		other.name = nullptr;
+		other.bookCount = 0;
+
+	}
+
+	void free()
+	{
+
+		delete[] name;
+		name = nullptr;
+		bookCount = 0;
+
+	}
+
+	Library() : name(nullptr), bookCount(0) {}
+
+	Library(const Library& other) 
+	{
+
+		copyFrom(other);
+
+	}
+
+	Library(Library&& other) noexcept
+	{
+
+		moveTo(std::move(other));
+
+	}
+
+	Library& operator = (const Library& other)
+	{
+
+		if (this != &other)
+		{
+
+			free();
+			copyFrom(other);
+
+		}
+
+		return *this;
+
+	}
+
+	Library& operator = (Library&& other) noexcept
+	{
+
+		if (this != &other)
+		{
+
+			free();
+			moveTo(std::move(other));
+
+		}
+
+		return *this;
+
+	}
+
+	~Library()
+	{
+
+		free();
+
+	}
 
 	void addBook(const char* tittle, const char* author, int publicationYear)
 	{
@@ -170,7 +275,7 @@ public:
 		for (int i = 0; i < bookCount; i++)
 		{
 
-			if (books[i] == book) 
+			if (books[i] == book)
 			{
 
 				books[i].status = Status::Borrowed;
@@ -205,7 +310,7 @@ public:
 
 		std::cout << book.tittle << " " << book.author << " " << book.publicationYear;
 
-		switch (book.status) 
+		switch (book.status)
 		{
 		case Status::Available: std::cout << "available"; break;
 		case Status::Borrowed: std::cout << "borrowed"; break;

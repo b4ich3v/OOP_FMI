@@ -1,12 +1,13 @@
 #include <iostream>
 
-enum class Age: uint8_t 
+enum class Age : uint8_t
 {
 
 	freshman,
 	sophomore,
 	junior,
-	senior
+	senior,
+	none
 
 };
 
@@ -17,6 +18,99 @@ public:
 	char* name = nullptr;
 	char* egn = nullptr;
 	Age age;
+
+	void copyFrom(const Student& other) 
+	{
+
+		this->name = new char[strlen(other.name) + 1];
+		strncpy(this->name, other.name, strlen(other.name));
+
+		this->egn = new char[strlen(other.egn) + 1];
+		strncpy(this->egn, other.egn, strlen(other.egn));
+
+		this->age = other.age;
+
+	}
+
+	void moveTo(Student&& other) 
+	{
+
+		name = other.name;
+		egn = other.egn;
+		age = other.age;
+
+		other.name = nullptr;
+		other.egn = nullptr;
+		other.age = Age::none;
+
+	}
+
+	void free() 
+	{
+
+		delete[] name;
+		delete[] egn;
+		age = Age::none;
+
+	}
+
+	Student() : name(nullptr), egn(nullptr) 
+	{
+
+		age = Age::none;
+
+	}
+
+	Student(const Student& other)
+	{
+
+		copyFrom(other);
+
+	}
+
+	Student(Student&& other) noexcept
+	{
+
+		moveTo(std::move(other));
+
+	}
+
+	Student& operator = (const Student& other)
+	{
+
+		if (this != &other)
+		{
+
+			free();
+			copyFrom(other);
+
+		}
+
+		return *this;
+
+	}
+
+	Student& operator = (Student&& other) noexcept
+	{
+
+		if (this != &other)
+		{
+
+			free();
+			moveTo(std::move(other));
+
+		}
+
+		return *this;
+
+	}
+
+	~Student()
+	{
+
+		free();
+
+	}
 
 };
 

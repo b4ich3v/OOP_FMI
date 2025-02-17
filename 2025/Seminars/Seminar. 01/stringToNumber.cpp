@@ -1,4 +1,6 @@
 #include <iostream>
+#include <climits>  
+#include <cstring> 
 
 enum class Error
 {
@@ -27,14 +29,14 @@ int toDigit(char ch)
 
 }
 
-bool isValid(char ch) 
+bool isValid(char ch)
 {
 
 	return ch >= '0' && ch <= '9';
 
 }
 
-ResultPair parse(const char* str) 
+ResultPair parse(const char* str)
 {
 
 	if (str == nullptr)
@@ -44,7 +46,7 @@ ResultPair parse(const char* str)
 
 	}
 
-	if (strlen(str) == 0) 
+	if (strlen(str) == 0)
 	{
 
 		return { 0, Error::EmptyText };
@@ -54,11 +56,10 @@ ResultPair parse(const char* str)
 	int iter = 1;
 	bool isNegative = false;
 	int number = 0;
-	int counter = 0;
 
-	for (int i = 0; i < strlen(str) - 1; i++) iter *= 10;// 
+	for (int i = 0; i < strlen(str) - 1; i++) iter *= 10;
 
-	if (*str == '-') 
+	if (*str == '-')
 	{
 
 		isNegative = true;
@@ -70,7 +71,7 @@ ResultPair parse(const char* str)
 	while (*str != '\0')
 	{
 
-		if (!isValid(*str)) 
+		if (!isValid(*str))
 		{
 
 			return { 0, Error::Invalid };
@@ -79,17 +80,16 @@ ResultPair parse(const char* str)
 		else
 		{
 
-			number += toDigit(*str) * iter;
-			iter /= 10;
-			counter |= number;
-			str += 1;
-
-			if ((counter ^ UINT32_MAX) == 0 && *str != '/0') 
+			if (number > (INT_MAX / 10) || (number == INT_MAX / 10 && toDigit(*str) > INT_MAX % 10))
 			{
 
 				return { 0, Error::Overflow };
 
 			}
+
+			number += toDigit(*str) * iter;
+			iter /= 10;
+			str += 1;
 
 		}
 
@@ -107,15 +107,15 @@ ResultPair parse(const char* str)
 
 }
 
-int main() 
+int main()
 {
 
-	char str[5] = "-123";
+	char str[17] = "1111111111111567";
 	ResultPair result = parse(str);
 
 	std::cout << result.number << " ";
 
-	switch (result.error) 
+	switch (result.error)
 	{
 
 	case Error::Invalid: std::cout << "invalid"; break;

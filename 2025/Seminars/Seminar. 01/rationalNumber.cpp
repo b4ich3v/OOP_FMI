@@ -21,7 +21,7 @@ int gcd(int number1, int number2)
 int lcm(int number1, int number2) 
 {
 
-	return ((number1 * number2) / gcd(number1, number2));
+	return (number1 / gcd(number1, number2)) * number2;
 
 }
 

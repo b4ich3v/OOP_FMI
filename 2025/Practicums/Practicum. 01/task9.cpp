@@ -27,6 +27,54 @@ void free(Matrix& matrix)
 
 }
 
+void printMatrix(const Matrix& matrix)
+{
+
+	for (int i = 0; i < matrix.rows; i++)
+	{
+
+		for (int j = 0; j < matrix.cols; j++)
+		{
+
+			std::cout << matrix.table[i][j] << " ";
+
+		}
+
+		std::cout << std::endl;
+
+	}
+
+}
+
+void swapPointers(int*& ptr1, int*& ptr2)
+{
+
+	int* temp = ptr1;
+	ptr1 = ptr2;
+	ptr2 = temp;
+
+}
+
+void custumSwap(Matrix& matrix)
+{
+
+	if (matrix.rows == 1) return;
+	else if (matrix.rows == 2 || matrix.rows == 3) 
+	{
+
+		swapPointers(matrix.table[0], matrix.table[matrix.rows - 1]);
+
+	}
+	else
+	{
+
+		swapPointers(matrix.table[0], matrix.table[matrix.rows - 1]);
+		swapPointers(matrix.table[matrix.rows - 2], matrix.table[2]);
+
+	}
+
+}
+
 Matrix transpose(Matrix& matrix)
 {
 
@@ -53,9 +101,7 @@ Matrix transpose(Matrix& matrix)
 	}
 
 	free(matrix);
+	custumSwap(result);
 	return result;
 
 }
-
-
-

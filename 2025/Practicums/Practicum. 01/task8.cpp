@@ -37,7 +37,12 @@ Graph readGraph()
 	result.ribs = new Rib[result.countOfRibs];
 	std::cin.ignore();
 
-	std::unordered_set<std::string> s;
+	char** allNames = new char* [result.countOfRibs * 2];
+	bool* helper = new bool[result.countOfRibs * 2] {false};
+	int index = 0;
+	int counter = 0;
+
+	for (int i = 0; i < result.countOfRibs * 2; i++) allNames[i] = new char[11];
 
 	for (int i = 0; i < result.countOfRibs; i++)
 	{
@@ -48,14 +53,44 @@ Graph readGraph()
 		std::cin.getline(node1.name, 11);
 		std::cin.getline(node2.name, 11);
 
+		strncpy(allNames[index], node1.name, 11);
+		strncpy(allNames[index + 1], node2.name, 11);
+		index += 2;
+
 		Rib currentRib = { node1 ,node2 };
 		result.ribs[i] = currentRib;
-		s.insert(node1.name);
-		s.insert(node2.name);
 
 	}
 
-	result.countOfNodes = s.size();
+	for (int i = 0; i < result.countOfRibs * 2; i++)
+	{
+
+		for (int j = i + 1; j < result.countOfRibs * 2; j++)
+		{
+
+			if (!strcmp(allNames[i], allNames[j]) && !helper[j])
+			{
+
+				helper[j] = true;
+				counter += 1;
+
+			}
+
+		}
+
+	}
+
+	for (int i = 0; i < result.countOfRibs * 2; i++)
+	{
+
+		delete[] allNames[i];
+
+	}
+
+	delete[] helper;
+	delete[] allNames;
+
+	result.countOfNodes = counter;
 	return result;
 
 }
@@ -70,7 +105,7 @@ void free(Graph& graph)
 
 }
 
-Graph addRib(const Node& node1, const Node& node2, const Graph& graph)
+Graph addRib(const Node& node1, const Node& node2, Graph& graph)
 {
 
 	Rib newRib = { node1 , node2 };
@@ -92,7 +127,7 @@ Graph addRib(const Node& node1, const Node& node2, const Graph& graph)
 
 }
 
-Graph removeRib(const Rib& rib, const Graph& graph)
+Graph removeRib(const Rib& rib, Graph& graph)
 {
 
 	Graph result;

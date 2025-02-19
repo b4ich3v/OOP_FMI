@@ -2,7 +2,7 @@
 #include <unordered_set>
 #include <string>
 
-struct Node 
+struct Node
 {
 public:
 
@@ -10,7 +10,7 @@ public:
 
 };
 
-struct Rib 
+struct Rib
 {
 public:
 
@@ -29,7 +29,7 @@ public:
 
 };
 
-Graph readGraph() 
+Graph readGraph()
 {
 
 	Graph result = { nullptr, 0 ,0 };
@@ -60,7 +60,7 @@ Graph readGraph()
 
 }
 
-void free(Graph& graph) 
+void free(Graph& graph)
 {
 
 	delete[] graph.ribs;
@@ -100,11 +100,14 @@ Graph removeRib(const Rib& rib, const Graph& graph)
 	result.countOfRibs = graph.countOfRibs - 1;
 	result.ribs = new Rib[graph.countOfRibs - 1];
 
+	int index = 0;
+
 	for (int i = 0; i < graph.countOfRibs; i++)
 	{
 
-		if(!strcmp(rib.node1.name, graph.ribs[i].node1.name)) continue;
-		result.ribs[i] = graph.ribs[i];
+		if (!strcmp(rib.node1.name, graph.ribs[i].node1.name)) continue;
+		result.ribs[index] = graph.ribs[i];
+		index += 1;
 
 	}
 
@@ -131,7 +134,7 @@ void exitAndEnter(const Node& node, const Graph& graph)
 
 }
 
-bool isGraphFull(const Graph& graph) 
+bool isGraphFull(const Graph& graph)
 {
 
 	return graph.countOfRibs == graph.countOfNodes * (graph.countOfNodes - 1);

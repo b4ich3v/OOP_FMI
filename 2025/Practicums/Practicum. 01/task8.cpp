@@ -1,6 +1,4 @@
 #include <iostream>
-#include <unordered_set>
-#include <string>
 
 struct Node
 {
@@ -90,7 +88,7 @@ Graph readGraph()
 	delete[] helper;
 	delete[] allNames;
 
-	result.countOfNodes = counter;
+	result.countOfNodes = result.countOfRibs * 2 - counter;
 	return result;
 
 }

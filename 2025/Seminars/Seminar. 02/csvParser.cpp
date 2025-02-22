@@ -254,7 +254,7 @@ void changeEmail(Student* students, int size, const char* id, const char* major,
 		{
 
 			strncpy(students[i].email, newEmail, strlen(newEmail));
-			students[i].email[strlen(newEmail)] = '/0';
+			students[i].email[strlen(newEmail)] = '\0';
 
 		}
 

@@ -55,7 +55,7 @@ void printHex(const HexViewer& hex)
 
     const char helper[] = "0123456789ABCDEF";
     const int number = 15;
-    std::string str = "0x";
+    //std::string str = "0x";
 
     for (int i = hex.size - 1; i >= 0 ; i--)
     {
@@ -64,14 +64,14 @@ void printHex(const HexViewer& hex)
         char lowerBits = helper[(currentByte >> 4) & number];
         char upperBits = helper[currentByte & number];
 
-        if (upperBits != '0') str += upperBits;
-        if (lowerBits != '0') str += lowerBits;
+        //if (upperBits != '0') str += upperBits;
+        //if (lowerBits != '0') str += lowerBits;
 
         std::cout << upperBits << lowerBits << " ";
 
     }
 
-    std::cout << str;
+    //std::cout << str;
 
 }
 

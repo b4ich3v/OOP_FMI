@@ -55,7 +55,7 @@ void printHex(const HexViewer& hex)
     const char helper[] = "0123456789ABCDEF";
     const int number = 15;
 
-    for (int i = 0; i < hex.size; i++)
+    for (int i = hex.size - 1; i >= 0 ; i--)
     {
 
         char currentByte = hex.data[i];

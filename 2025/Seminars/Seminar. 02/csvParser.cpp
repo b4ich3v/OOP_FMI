@@ -2,6 +2,10 @@
 #include <fstream>
 #include <cstring>
 
+const int MAX_COUNT = 100;
+const int COUNT_OF_FIELDS = 4;
+typedef char Field[MAX_COUNT];
+
 enum class Major
 {
 
@@ -15,10 +19,7 @@ struct Row
 {
 public:
 
-	char firstName[100] = "None";
-	char secondName[100] = "None";
-	char email[100] = "fmi@gmail.com";
-	char id[100] = "None";
+	Field fields[COUNT_OF_FIELDS];
 	Major major = Major::None;
 
 };
@@ -68,8 +69,8 @@ Row parseStudent(const char* data)
 		if (*data == ',')
 		{
 
-			strncpy(result.firstName, helper, counter);
-			result.firstName[counter] = '\0';
+			strncpy(result.fields[0], helper, counter);
+			result.fields[0][counter] = '\0';
 			break;
 
 		}
@@ -89,8 +90,8 @@ Row parseStudent(const char* data)
 		if (*data == ',')
 		{
 
-			strncpy(result.secondName, helper, counter);
-			result.secondName[counter] = '\0';
+			strncpy(result.fields[1], helper, counter);
+			result.fields[1][counter] = '\0';
 			break;
 
 		}
@@ -110,8 +111,8 @@ Row parseStudent(const char* data)
 		if (*data == ',')
 		{
 
-			strncpy(result.email, helper, counter);
-			result.email[counter] = '\0';
+			strncpy(result.fields[2], helper, counter);
+			result.fields[2][counter] = '\0';
 			break;
 
 		}
@@ -131,8 +132,8 @@ Row parseStudent(const char* data)
 		if (*data == ',')
 		{
 
-			strncpy(result.id, helper, counter);
-			result.id[counter] = '\0';
+			strncpy(result.fields[3], helper, counter);
+			result.fields[3][counter] = '\0';
 			break;
 
 		}
@@ -187,10 +188,10 @@ Row* readFromFile(std::ifstream& file, int& size)
 void writeRow(std::ofstream& file, const Row& row)
 {
 
-	file << row.firstName << ",";
-	file << row.secondName << ",";
-	file << row.email << ",";
-	file << row.id << ",";
+	file << row.fields[0] << ",";
+	file << row.fields[1] << ",";
+	file << row.fields[2] << ",";
+	file << row.fields[3] << ",";
 	file << (int)row.major;
 	file << std::endl;
 
@@ -215,10 +216,10 @@ void writeToFile(std::ofstream& file, const Table& table, int size)
 void printRow(const Row& row)
 {
 
-	std::cout << row.firstName << " ";
-	std::cout << row.secondName << " ";
-	std::cout << row.email << " ";
-	std::cout << row.id << " ";
+	std::cout << row.fields[0] << " ";
+	std::cout << row.fields[1] << " ";
+	std::cout << row.fields[2] << " ";
+	std::cout << row.fields[3] << " ";
 
 	switch (row.major)
 	{
@@ -239,7 +240,7 @@ void printRowById(const Table& table, int size, const char* id)
 	for (int i = 0; i < size; i++)
 	{
 
-		if (!strcmp(table.rows[i].id, id))
+		if (!strcmp(table.rows[i].fields[3], id))
 		{
 
 			printRow(table.rows[i]);
@@ -256,13 +257,13 @@ void changeEmail(const Table& table, int size, const char* id, const char* major
 	for (int i = 0; i < size; i++)
 	{
 
-		if (!strcmp(table.rows[i].id, id) &&
+		if (!strcmp(table.rows[i].fields[3], id) &&
 			(!strcmp("SI", major) && !(int)table.rows[i].major ||
-			 !strcmp("KN", major) && (int)table.rows[i].major))
+				!strcmp("KN", major) && (int)table.rows[i].major))
 		{
 
-			strncpy(table.rows[i].email, newEmail, strlen(newEmail));
-			table.rows[i].email[strlen(newEmail)] = '\0';
+			strncpy(table.rows[i].fields[2], newEmail, strlen(newEmail));
+			table.rows[i].fields[2][strlen(newEmail)] = '\0';
 
 		}
 

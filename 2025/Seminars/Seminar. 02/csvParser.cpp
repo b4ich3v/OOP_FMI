@@ -11,7 +11,7 @@ enum class Major
 
 };
 
-struct Student
+struct Row
 {
 public:
 
@@ -20,6 +20,14 @@ public:
 	char email[100] = "fmi@gmail.com";
 	char id[100] = "None";
 	Major major = Major::None;
+
+};
+
+struct Table
+{
+public:
+
+	Row* rows;
 
 };
 
@@ -45,12 +53,12 @@ int getFileSize(std::ifstream& file)
 
 }
 
-Student parseStudent(const char* data)
+Row parseStudent(const char* data)
 {
 
 	if (!data) return {};
 
-	Student result;
+	Row result;
 	int counter = 0;
 	const char* helper = data;
 
@@ -149,13 +157,13 @@ Student parseStudent(const char* data)
 
 }
 
-Student* readFromFile(std::ifstream& file, int& size)
+Row* readFromFile(std::ifstream& file, int& size)
 {
 
 	if (!file.is_open()) return {};
 
 	size = getFileSize(file);
-	Student* result = new Student[size];
+	Row* result = new Row[size];
 
 	char buffer[1024];
 	int currentIndex = 0;
@@ -176,27 +184,27 @@ Student* readFromFile(std::ifstream& file, int& size)
 
 }
 
-void writeStudent(std::ofstream& file, Student st)
+void writeRow(std::ofstream& file, const Row& row)
 {
 
-	file << st.firstName << ",";
-	file << st.secondName << ",";
-	file << st.email << ",";
-	file << st.id << ",";
-	file << (int)st.major;
+	file << row.firstName << ",";
+	file << row.secondName << ",";
+	file << row.email << ",";
+	file << row.id << ",";
+	file << (int)row.major;
 	file << std::endl;
 
 }
 
-void writeToFile(std::ofstream& file, Student* students, int size)
+void writeToFile(std::ofstream& file, const Table& table, int size)
 {
 
-	if (!students || size <= 0 || !file.is_open()) return;
+	if (!table.rows || size <= 0 || !file.is_open()) return;
 
 	for (int i = 0; i < size; i++)
 	{
 
-		writeStudent(file, students[i]);
+		writeRow(file, table.rows[i]);
 
 	}
 
@@ -204,15 +212,15 @@ void writeToFile(std::ofstream& file, Student* students, int size)
 
 }
 
-void printStudent(const Student& st)
+void printRow(const Row& row)
 {
 
-	std::cout << st.firstName << " ";
-	std::cout << st.secondName << " ";
-	std::cout << st.email << " ";
-	std::cout << st.id << " ";
+	std::cout << row.firstName << " ";
+	std::cout << row.secondName << " ";
+	std::cout << row.email << " ";
+	std::cout << row.id << " ";
 
-	switch (st.major)
+	switch (row.major)
 	{
 
 	case Major::SI: std::cout << "SI"; break;
@@ -225,16 +233,16 @@ void printStudent(const Student& st)
 
 }
 
-void printStudentById(Student* students, int size, const char* id)
+void printRowById(const Table& table, int size, const char* id)
 {
 
 	for (int i = 0; i < size; i++)
 	{
 
-		if (!strcmp(students[i].id, id))
+		if (!strcmp(table.rows[i].id, id))
 		{
 
-			printStudent(students[i]);
+			printRow(table.rows[i]);
 
 		}
 
@@ -242,19 +250,19 @@ void printStudentById(Student* students, int size, const char* id)
 
 }
 
-void changeEmail(Student* students, int size, const char* id, const char* major, const char* newEmail)
+void changeEmail(const Table& table, int size, const char* id, const char* major, const char* newEmail)
 {
 
 	for (int i = 0; i < size; i++)
 	{
 
-		if (!strcmp(students[i].id, id) &&
-			(!strcmp("SI", major) && !(int)students[i].major ||
-			 !strcmp("KN", major) && (int)students[i].major))
+		if (!strcmp(table.rows[i].id, id) &&
+			(!strcmp("SI", major) && !(int)table.rows[i].major ||
+			 !strcmp("KN", major) && (int)table.rows[i].major))
 		{
 
-			strncpy(students[i].email, newEmail, strlen(newEmail));
-			students[i].email[strlen(newEmail)] = '\0';
+			strncpy(table.rows[i].email, newEmail, strlen(newEmail));
+			table.rows[i].email[strlen(newEmail)] = '\0';
 
 		}
 
@@ -269,13 +277,14 @@ int main()
 	std::ofstream file2("../test2.txt");
 
 	int size = 0;
-	Student* students = readFromFile(file1, size);
+	Table table;
+	table.rows = readFromFile(file1, size);
 
-	writeToFile(file2, students, size);
-	changeEmail(students, size, "0MI0600328", "SI", "ludsum@gmail.com");
-	printStudentById(students, size, "0MI0600328");
+	writeToFile(file2, table, size);
+	changeEmail(table, size, "0MI0600328", "SI", "ludsum@gmail.com");
+	printRowById(table, size, "0MI0600328");
 
-	delete[] students;
+	delete[] table.rows;
 	return 0;
 
 }

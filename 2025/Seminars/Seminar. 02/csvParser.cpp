@@ -3,7 +3,6 @@
 #include <cstring>
 
 const int MAX_COUNT = 100;
-const int COUNT_OF_FIELDS = 4;
 typedef char Field[MAX_COUNT];
 
 enum class Major
@@ -19,7 +18,7 @@ struct Row
 {
 public:
 
-	Field fields[COUNT_OF_FIELDS];
+	Field fields[4];
 	Major major = Major::None;
 
 };
@@ -29,6 +28,7 @@ struct Table
 public:
 
 	Row* rows;
+	int countOfRows;
 
 };
 
@@ -277,13 +277,12 @@ int main()
 	std::ifstream file1("../test1.txt");
 	std::ofstream file2("../test2.txt");
 
-	int size = 0;
 	Table table;
-	table.rows = readFromFile(file1, size);
+	table.rows = readFromFile(file1, table.countOfRows);
 
-	writeToFile(file2, table, size);
-	changeEmail(table, size, "0MI0600328", "SI", "ludsum@gmail.com");
-	printRowById(table, size, "0MI0600328");
+	writeToFile(file2, table, table.countOfRows);
+	changeEmail(table, table.countOfRows, "0MI0600328", "SI", "ludsum@gmail.com");
+	printRowById(table, table.countOfRows, "0MI0600328");
 
 	delete[] table.rows;
 	return 0;

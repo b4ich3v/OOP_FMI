@@ -2,9 +2,17 @@
 #include <fstream>
 #include <cstring>
 
-const int MAX_COUNT = 100;
-const int COUNT_OF_FIELDS = 4;
-typedef char Field[MAX_COUNT];
+namespace constants
+{
+
+	const int MAX_COUNT = 100;
+	const int COUNT_OF_FIELDS = 4;
+	const int MAX_SIZE_OF_BUFFER = 1024;
+	const char SEPARATOR = ',';
+
+}
+
+typedef char Field[constants::MAX_COUNT];
 
 enum class Major
 {
@@ -19,7 +27,7 @@ struct Row
 {
 public:
 
-	Field fields[COUNT_OF_FIELDS];
+	Field fields[constants::COUNT_OF_FIELDS];
 	Major major = Major::None;
 
 };
@@ -37,12 +45,12 @@ int getFileSize(std::ifstream& file)
 {
 
 	int counter = 0;
-	char buffer[1024];
+	char buffer[constants::MAX_SIZE_OF_BUFFER];
 
 	while (true)
 	{
 
-		file.getline(buffer, 1024);
+		file.getline(buffer, constants::MAX_SIZE_OF_BUFFER);
 		counter += 1;
 
 		if (file.eof()) break;
@@ -67,7 +75,7 @@ Row parseStudent(const char* data)
 	while (*data != '\0')
 	{
 
-		if (*data == ',')
+		if (*data == constants::SEPARATOR)
 		{
 
 			strncpy(result.fields[0], helper, counter);
@@ -88,7 +96,7 @@ Row parseStudent(const char* data)
 	while (*data != '\0')
 	{
 
-		if (*data == ',')
+		if (*data == constants::SEPARATOR)
 		{
 
 			strncpy(result.fields[1], helper, counter);
@@ -109,7 +117,7 @@ Row parseStudent(const char* data)
 	while (*data != '\0')
 	{
 
-		if (*data == ',')
+		if (*data == constants::SEPARATOR)
 		{
 
 			strncpy(result.fields[2], helper, counter);
@@ -130,7 +138,7 @@ Row parseStudent(const char* data)
 	while (*data != '\0')
 	{
 
-		if (*data == ',')
+		if (*data == constants::SEPARATOR)
 		{
 
 			strncpy(result.fields[3], helper, counter);
@@ -189,10 +197,10 @@ Row* readFromFile(std::ifstream& file, int& size)
 void writeRow(std::ofstream& file, const Row& row)
 {
 
-	file << row.fields[0] << ",";
-	file << row.fields[1] << ",";
-	file << row.fields[2] << ",";
-	file << row.fields[3] << ",";
+	file << row.fields[0] << constants::SEPARATOR;
+	file << row.fields[1] << constants::SEPARATOR;
+	file << row.fields[2] << constants::SEPARATOR;
+	file << row.fields[3] << constants::SEPARATOR;
 	file << (int)row.major;
 	file << std::endl;
 

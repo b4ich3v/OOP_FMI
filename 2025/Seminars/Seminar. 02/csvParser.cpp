@@ -3,6 +3,7 @@
 #include <cstring>
 
 const int MAX_COUNT = 100;
+const int COUNT_OF_FIELDS = 4;
 typedef char Field[MAX_COUNT];
 
 enum class Major
@@ -18,7 +19,7 @@ struct Row
 {
 public:
 
-	Field fields[4];
+	Field fields[COUNT_OF_FIELDS];
 	Major major = Major::None;
 
 };

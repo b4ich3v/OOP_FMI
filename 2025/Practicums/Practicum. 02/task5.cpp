@@ -1,12 +1,6 @@
 #include <iostream>
 #include <fstream>
 
-//За тази задача използвайте структурите, които написахме предния път -
-//Point, Triangle.Напишете програма, която чете масив от точки от стандартния вход,
-//след което го записва във файл.След като точките са записани във файла,
-//трябва да прочетете същия файл, интерпретиран като масив от триъгълници.
-//Ако броят точки не се дели точно на 3, прочетете толкова триъгълници за колкото стигат точките.
-
 struct Point
 {
 public:
@@ -64,7 +58,7 @@ void writeTriangleToFile(const Triangle& tr, std::ofstream& file)
 	writePointToFile(tr.p1, file);
 	writePointToFile(tr.p2, file);
 	writePointToFile(tr.p3, file);
-	file << std::endl;
+	file << " ";
 
 }
 
@@ -82,16 +76,21 @@ void writeTrianglesToFile(Triangle* triangles, int size, const char* fileName)
 
 	}
 
+	file.close();
+
 }
 
 Point readPoint(std::ifstream& file)
 {
 
-	char data[5];
-	file >> data;
+	int number = 0;
+	file >> number;
+
+	int newX = number / 10;
+	int newY = number % 10;
 
 	file.clear();
-	return { (data[0] - '0'), (data[1] - '0') };
+	return { newX, newY };
 
 }
 
@@ -165,21 +164,51 @@ void printTriangles(Triangle* triangles, int size)
 int main()
 {
 
-	/*Triangle triangles[3] =
+	int inputSize = 0;
+	std::cin >> inputSize;
+
+	int size = inputSize / 3;
+	int index = 0;
+	int counter = 0;
+
+	Point* points = new Point[inputSize];
+	Triangle* triangles = new Triangle[size];
+	Point fictivePoint = { 0,0 };
+
+	for (int i = 0; i < inputSize; i++)
 	{
 
-		{{0, 0}, {0, 1}, {1, 0}},
-		{{0, 0}, {0, 2}, {2, 0}},
-		{{0, 0}, {0, 3}, {3, 0}}
+		std::cin >> fictivePoint.x >> fictivePoint.y;
+		points[i] = fictivePoint;
 
-	};
+		if(counter == 0) triangles[index].p1 = points[counter];
+		else if(counter == 1) triangles[index].p2 = points[counter];
+		else if(counter == 2) triangles[index].p3 = points[counter];
+		else
+		{
 
-	writeTrianglesToFile(triangles, 3, "../test1.txt");*/
+			counter = 0;
+			index += 1;
 
-	int size = 0;
-	Triangle* triangles = readTrianglesFromFile("../test1.txt", size);
+		}
 
+		counter += 1;
+
+	}
+
+	int fictiveSize = 0;
+
+	std::cout << std::endl;
 	printTriangles(triangles, size);
+	std::cout << std::endl;
+
+	writeTrianglesToFile(triangles, size, "../test1.txt");
+	Triangle* result = readTrianglesFromFile("../test1.txt", fictiveSize);
+
+	printTriangles(result, size);
+
+	delete[] result;
+	delete[] points;
 	delete[] triangles;
 
 	return 0;

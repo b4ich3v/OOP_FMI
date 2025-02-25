@@ -1,14 +1,15 @@
 #include <iostream>
 #include <fstream>
 
+const double EPSILON = 1e-9;
+
 struct Vector
 {
 public:
 
-    int x;
-    int y;
-    int z;
-    int mask;
+	int x;
+	int y;
+	int z;
 
 };
 
@@ -16,308 +17,344 @@ struct VectorSpace
 {
 public:
 
-    Vector vectors[50];
-    int countOfVectors;
+	Vector vectors[50];
+	int countOfVectors;
 
 };
 
 int gcd(int number1, int number2)
 {
 
-    int result = std::min(number1, number2);
+	int size = std::min(std::abs(number1), std::abs(number2));
 
-    for (int i = 2; i <= result; i++)
-    {
+	for (int i = 2; i <= size; i++)
+	{
 
-        if ((number1 % i == 0) && (number2 % i == 0)) return i;
+		if ((number1 % i == 0) && (number2 % i == 0)) return i;
 
-    }
+	}
 
-    return 1;
+	return 1;
+
+}
+
+int getCountOfVectors(std::ifstream& file)
+{
+
+	int counter = 0;
+	int number = 0;
+
+	while (file >> number) counter += 1;
+	counter /= 3;
+
+	file.clear();
+	file.seekg(0, std::ios::beg);
+	return counter;
+
+}
+
+Vector makeVector()
+{
+
+	Vector result;
+	std::cin >> result.x >> result.y >> result.z;
+
+	return result;
+
+}
+
+void addVector(VectorSpace& space, const Vector& v)
+{
+
+	if (space.countOfVectors == 50) return;
+
+	space.vectors[space.countOfVectors] = v;
+	space.countOfVectors += 1;
 
 }
 
 void serializeVector(const Vector& v, std::ofstream& file)
 {
 
-    file << std::abs(v.x) << " " << std::abs(v.y) << " " << std::abs(v.z) << " " << v.mask << "\n";
+	file << v.x << " ";
+	file << v.y << " ";
+	file << v.z << " ";
 
 }
 
 void serializeVectorSpace(const VectorSpace& space, const char* fileName)
 {
 
-    std::ofstream file(fileName);
+	std::ofstream file(fileName);
 
-    if (!file.is_open()) return;
+	if (!file.is_open()) return;
 
-    file << space.countOfVectors << "\n";
+	for (int i = 0; i < space.countOfVectors; i++)
+	{
 
-    for (int i = 0; i < space.countOfVectors; i++)
-    {
+		serializeVector(space.vectors[i], file);
 
-        serializeVector(space.vectors[i], file);
+	}
 
-    }
-
-    file.close();
+	file.close();
 
 }
 
 Vector deserializeVector(std::ifstream& file)
 {
 
-    Vector result;
-    file >> result.x >> result.y >> result.z >> result.mask;
+	Vector result;
+	file >> result.x >> result.y >> result.z;
 
-    return result;
+	return result;
 
 }
 
 VectorSpace deserializeVectorSpace(const char* fileName)
 {
 
-    std::ifstream file(fileName);
+	std::ifstream file(fileName);
 
-    if (!file.is_open())  return {};
+	if (!file.is_open()) return {};
 
-    VectorSpace result;
-    file >> result.countOfVectors;
-    result.countOfVectors = std::min(result.countOfVectors, 50);
+	VectorSpace result;
+	result.countOfVectors = getCountOfVectors(file);
 
-    for (int i = 0; i < result.countOfVectors; i++)
-    {
+	for (int i = 0; i < result.countOfVectors; i++)
+	{
 
-        result.vectors[i] = deserializeVector(file);
+		result.vectors[i] = deserializeVector(file);
 
-    }
+	}
 
-    file.close();
-    return result;
+	file.close();
+	return result;
 
 }
 
 void printVector(const Vector& v)
 {
 
-    Vector vC = v;
-
-    if ((vC.mask & 0x001) == 0) vC.x *= -1;
-    if ((vC.mask & 0x010) == 0) vC.y *= -1;
-    if ((vC.mask & 0x100) == 0) vC.z *= -1;
-
-    std::cout << "(" << vC.x << ", " << vC.y << ", " << vC.z << ") ";
+	std::cout << "(";
+	std::cout << v.x << "," << v.y << "," << v.z;
+	std::cout << ")";
 
 }
 
 void printVectorSpace(const VectorSpace& space)
 {
 
-    std::cout << "{ ";
+	std::cout << "{ ";
 
-    for (int i = 0; i < space.countOfVectors; i++)
-    {
+	for (int i = 0; i < space.countOfVectors; i++)
+	{
 
-        printVector(space.vectors[i]);
+		printVector(space.vectors[i]);
+		std::cout << " ";
 
-    }
+	}
 
-    std::cout << "}\n";
-
-}
-
-int getPowerOfLen(const Vector& v)
-{
-
-    return v.x * v.x + v.y * v.y + v.z * v.z;
+	std::cout << "}" << std::endl;
 
 }
 
-void sort(VectorSpace& space)
+int getPower2OfLen(const Vector& v)
 {
 
-    for (int i = 0; i < space.countOfVectors - 1; i++)
-    {
-
-        for (int j = 0; j < space.countOfVectors - i - 1; j++)
-        {
-
-            if (getPowerOfLen(space.vectors[j]) > getPowerOfLen(space.vectors[j + 1]))
-            {
-
-                std::swap(space.vectors[j], space.vectors[j + 1]);
-
-            }
-
-        }
-
-    }
+	return v.x * v.x + v.y * v.y + v.z * v.z;
 
 }
 
-void evaluateVector(Vector& v)
+void sortVectorSpace(VectorSpace& space)
 {
 
-    if ((v.mask & 0x001) == 0) v.x *= -1;
-    if ((v.mask & 0x010) == 0) v.y *= -1;
-    if ((v.mask & 0x100) == 0) v.z *= -1;
+	for (int i = 0; i < space.countOfVectors - 1; i++)
+	{
+
+		for (int j = 0; j < space.countOfVectors - i - 1; j++)
+		{
+
+			if (getPower2OfLen(space.vectors[j]) > getPower2OfLen(space.vectors[j + 1]))
+			{
+
+				std::swap(space.vectors[j], space.vectors[j + 1]);
+
+			}
+
+		}
+
+	}
 
 }
 
-int scalarMult(const Vector& v1, const Vector& v2)
+bool linearDependant(const VectorSpace& space, int i, int j)
 {
 
-    Vector v1C = v1;
-    Vector v2C = v2;
+	if (i < 0 || j < 0 || i >= space.countOfVectors || j >= space.countOfVectors || i == j) return false;
 
-    evaluateVector(v1C);
-    evaluateVector(v2C);
+	Vector v1 = space.vectors[i];
+	Vector v2 = space.vectors[j];
 
-    return v1C.x * v2C.x + v1C.y * v2C.y + v1C.z * v2C.z;
+	Vector crossProduct = { v1.y * v2.z - v1.z * v2.y,
+							v1.z * v2.x - v1.x * v2.z,
+							v1.x * v2.y - v1.y * v2.x };
+
+	return (std::abs(crossProduct.x) < EPSILON &&
+		std::abs(crossProduct.y) < EPSILON &&
+		std::abs(crossProduct.z) < EPSILON);
 
 }
 
-Vector vectorMult(const Vector& v1, const Vector& v2)
+bool linearNonDependant(const VectorSpace& space, int i, int j)
 {
 
-    Vector v1C = v1, v2C = v2;
-    evaluateVector(v1C);
-    evaluateVector(v2C);
-
-    Vector result;
-    result.x = v1C.y * v2C.z - v1C.z * v2C.y;
-    result.y = v1C.z * v2C.x - v1C.x * v2C.z;
-    result.z = v1C.x * v2C.y - v1C.y * v2C.x;
-
-    return result;
+	return !linearDependant(space, i, j);
 
 }
 
-int mixedMult(const Vector& v1, const Vector& v2, const Vector& v3)
+int scalarMultiplication(const Vector& v1, const Vector& v2)
 {
 
-    Vector v1C = v1;
-    Vector v2C = v2;
-    Vector v3C = v3;
-
-    evaluateVector(v1C);
-    evaluateVector(v2C);
-    evaluateVector(v3C);
-
-    Vector left = vectorMult(v1C, v2C);
-    Vector right = v3C;
-
-    return scalarMult(left, right);
+	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 
 }
 
-bool areLNZ(const VectorSpace& space, int i, int j)
+Vector vectorMultiplication(const Vector& v1, const Vector& v2)
 {
 
-    if (i >= space.countOfVectors || j >= space.countOfVectors || i < 0 || j < 0 || i == j) return false;
-        
-    Vector v1 = space.vectors[i];
-    Vector v2 = space.vectors[j];
+	Vector result;
 
-    evaluateVector(v1);
-    evaluateVector(v2);
+	result.x = v1.y * v2.z - v1.z * v2.y;
+	result.y = -v1.x * v2.z + v1.z * v2.x;
+	result.z = v1.x * v2.y - v1.y * v2.x;
 
-    return vectorMult(v1, v2).x != 0 || vectorMult(v1, v2).y != 0 || vectorMult(v1, v2).z != 0;
+	return result;
 
 }
 
-void simplify(Vector& v)
+int mixedMultiplication(const Vector& v1, const Vector& v2, const Vector& v3)
 {
 
-    int GCD = gcd(v.x, gcd(v.y, v.z));
-    v.x /= GCD;
-    v.y /= GCD;
-    v.z /= GCD;
+	return scalarMultiplication(v1, vectorMultiplication(v2, v3));
 
 }
 
-void printBaseVectors(const VectorSpace& space)
+void simplifyVector(Vector& v)
 {
 
-    bool* areBaseVectors = new bool[space.countOfVectors];
+	int GCD = gcd(v.x, gcd(v.y, v.z));
+	v.x /= GCD;
+	v.y /= GCD;
+	v.z /= GCD;
 
-    for (int i = 0; i < space.countOfVectors; i++)
-    {
+}
 
-        areBaseVectors[i] = true;
+void printBasis(const VectorSpace& space)
+{
 
-    }
+	VectorSpace LND;
+	bool* usedIndexes = new bool[space.countOfVectors];
+	int index = 0;
 
-    for (int i = 0; i < space.countOfVectors; i++)
-    {
+	for (int i = 0; i < space.countOfVectors; i++)
+	{
 
-        for (int j = i + 1; j < space.countOfVectors; j++)
-        {
+		bool isIndependent = true;
 
-            if (!areLNZ(space, i, j) && i != j)
-            {
+		for (int j = 0; j < space.countOfVectors; j++)
+		{
 
-                areBaseVectors[i] = false;
+			if (!usedIndexes[i] && !usedIndexes[j] && linearDependant(space, i, j))
+			{
 
-            }
+				isIndependent = false;
+				usedIndexes[i] = true;
+				usedIndexes[j] = true;
+				break;
 
-        }
+			}
 
-    }
+		}
 
-    for (int i = 0; i < space.countOfVectors; i++)
-    {
+		if (isIndependent)
+		{
 
-        if (areBaseVectors[i])
-        {
+			LND.vectors[index] = space.vectors[i];
+			index += 1;
 
-            Vector simpleForm = space.vectors[i];
-            simplify(simpleForm);
-            printVector(simpleForm);
+		}
 
-        }
+	}
 
-    }
+	LND.countOfVectors = index;
 
-    delete[] areBaseVectors;
+	for (int i = 0; i < LND.countOfVectors - 2; i++)
+	{
+
+		for (int j = i + 1; j < LND.countOfVectors - 1; j++)
+		{
+
+			for (int k = j + 1; k < LND.countOfVectors; k++)
+			{
+
+				simplifyVector(LND.vectors[i]);
+				simplifyVector(LND.vectors[j]);
+				simplifyVector(LND.vectors[k]);
+
+				printVector(LND.vectors[i]);
+				std::cout << " ";
+				printVector(LND.vectors[j]);
+				std::cout << " ";
+				printVector(LND.vectors[k]);
+				std::cout << std::endl;
+
+			}
+
+		}
+
+	}
+
+	delete[] usedIndexes;
 
 }
 
 int main()
 {
 
-    VectorSpace space;
-    space.countOfVectors = 4;
-    space.vectors[0] = { 1, 2, 3, 0x000 };
-    space.vectors[1] = { 4, 15, 1, 0x011 };
-    space.vectors[2] = { 7, 3, 1, 0x100 };
-    space.vectors[3] = { 2, 4, 6, 0x000 };
+	Vector v1 = { 1, 1, 1 };
+	Vector v2 = { 1 , 2, -3 };
+	Vector v3 = { -1 , 2, 11 };
+	Vector v4 = { 2 , 4, -6 };
+	Vector v5 = { -1 , 34, -6 };
+	Vector v6 = { 3 , 18, -6 };
 
-    serializeVectorSpace(space, "../test1.txt");
-    VectorSpace result = deserializeVectorSpace("../test1.txt");
+	VectorSpace space = { {v1, v2, v3, v4, v5, v6}, 6 };
 
-    printVectorSpace(result);
-    sort(result);
-    printVectorSpace(result);
-    std::cout << std::endl;
-    printBaseVectors(space);
-    std::cout << std::endl;
+	serializeVectorSpace(space, "../test1.txt");
+	VectorSpace newSpace = deserializeVectorSpace("../test1.txt");
 
-    Vector product1 = vectorMult(space.vectors[0], space.vectors[1]);
-    printVector(product1);
-    std::cout << std::endl;
+	printVectorSpace(newSpace);
+	sortVectorSpace(newSpace);
+	printVectorSpace(newSpace);
+	std::cout << std::endl;
 
-    int product2 = scalarMult(space.vectors[0], space.vectors[1]);
-    std::cout << product2;
-    std::cout << std::endl;
+	int scalarProduct = scalarMultiplication(v1, v3);
+	std::cout << scalarProduct << std::endl;
 
-    int product3 = mixedMult(space.vectors[0], space.vectors[1], space.vectors[2]);
-    std::cout << product3;
-    std::cout << std::endl;
+	Vector vectorProduct = vectorMultiplication(v1, v3);
+	printVector(vectorProduct);
+	std::cout << std::endl;
 
-    if (areLNZ(space, 0, 3)) std::cout << "Yes" << std::endl;
-    else std::cout << "No" << std::endl;
+	int mixedProduct = mixedMultiplication(v1, v2, v2);
+	std::cout << mixedProduct << std::endl;
 
-    return 0;
+	std::cout << std::endl;
+	printBasis(space);
+	std::cout << std::endl;
+
+	if (linearDependant(space, 1, 3)) std::cout << "Yes";
+	else std::cout << "No";
+
+	return 0;
 
 }

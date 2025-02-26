@@ -234,17 +234,18 @@ int main()
 {
 
     Table table = parseTable("../test1.txt");
-    writeTableToFile(table, "../test2.txt");
 
     printStudentById(table, "0MI0600328");
     changeGrade(table, "0MI0600328", 6.00);
     printStudentById(table, "0MI0600328");
 
     std::cout<<std::endl;
-    
+
     printStudentById(table, "2MI0600305");
     changeGrade(table, "2MI0600305", 2.00);
     printStudentById(table, "2MI0600305");
+
+    writeTableToFile(table, "../test2.txt");
 
     return 0;
 

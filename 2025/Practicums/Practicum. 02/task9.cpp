@@ -69,7 +69,7 @@ Device createDevice()
 
 }
 
-Warehouse  createWarehouse()
+Warehouse createWarehouse()
 {
 
 	int size = 0;

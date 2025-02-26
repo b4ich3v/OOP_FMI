@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-typedef bool (*predicate)(double, double);
+typedef bool (*predicate1)(int, int);
 
 enum class Type
 {
@@ -36,6 +36,8 @@ public:
 	char owner[33];
 
 };
+
+typedef bool (*predicate2)(const Device&, const Device&);
 
 Device createDevice()
 {
@@ -220,7 +222,7 @@ void printWarehouse(const Warehouse& wh)
 
 }
 
-void sortWarehouse(Warehouse& wh, predicate func)
+void sortWarehouse(Warehouse& wh, predicate1 func)
 {
 
 	for (int i = 0; i < wh.countOfDevices - 1; i++)
@@ -242,28 +244,57 @@ void sortWarehouse(Warehouse& wh, predicate func)
 
 }
 
-bool min(double number1, double number2)
+void findDevice(const Warehouse& wh, predicate2 func)
+{
+
+	Device temp;
+
+	for (int i = 0; i < wh.countOfDevices - 1; i++)
+	{
+
+		if (func(wh.devices[i], wh.devices[i + 1]))
+		{
+
+			temp = wh.devices[i];
+
+		}
+
+	}
+
+	printDevice(temp);
+
+}
+
+bool min1(int number1, int number2)
 {
 
 	return number1 < number2;
 
 }
 
+bool min2(const Device& d1, const Device& d2)
+{
+
+	return d1.price < d2.price;
+
+}
+
 int main()
 {
 
-	Device d1 = { "1", 3, 0.1, Type::TV, "1" };
+	Device d1 = { "1", 3, 0.5, Type::TV, "1" };
 	Device d2 = { "2", 3, 0.5, Type::SMARTPHONE, "2" };
-	Device d3 = { "3", 3, 0.3, Type::CAMERA, "3" };
+	Device d3 = { "3", 3, 0.5, Type::CAMERA, "3" };
 
 	Warehouse wh = { {d1, d2, d3}, 3 , "da" };
 
 	serializeWarehouse("../test1.txt", wh);
 	Warehouse newWh = deserializeWarehouse("../test1.txt");
 	printWarehouse(newWh);
-	sortWarehouse(newWh, min);
-	std::cout<<std::endl;
+	sortWarehouse(newWh, min1);
 	printWarehouse(newWh);
+
+	findDevice(wh, min2);
 
 	return 0;
 

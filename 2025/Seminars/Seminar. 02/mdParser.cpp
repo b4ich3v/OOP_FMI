@@ -17,6 +17,64 @@ namespace CONSTANTS
 
 }
 
+namespace HELP_FUNCTIONS
+{
+
+    int getCountOfRows(std::ifstream& file)
+    {
+
+        int counter = 0;
+        char buffer[CONSTANTS::MAX_SIZE_ROW];
+
+        while (true)
+        {
+
+            file.getline(buffer, CONSTANTS::MAX_SIZE_ROW);
+            counter += 1;
+
+            if (file.eof()) break;
+
+        }
+
+        file.clear();
+        file.seekg(0, std::ios::beg);
+
+        return counter;
+
+    }
+
+    void skipFirstTwoRows(std::ifstream& file)
+    {
+
+        char buffer[CONSTANTS::MAX_SIZE_ROW];
+
+        for (int i = 0; i < 2; i++)
+        {
+
+            file.getline(buffer, CONSTANTS::MAX_SIZE_ROW);
+
+        }
+
+    }
+
+    void skipWhiteSpacesToSep(std::ifstream& file)
+    {
+
+        char current = 'a';
+
+        while (!file.eof())
+        {
+
+            current = file.get();
+
+            if (current != CONSTANTS::WHITE_SPACE) break;
+
+        }
+
+    }
+
+}
+
 struct FieldForName
 {
 public:
@@ -60,59 +118,6 @@ public:
 
 };
 
-int getCountOfRows(std::ifstream& file)
-{
-
-    int counter = 0;
-    char buffer[CONSTANTS::MAX_SIZE_ROW];
-
-    while (true)
-    {
-
-        file.getline(buffer, CONSTANTS::MAX_SIZE_ROW);
-        counter += 1;
-
-        if (file.eof()) break;
-
-    }
-
-    file.clear();
-    file.seekg(0, std::ios::beg);
-
-    return counter;
-
-}
-
-void skipFirstTwoRows(std::ifstream& file)
-{
-
-    char buffer[CONSTANTS::MAX_SIZE_ROW];
-
-    for (int i = 0; i < 2; i++)
-    {
-
-        file.getline(buffer, CONSTANTS::MAX_SIZE_ROW);
-
-    }
-
-}
-
-void skipWhiteSpacesToSep(std::ifstream& file)
-{
-
-    char current = 'a';
-
-    while (!file.eof())
-    {
-
-        current = file.get();
-
-        if (current != CONSTANTS::WHITE_SPACE) break;
-
-    }
-
-}
-
 Row parseRow(std::ifstream& file)
 {
 
@@ -131,13 +136,13 @@ Row parseRow(std::ifstream& file)
     strncpy(result.field1.name, firstName, 51);
     result.field1.name[strlen(firstName)] = '\0';
 
-    skipWhiteSpacesToSep(file);
+    HELP_FUNCTIONS::skipWhiteSpacesToSep(file);
     file >> result.field2.id;
 
-    skipWhiteSpacesToSep(file);
+    HELP_FUNCTIONS::skipWhiteSpacesToSep(file);
     file >> result.field3.aGrade;
 
-    skipWhiteSpacesToSep(file);
+    HELP_FUNCTIONS::skipWhiteSpacesToSep(file);
     return result;
 
 }
@@ -150,9 +155,9 @@ Table parseTable(const char* fileName)
     if (!file.is_open()) return {};
 
     Table result;
-    result.countOfRows = getCountOfRows(file) - 2;
+    result.countOfRows = HELP_FUNCTIONS::getCountOfRows(file) - 2;
 
-    skipFirstTwoRows(file);
+    HELP_FUNCTIONS::skipFirstTwoRows(file);
 
     for (int i = 0; i < result.countOfRows; i++)
     {

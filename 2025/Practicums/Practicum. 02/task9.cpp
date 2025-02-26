@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-typedef bool (*predicate1)(int, int);
+typedef bool (*predicate1)(double, double);
 
 enum class Type
 {
@@ -247,17 +247,12 @@ void sortWarehouse(Warehouse& wh, predicate1 func)
 void findDevice(const Warehouse& wh, predicate2 func)
 {
 
-	Device temp;
+	Device temp = wh.devices[0];
 
-	for (int i = 0; i < wh.countOfDevices - 1; i++)
+	for (int i = 0; i < wh.countOfDevices; i++)
 	{
 
-		if (func(wh.devices[i], wh.devices[i + 1]))
-		{
-
-			temp = wh.devices[i];
-
-		}
+		if (func(temp, wh.devices[i])) temp = wh.devices[i];
 
 	}
 
@@ -265,7 +260,7 @@ void findDevice(const Warehouse& wh, predicate2 func)
 
 }
 
-bool min1(int number1, int number2)
+bool min1(double number1, double number2)
 {
 
 	return number1 < number2;
@@ -282,9 +277,9 @@ bool min2(const Device& d1, const Device& d2)
 int main()
 {
 
-	Device d1 = { "1", 3, 0.5, Type::TV, "1" };
+	Device d1 = { "1", 3, 0.1, Type::TV, "1" };
 	Device d2 = { "2", 3, 0.5, Type::SMARTPHONE, "2" };
-	Device d3 = { "3", 3, 0.5, Type::CAMERA, "3" };
+	Device d3 = { "3", 3, 0.3, Type::CAMERA, "3" };
 
 	Warehouse wh = { {d1, d2, d3}, 3 , "da" };
 
@@ -292,8 +287,9 @@ int main()
 	Warehouse newWh = deserializeWarehouse("../test1.txt");
 	printWarehouse(newWh);
 	sortWarehouse(newWh, min1);
+	std::cout << std::endl;
 	printWarehouse(newWh);
-
+	std::cout << std::endl;
 	findDevice(wh, min2);
 
 	return 0;

@@ -6,6 +6,7 @@ namespace CONSTANTS
 {
 
     const char SEPARATOR = '|';
+    const char WHITE_SPACE = ' ';
     const char PATTERN_FOR_ROW1[34] = "| Name | Faculty Number | Grade |";
     const char PATTERN_FOR_ROW2[34] = "|------|----------------|-------|";
 
@@ -82,7 +83,7 @@ void skipWhiteSpacesToSep(std::ifstream& file)
 
         current = file.get();
 
-        if (current != ' ') break;
+        if (current != CONSTANTS::WHITE_SPACE) break;
 
     }
 
@@ -238,6 +239,12 @@ int main()
     printStudentById(table, "0MI0600328");
     changeGrade(table, "0MI0600328", 6.00);
     printStudentById(table, "0MI0600328");
+
+    std::cout<<std::endl;
+    
+    printStudentById(table, "2MI0600305");
+    changeGrade(table, "2MI0600305", 2.00);
+    printStudentById(table, "2MI0600305");
 
     return 0;
 

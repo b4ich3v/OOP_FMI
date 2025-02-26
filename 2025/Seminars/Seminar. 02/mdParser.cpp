@@ -72,6 +72,22 @@ void skipFirstTwoRows(std::ifstream& file)
 
 }
 
+void skipWhiteSpacesToSep(std::ifstream& file)
+{
+
+    char current = 'a';
+
+    while (!file.eof())
+    {
+
+        current = file.get();
+
+        if (current != ' ') break;
+
+    }
+
+}
+
 Row parseRow(std::ifstream& file)
 {
 
@@ -90,13 +106,13 @@ Row parseRow(std::ifstream& file)
     strncpy(result.name, firstName, 51);
     result.name[strlen(firstName)] = '\0';
 
-    file.ignore(3);
+    skipWhiteSpacesToSep(file);
     file >> result.id;
 
-    file.ignore(3);
+    skipWhiteSpacesToSep(file);
     file >> result.aGrade;
 
-    file.ignore(3); 
+    skipWhiteSpacesToSep(file);
     return result;
 
 }
@@ -178,7 +194,7 @@ void printStudent(const Row& row)
 
 }
 
-void printStudentById(const Table& table, const char* id) 
+void printStudentById(const Table& table, const char* id)
 {
 
     for (int i = 0; i < table.countOfRows; i++)
@@ -226,4 +242,3 @@ int main()
     return 0;
 
 }
-

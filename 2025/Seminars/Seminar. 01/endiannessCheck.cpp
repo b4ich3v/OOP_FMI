@@ -18,18 +18,8 @@ bool isBigEndian()
 int main() 
 {
 
-	if (isBigEndian()) 
-	{
-
-		std::cout << "Big Endian";
-
-	}
-	else
-	{
-
-		std::cout << "Little Endian";
-
-	}
+	if (isBigEndian()) std::cout << "Big Endian";
+	else std::cout << "Little Endian";
 
 	return 0;
 

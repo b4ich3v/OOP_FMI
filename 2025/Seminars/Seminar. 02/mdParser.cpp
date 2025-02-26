@@ -17,13 +17,37 @@ namespace CONSTANTS
 
 }
 
-struct Row
+struct FieldForName
 {
 public:
 
     char name[CONSTANTS::MAX_SIZE_NAME];
+
+};
+
+struct FieldForId
+{
+public:
+
     char id[CONSTANTS::MAX_SIZE_ID];
+
+};
+
+struct FieldForGrade
+{
+public:
+
     double aGrade;
+
+};
+
+struct Row
+{
+public:
+
+    FieldForName field1;
+    FieldForId field2;
+    FieldForGrade field3;
 
 };
 
@@ -104,14 +128,14 @@ Row parseRow(std::ifstream& file)
     file >> secondName;
     strcat(firstName, secondName);
 
-    strncpy(result.name, firstName, 51);
-    result.name[strlen(firstName)] = '\0';
+    strncpy(result.field1.name, firstName, 51);
+    result.field1.name[strlen(firstName)] = '\0';
 
     skipWhiteSpacesToSep(file);
-    file >> result.id;
+    file >> result.field2.id;
 
     skipWhiteSpacesToSep(file);
-    file >> result.aGrade;
+    file >> result.field3.aGrade;
 
     skipWhiteSpacesToSep(file);
     return result;
@@ -154,13 +178,13 @@ void writeRowToFile(const Row& row, std::ofstream& file)
 {
 
     file << CONSTANTS::SEPARATOR << " ";
-    file << row.name << " ";
+    file << row.field1.name << " ";
 
     file << CONSTANTS::SEPARATOR << " ";
-    file << row.id << " ";
+    file << row.field2.id << " ";
 
     file << CONSTANTS::SEPARATOR << " ";
-    file << row.aGrade << " ";
+    file << row.field3.aGrade << " ";
 
     file << CONSTANTS::SEPARATOR << std::endl;
 
@@ -189,9 +213,9 @@ void writeTableToFile(const Table& table, const char* fileName)
 void printStudent(const Row& row)
 {
 
-    std::cout << row.name << " ";
-    std::cout << row.id << " ";
-    std::cout << row.aGrade;
+    std::cout << row.field1.name << " ";
+    std::cout << row.field2.id << " ";
+    std::cout << row.field3.aGrade;
 
 }
 
@@ -201,7 +225,7 @@ void printStudentById(const Table& table, const char* id)
     for (int i = 0; i < table.countOfRows; i++)
     {
 
-        if (!strcmp(table.rows[i].id, id))
+        if (!strcmp(table.rows[i].field2.id, id))
         {
 
             printStudent(table.rows[i]);
@@ -219,10 +243,10 @@ void changeGrade(Table& table, const char* id, double newGrade)
     for (int i = 0; i < table.countOfRows; i++)
     {
 
-        if (!strcmp(table.rows[i].id, id))
+        if (!strcmp(table.rows[i].field2.id, id))
         {
 
-            table.rows[i].aGrade = newGrade;
+            table.rows[i].field3.aGrade = newGrade;
 
         }
 
@@ -239,7 +263,7 @@ int main()
     changeGrade(table, "0MI0600328", 6.00);
     printStudentById(table, "0MI0600328");
 
-    std::cout<<std::endl;
+    std::cout << std::endl;
 
     printStudentById(table, "2MI0600305");
     changeGrade(table, "2MI0600305", 2.00);

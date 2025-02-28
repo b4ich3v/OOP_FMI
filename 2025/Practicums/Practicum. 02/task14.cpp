@@ -8,7 +8,9 @@ namespace HELPERS
 
     const char PATTERN1[7] = "Dear, ";
     const char PATTERN2[11] = "Sincerely,";
-    const int MAX_SIZE = 50;
+    const int MAX_SIZE_ATTR = 50;
+    const int MAX_SIZE_LINE = 1024;
+    const int COUNT_ATTR = 4;
 
 }
 
@@ -16,10 +18,10 @@ struct Data
 {
 public:
 
-    char tittle[HELPERS::MAX_SIZE];
-    char recipientName[HELPERS::MAX_SIZE];
-    char message[HELPERS::MAX_SIZE];
-    char senderName[HELPERS::MAX_SIZE];
+    char tittle[HELPERS::MAX_SIZE_ATTR];
+    char recipientName[HELPERS::MAX_SIZE_ATTR];
+    char message[HELPERS::MAX_SIZE_ATTR];
+    char senderName[HELPERS::MAX_SIZE_ATTR];
 
 };
 
@@ -30,14 +32,14 @@ Data readFromFile(const char* fileName)
 
     if (!file.is_open()) return {};
 
-    char buffer[1024];
+    char buffer[HELPERS::MAX_SIZE_LINE];
     int counter = 0;
-    char allRows[4][1024];
+    char allRows[HELPERS::COUNT_ATTR][HELPERS::MAX_SIZE_LINE];
 
     while (true)
     {
 
-        file.getline(buffer, 1024);
+        file.getline(buffer, HELPERS::MAX_SIZE_LINE);
         strncpy(allRows[counter], buffer, strlen(buffer));
         counter += 1;
 
@@ -54,7 +56,7 @@ Data readFromFile(const char* fileName)
         std::stringstream ss(allRows[counter]);
         ss >> buffer;
         ss.seekg(1, std::ios::cur);
-        ss.getline(buffer, 1024);
+        ss.getline(buffer, HELPERS::MAX_SIZE_LINE);
 
         if (counter == 0)
         {

@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-struct HexViewer
+struct HexViewe
 {
 public:
 

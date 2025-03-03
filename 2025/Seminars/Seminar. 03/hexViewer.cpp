@@ -75,6 +75,14 @@ void deleteHexViewer(HexViewer& hex)
 
 }
 
+void deleteHexParts(HexParts* parts)
+{
+
+    delete[] parts;
+    parts = nullptr;
+
+}
+
 HexParts* getHexadecimal(const HexViewer& hex, int& size)
 {
 
@@ -186,7 +194,7 @@ int main()
     HexParts* parts = getHexadecimal(hex, size);
     convertToDecimal(parts, size);
 
-    delete[] parts;
+    deleteHexParts(parts);
     deleteHexViewer(hex);
 
     return 0;

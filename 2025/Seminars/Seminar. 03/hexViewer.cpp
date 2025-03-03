@@ -176,7 +176,7 @@ void convertToDecimal(HexParts* parts, int size)
 int main()
 {
 
-    //std::ofstream file("../file.dat");
+    //std::ofstream file("../file.dat", std::ios::binary);
     //int number = 1322;
     //file.write((const char*)&number, sizeof(int));
     //file.close();

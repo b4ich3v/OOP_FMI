@@ -164,7 +164,6 @@ void convertToDecimal(HexParts* parts, int size)
         char p1 = parts[i].part1;
         char p2 = parts[i].part2;
 
-
         processingPart(number, p1, iter);
         processingPart(number, p2, iter);
 

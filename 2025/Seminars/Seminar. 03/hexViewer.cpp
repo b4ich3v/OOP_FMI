@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace CONSTANT
+namespace CONSTANTS
 {
 
     const char PATTERN[17] = "0123456789ABCDEF";

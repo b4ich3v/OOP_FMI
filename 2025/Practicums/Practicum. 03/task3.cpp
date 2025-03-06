@@ -456,7 +456,6 @@ int main()
 	Type mostTyp = mostPopularSaberType(collection);
 	std::cout << (int)mostTyp << std::endl;
 
-
 	return 0;
 
 }

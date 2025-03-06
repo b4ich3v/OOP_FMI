@@ -205,6 +205,8 @@ void printJediCollection(const JediCollection& collection)
 void saveCollectionToBinary(const char* fileName, const JediCollection& collection)
 {
 
+	if (!fileName) return;
+
 	std::ofstream file(fileName, std::ios::binary);
 
 	if (!file.is_open()) return;
@@ -216,6 +218,8 @@ void saveCollectionToBinary(const char* fileName, const JediCollection& collecti
 
 JediCollection readCollectionFromBinary(const char* fileName)
 {
+
+	if (!fileName) return;
 
 	std::ifstream file(fileName, std::ios::binary);
 
@@ -245,6 +249,8 @@ void saveJediToTxt(std::ofstream& file, const Jedi& jedi)
 
 void saveCollectionToTxt(const char* fileName, const JediCollection& collection)
 {
+
+	if (!fileName) return;
 
 	std::ofstream file(fileName);
 
@@ -284,6 +290,8 @@ Jedi readJediFromTxt(std::ifstream& file)
 
 JediCollection readCollectionFromTxt(const char* fileName)
 {
+
+	if (!fileName) return;
 
 	std::ifstream file(fileName);
 
@@ -455,6 +463,7 @@ int main()
 
 	Type mostTyp = mostPopularSaberType(collection);
 	std::cout << (int)mostTyp << std::endl;
+
 
 	return 0;
 

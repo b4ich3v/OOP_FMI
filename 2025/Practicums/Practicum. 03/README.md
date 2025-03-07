@@ -82,29 +82,10 @@ Disclaimer: Може да приемате във функциите дирек�
 
 Напишете следните функции:
 
-* PokemonHandler newPokemonHandler(const char* filename)
-тази функция създава PokemonHandler от двоичен файл
-int size(const PokemonHandler &ph)
-//OR
-int size(std::fstream& file)
-връща размера на колекцията от покемони
-* Pokemon at(const PokemonHandler &ph, int i)
-//OR
-* Pokemon at(std::fstream& file, int i)
-връщаща покемонът намиращ се на i-ти индекс (погрижете се дали тази индекс е валиден)
-* void swap(const PokemonHandler &ph, int i, int j)
-//OR
-* void swap(std::fstream& file, int i, int j)
-разменя покемоните на индекси i и j (валидирайте коректността на индексите). Идеята е да я ползвате като помощна функция
-void insert(const PokemonHandler &ph, const Pokemon &pokemon)
-//OR
-* void insert(std::fstream& file, const Pokemon &pokemon)
-добавя покемон в наредената ни колекция
-* void textify(const PokemonHandler &ph, const char* filename)
-//OR
-* void textify(std::fstream& file, const char* filename)
-записва цялата колекция в текстов файл с име filename
-* void untextify(const PokemonHandler &ph, const char* filename)
-//OR
-* void untextify(std::fstream& file, const char* filename)
-зарежда колекция от текстов файл filename. Очаква се да се изтрие всичко, което сме имали до сега в PokemonHandler
+* PokemonHandler newPokemonHandler(const char* filename) - тази функция създава PokemonHandler от двоичен файл
+* int size(const PokemonHandler &ph), int size(std::fstream& file) - връща размера на колекцията от покемони
+* Pokemon at(const PokemonHandler &ph, int i), Pokemon at(std::fstream& file, int i) - връщаща покемонът намиращ се на i-ти индекс (погрижете се дали тази индекс е валиден)
+* void swap(const PokemonHandler &ph, int i, int j), void swap(std::fstream& file, int i, int j) - разменя покемоните на индекси i и j (валидирайте коректността на индексите). Идеята е да я ползвате като помощна функция
+void insert(const PokemonHandler &ph, const Pokemon &pokemon), void insert(std::fstream& file, const Pokemon &pokemon) - добавя покемон в наредената ни колекция
+* void textify(const PokemonHandler &ph, const char* filename), void textify(std::fstream& file, const char* filename) - записва цялата колекция в текстов файл с име filename
+* void untextify(const PokemonHandler &ph, const char* filename), void untextify(std::fstream& file, const char* filename) - зарежда колекция от текстов файл filename. Очаква се да се изтрие всичко, което сме имали до сега в PokemonHandler

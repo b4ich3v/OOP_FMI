@@ -62,3 +62,49 @@
 
 * Забележете, че последният възел от списъка (този, който има next == 0) най-вероятно няма да е последният запис във файла
 * Може да приемете, че възлите, които са в списъка, няма да образуват цикъл
+
+# Задача 7.
+Напишете структура Pokemon, който се състои от:
+
+* име (символен низ с най-много 50 символа)
+* тип (изброим тип със следните възможности: NORMAL, FIRE, WATER, GRASS, ELECTRIC, GHOST, FLYING)
+* сила (цяло положително число от 10 до 1000)
+Напишете следните функции:
+
+* функция създаваща покемон от стандартния вход
+* функция създаваща покемон от двоичен поток
+* функция записваща покемон в двоичен поток
+* Създайте структура PokemonHandler, който да се грижи за наредена по сила колекция от покемони.
+
+Тази структура НЕ пази никакви покемони в себе си! Тя работи само с предоставения двоичен файл.
+
+Disclaimer: Може да приемате във функциите директно fstream& И да работите с него, Идеята е да не пазите в програмата масив от покемони а да работите изцяло със файла като масив
+
+Напишете следните функции:
+
+* PokemonHandler newPokemonHandler(const char* filename)
+тази функция създава PokemonHandler от двоичен файл
+int size(const PokemonHandler &ph)
+//OR
+int size(std::fstream& file)
+връща размера на колекцията от покемони
+* Pokemon at(const PokemonHandler &ph, int i)
+//OR
+* Pokemon at(std::fstream& file, int i)
+връщаща покемонът намиращ се на i-ти индекс (погрижете се дали тази индекс е валиден)
+* void swap(const PokemonHandler &ph, int i, int j)
+//OR
+* void swap(std::fstream& file, int i, int j)
+разменя покемоните на индекси i и j (валидирайте коректността на индексите). Идеята е да я ползвате като помощна функция
+void insert(const PokemonHandler &ph, const Pokemon &pokemon)
+//OR
+* void insert(std::fstream& file, const Pokemon &pokemon)
+добавя покемон в наредената ни колекция
+* void textify(const PokemonHandler &ph, const char* filename)
+//OR
+* void textify(std::fstream& file, const char* filename)
+записва цялата колекция в текстов файл с име filename
+* void untextify(const PokemonHandler &ph, const char* filename)
+//OR
+* void untextify(std::fstream& file, const char* filename)
+зарежда колекция от текстов файл filename. Очаква се да се изтрие всичко, което сме имали до сега в PokemonHandler

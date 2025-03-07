@@ -113,6 +113,8 @@ void fillBooleanArray(bool* array, int size, const NodeContainer& collection)
 void parserForNodeContainer(const char* fileName)
 {
 
+	if (!fileName) return;
+
 	std::ifstream file(fileName, std::ios::binary);
 
 	if (!file.is_open()) return;

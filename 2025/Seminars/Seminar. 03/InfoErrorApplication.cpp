@@ -207,19 +207,11 @@ int main()
     dataBase.close();
     std::ifstream file("../file.dat", std::ios::binary);
 
-    if (file.is_open())
-    {
-
-        readDataFromBinaryFile(file);
-        file.close();
-
-    }
-    else
-    {
-
-        std::cout << "Error opening file for reading!" << std::endl;
-
-    }
+    if (file.is_open()) return -1;
+    
+    std::cout << std::endl;
+    readDataFromBinaryFile(file);
+    file.close();
 
     freeArrayForStringData(arr1);
     freeArrayForStringData(arr2);

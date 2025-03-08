@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#pragma warning (disable:4997)
+#pragma warning(disable:4996)
 
 namespace HELPERS
 {

@@ -66,60 +66,26 @@ public:
 	void setBrand(const char* brand)
 	{
 
-		if (!brand)
-		{
+		if (this->brand) delete[] this->brand;
 
-			char* newBrand = new char[strlen(brand) + 1];
-			strncpy(newBrand, brand, strlen(brand));
-			newBrand[strlen(brand)] = '\0';
-
-			delete[] brand;
-			this->brand = newBrand;
-
-		}
-		else
-		{
-
-			this->brand = new char[strlen(brand) + 1];
-			strncpy(this->brand, brand, strlen(brand));
-			this->brand[strlen(brand)] = '\0';
-
-		}
+		this->brand = new char[strlen(brand) + 1];
+		strncpy(this->brand, brand, strlen(brand));
+		this->brand[strlen(brand)] = '\0';
 
 	}
 
-	void setKilometers(int* kilometers, int countOfTrips)
+	void setKilometers(int* kilometers, int countOfTrips) 
 	{
 
-		if (!this->kilometers)
+		if (this->kilometers) delete[] this->kilometers;
+
+		this->countOfTrips = countOfTrips;
+		this->kilometers = new int[countOfTrips];
+
+		for (int i = 0; i < countOfTrips; i++) 
 		{
 
-			this->countOfTrips = countOfTrips;
-			int* newkilometers = new int[countOfTrips];
-
-			for (int i = 0; i < countOfTrips; i++)
-			{
-
-				newkilometers[i] = kilometers[i];
-
-			}
-
-			delete[] this->kilometers;
-			this->kilometers = newkilometers;
-
-		}
-		else
-		{
-
-			this->countOfTrips = countOfTrips;
-			this->kilometers = new int[countOfTrips];
-
-			for (int i = 0; i < countOfTrips; i++)
-			{
-
-				this->kilometers[i] = kilometers[i];
-
-			}
+			this->kilometers[i] = kilometers[i];
 
 		}
 
@@ -231,6 +197,8 @@ public:
 
 		int sizeOfBrand = 0;
 		file.read((char*)&sizeOfBrand, sizeof(int));
+
+		if (result.brand) delete[] result.brand;
 		result.brand = new char[sizeOfBrand + 1];
 		file.read((char*)result.brand, sizeOfBrand * sizeof(char));
 		result.brand[sizeOfBrand] = '\0';
@@ -239,6 +207,8 @@ public:
 		file.read((char*)&result.maxSpeed, sizeof(double));
 
 		file.read((char*)&result.countOfTrips, sizeof(int));
+
+		if (result.kilometers) delete[] result.kilometers;
 		result.kilometers = new int[result.countOfTrips];
 		file.read((char*)result.kilometers, result.countOfTrips * sizeof(int));
 
@@ -246,7 +216,6 @@ public:
 		return result;
 
 	}
-
 
 };
 

@@ -195,6 +195,13 @@ public:
 
 	}
 
+	int getPoints() const 
+	{
+
+		return points;
+
+	}
+
 };
 
 class Exam
@@ -215,6 +222,31 @@ public:
 		if (countOfTasks == CONSTANTS::MAX_SIZE_TASKS) return;
 		tasks[countOfTasks] = task;
 		countOfTasks += 1;
+
+	}
+
+	void changeMin(int newMin)
+	{
+
+		if (newMin < 0) return;
+
+		minPointToPass = newMin;
+
+	}
+
+	int getMax() const 
+	{
+
+		int result = 0;
+
+		for (int i = 0; i < countOfTasks; i++)
+		{
+
+			result += tasks[i].getPoints();
+
+		}
+
+		return result;
 
 	}
 

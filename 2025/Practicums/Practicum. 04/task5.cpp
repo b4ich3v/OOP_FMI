@@ -162,12 +162,12 @@ public:
 
 	int getSalary() const
 	{
-	
+
 		return salary;
 
 	}
-	
-	int getAge() const 
+
+	int getAge() const
 	{
 
 		return age;
@@ -176,7 +176,7 @@ public:
 
 	const char* getName() const
 	{
-		
+
 		return name;
 
 	}
@@ -192,7 +192,7 @@ private:
 
 	Programmer prs[CONSTANTS::MAX_COUNT_PROGRAMMERS];
 	int countOfProgrammers;
-	
+
 	static bool bySalary(const Programmer& p1, const Programmer& p2)
 	{
 
@@ -200,7 +200,7 @@ private:
 
 	}
 
-	static bool byAge(const Programmer& p1, const Programmer& p2) 
+	static bool byAge(const Programmer& p1, const Programmer& p2)
 	{
 
 		return p1.getAge() > p2.getAge();
@@ -238,7 +238,7 @@ public:
 
 	}
 
-	void addProgrammer(const Programmer& pr) 
+	void addProgrammer(const Programmer& pr)
 	{
 
 		if (countOfProgrammers == CONSTANTS::MAX_COUNT_PROGRAMMERS) return;
@@ -252,10 +252,10 @@ public:
 	{
 
 		return countOfProgrammers;
-		
+
 	}
 
-	void printAllProgrammers() const 
+	void printAllProgrammers() const
 	{
 
 		for (int i = 0; i < countOfProgrammers; i++)
@@ -316,7 +316,7 @@ public:
 
 	}
 
-	void changeSalaryToProgrammer(const Programmer& pr, predicate1 func) 
+	void changeSalaryToProgrammer(const Programmer& pr, predicate1 func)
 	{
 
 		for (int i = 0; i < countOfProgrammers; i++)
@@ -333,7 +333,7 @@ public:
 
 	}
 
-	void sortBySalary() 
+	void sortBySalary()
 	{
 
 		sort(bySalary);
@@ -356,6 +356,7 @@ int main()
 	Programmer pr2("Koki Markov", 21, 3879, Language::CPP);
 	Programmer pr3("Ivo Kunchev", 21, 2501, Language::ASEMBLY);
 	Programmer pr4("Ilian Zaprqnov", 46, 0, Language::HTML);
+	Programmer pr5("Olq Ivanova", 20, 4999, Language::PYTHON);
 
 	uint8_t newMask = ((int)Language::CPP | (int)Language::JAVA | (int)Language::PYTHON);
 	pr1.setLanguage(newMask);
@@ -366,6 +367,7 @@ int main()
 	company.addProgrammer(pr2);
 	company.addProgrammer(pr3);
 	company.addProgrammer(pr4);
+	company.addProgrammer(pr5);
 
 	company.printAllProgrammers();
 	std::cout << std::endl;
@@ -374,7 +376,7 @@ int main()
 	company.printAllProgrammers();
 	std::cout << std::endl;
 	company.sortByAge();
-	
+
 	company.printAllProgrammers();
 
 

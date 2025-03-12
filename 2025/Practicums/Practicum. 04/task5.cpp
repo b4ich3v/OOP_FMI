@@ -352,13 +352,13 @@ public:
 int main()
 {
 
-	Programmer pr1("Yoan Baychev", 20, 4999, Language::C);
-	Programmer pr2("Koki Markov", 21, 3879, Language::CPP);
-	Programmer pr3("Ivo Kunchev", 21, 2501, Language::ASEMBLY);
+	Programmer pr1("Yoan Baychev", 16, 4999, Language::C);
+	Programmer pr2("Koki Markov", 21, 4999, Language::CPP);
+	Programmer pr3("Ivo Kunchev", 20, 4999, Language::ASEMBLY);
 	Programmer pr4("Ilian Zaprqnov", 46, 0, Language::HTML);
 	Programmer pr5("Olq Ivanova", 20, 4999, Language::PYTHON);
 
-	uint8_t newMask = ((int)Language::CPP | (int)Language::JAVA | (int)Language::PYTHON);
+	uint8_t newMask = ((int)Language::CPP | (int)Language::JAVA | (int)Language::PYTHON | (int)Language::ASEMBLY);
 	pr1.setLanguage(newMask);
 	pr1.printProgrammer();
 

@@ -1,0 +1,265 @@
+body {
+	background: GhostWhite;
+	font-family: Sans-Serif;
+}
+
+
+/* corner buttons: located in screen corners */
+.cornerButton {
+	position: fixed;
+	width: 0;
+	height: 0;
+	cursor: pointer;
+	user-select: none;
+	z-index: 1;
+}
+
+.cornerButton[corner=topLeft] {
+	top: 0;
+	left: 0;
+	border-top: 15vmin solid black;
+	border-right: 15vmin solid transparent;
+}
+
+.cornerButton[corner=topRight] {
+	top: 0;
+	right: 0;
+	border-top: 15vmin solid black;
+	border-left: 15vmin solid transparent;
+}
+
+.cornerButton[corner=bottomLeft] {
+	bottom: 0vmin;
+	left: 0vmin;
+	border-bottom: 15vmin solid black;
+	border-right: 15vmin solid transparent;
+}
+
+.cornerButton[corner=bottomRight] {
+	bottom: 0;
+	right: 0;
+	border-bottom: 15vmin solid black;
+	border-left: 15vmin solid transparent;
+}
+
+.cornerIcon {
+	position: fixed;
+	z-index: 2;
+	width: 8vmin;
+}
+
+[corner=topLeft]>.cornerIcon {
+	top: 1vmin;
+	left: 1vmin;
+}
+
+[corner=topRight]>.cornerIcon {
+	top: 1vmin;
+	right: 1vmin;
+}
+
+[corner=bottomLeft]>.cornerIcon {
+	bottom: 1vmin;
+	left: 1vmin;
+}
+
+[corner=bottomRight]>.cornerIcon {
+	bottom: 1vmin;
+	right: 1vmin;
+}
+
+.cornerText {
+	position: fixed;
+	color: Black;
+	#font-family: Arial;
+	font-weight: bold;
+	font-size: 2.5vmin;
+	z-index: 2;
+	width: 30vmin;
+	text-align: center;
+}
+
+[corner=topLeft]>.cornerText {
+	top: 7vmin;
+	left: -7vmin;
+	border-bottom: solid 1px black;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+}
+
+[corner=topRight]>.cornerText {
+	top: 7vmin;
+	right: -7vmin;
+	border-bottom: solid 1px black;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+}
+
+[corner=bottomLeft]>.cornerText {
+	bottom: 7vmin;
+	left: -7vmin;
+	border-top: solid 1px black;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+}
+
+[corner=bottomRight]>.cornerText {
+	bottom: 7vmin;
+	right: -7vmin;
+	border-top: solid 1px black;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+}
+
+.statistics {
+	position: absolute;
+	color: Black;
+	font-size: 0.3cm;
+	z-index: 2;
+	top: 0;
+	left: calc(50% - 12vmin);
+	text-align: center;
+	opacity: 0.5;
+	padding: 0.4vmin;
+	cursor: default;
+	pointer-events: none;
+	user-select: none;
+}
+
+.blured {
+	filter: brightness(50%) contrast(50%) blur(0.2cm);
+	-webkit-filter: brightness(50%) contrast(50%) blur(0.2cm);
+}
+
+.infoPanel {
+	display: none;
+	position: absolute;
+	background-color: WhiteSmoke;
+	border: White solid 0.5em;
+	border-radius: 0.2em;
+	z-index: 10;
+	width: 75%;
+	margin: auto;
+	padding: 0 0 0 1em;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	max-height: 80%;
+	overflow-y: auto;
+	cursor: pointer;
+}
+
+.infoPanel>h1 {
+	color: CornflowerBlue;
+	font-weight: bold;
+	margin-bottom: 0;
+	font-size: 1.4em;
+}
+
+.infoPanel>h2 {
+	color: CornflowerBlue;
+	font-size: 1.15em;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.infoPanel>p, .infoPanel>ul {
+	margin-top: 0.25em;
+	font-size: 1.15em;
+}
+
+.index-container {
+	display: block;
+	#font-family: Sans-Serif;
+	font-weight: bold;
+	font-size: 3em;
+	width: 90%;
+	text-align: center;
+	#position: absolute;
+    #left: 0;
+	margin-top: 20%;
+}
+
+.index-button {
+	display: inline-block;
+	vertical-align: middle; 
+	background-color: ghostwhite;
+	padding: 0 0.5em 0 0.5em;
+	height: 1.1em;
+	#border-radius: 0.75vmin;
+	#box-shadow: 0 0 2vmin 0vmin LightGray;
+	cursor: pointer;
+}
+
+.additional {
+	background-color: transparent;
+	color: Gray;
+	box-shadow: none;
+}
+
+.additional:hover {
+	background-color: white;
+	box-shadow: 0 0 2vmin 0vmin LightGray;
+	cursor: pointer;
+	color: black;
+}
+
+em {
+	font-size: 115%;
+	font-family: Serif;
+	color: CornflowerBlue;
+	font-style: normal;
+}
+
+.index-list {
+	border: dotted 1px lightgray;
+	margin: 3em;
+	padding: 1em;
+	background: white;
+}
+
+.index-list div {
+	display: block;
+	padding: 0.25em 0.5em;
+	color: black;
+	cursor: pointer;
+}
+
+.index-list div:hover {
+	background: lightgray;
+	#color: white;
+}
+
+.index-list span.model {
+	font-weight: bold;
+	#background: ghostwhite;
+	#color: white;
+	#padding: 0 0.2em;
+} 
+
+.index-list span.caption {
+	font-weight: bold;
+	font-size: 1.15em;
+	#background: ghostwhite;
+	#color: white;
+	#padding: 0 0.2em;
+} 
+
+.index-list span.model:after {
+	font-weight: normal;
+	content: ']';
+} 
+.index-list span.model:before {
+	padding-left: 2em;
+	font-weight: normal;
+	content: '[';
+} 
+

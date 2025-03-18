@@ -2,34 +2,12 @@
 #include <fstream>
 #include <cstring>
 
-namespace HELPERS
+namespace HELPERS 
 {
 
 	const int MAX_SIZE_NAME = 15;
 	const int MAX_SIZE_BANK_CODE = 30;
 	const int MAX_SIZE_BUFFER = 1024;
-
-	int getCountOfLines(std::ifstream& file)
-	{
-
-		char buffer[MAX_SIZE_BUFFER + 1];
-		int counter = 0;
-		int currentPos = file.tellg();
-
-		while (!file.eof())
-		{
-
-			std::cin.getline(buffer, MAX_SIZE_BUFFER);
-			counter += 1;
-
-		}
-
-		file.clear();
-		file.seekg(currentPos);
-
-		return counter;
-
-	}
 
 }
 
@@ -41,7 +19,7 @@ private:
 	char code[HELPERS::MAX_SIZE_BANK_CODE + 1] = "";
 	double availableMoney = 0;
 
-	void setName(const char* name)
+	void setName(const char* name) 
 	{
 
 		if (name == nullptr) return;
@@ -61,7 +39,7 @@ private:
 
 	}
 
-	void setAvailableMoney(double availableMoney)
+	void setAvailableMoney(double availableMoney) 
 	{
 
 		if (availableMoney < 0) return;
@@ -74,7 +52,7 @@ public:
 
 	BankAccount() = default;
 
-	BankAccount(const char* name, const char* code, double availableMoney)
+	BankAccount(const char* name, const char* code, double availableMoney) 
 	{
 
 		setName(name);
@@ -119,7 +97,7 @@ public:
 
 	}
 
-	void read(std::istream& is)
+	void read(std::istream& is) 
 	{
 
 		is >> name;
@@ -129,21 +107,21 @@ public:
 
 	}
 
-	const char* getName() const
+	const char* getName() const 
 	{
 
 		return name;
 
 	}
 
-	const char* getCode() const
+	const char* getCode() const 
 	{
 
 		return code;
 
 	}
 
-	double getAvailableMoney() const
+	double getAvailableMoney() const 
 	{
 
 		return availableMoney;
@@ -160,7 +138,7 @@ private:
 	int countOfAccounts = 0;
 	int capacity = 8;
 
-	void resize(int newCapacity)
+	void resize(int newCapacity) 
 	{
 
 		if (newCapacity <= capacity) return;
@@ -180,7 +158,7 @@ private:
 
 	}
 
-	void free()
+	void free() 
 	{
 
 		delete[] accounts;
@@ -192,7 +170,7 @@ private:
 
 public:
 
-	Bank()
+	Bank() 
 	{
 
 		countOfAccounts = 0;
@@ -201,10 +179,10 @@ public:
 
 	}
 
-	Bank(std::ifstream& file)
+	Bank(std::ifstream& file) 
 	{
 
-		capacity = 8;
+		capacity = 8; 
 		accounts = new BankAccount[capacity];
 
 		file >> countOfAccounts;
@@ -223,7 +201,7 @@ public:
 
 	}
 
-	~Bank()
+	~Bank() 
 	{
 
 		free();
@@ -234,7 +212,7 @@ public:
 
 	Bank& operator = (const Bank& other) = delete;
 
-	void saveInfo(std::ostream& os)
+	void saveInfo(std::ostream& os) 
 	{
 
 		os << countOfAccounts;
@@ -249,14 +227,14 @@ public:
 
 	}
 
-	bool checkIfAlreadyHas(const BankAccount& acc) const
+	bool checkIfAlreadyHas(const BankAccount& acc) const 
 	{
 
 		for (int i = 0; i < countOfAccounts; i++)
 		{
 
 			if(!strcmp(accounts[i].getName(), acc.getName()) &&
-				!strcmp(accounts[i].getCode(), acc.getCode()))
+				!strcmp(accounts[i].getCode(), acc.getCode())) 
 			{
 
 				return true;
@@ -283,7 +261,7 @@ public:
 
 	}
 
-	void addBankAccount(const BankAccount& acc)
+	void addBankAccount(const BankAccount& acc) 
 	{
 
 		if (countOfAccounts == capacity) resize(capacity * 2);
@@ -294,7 +272,7 @@ public:
 
 	}
 
-	void removeBankAccount(const char* code)
+	void removeBankAccount(const char* code) 
 	{
 
 		if (code == nullptr) return;
@@ -302,7 +280,7 @@ public:
 		for (int i = 0; i < countOfAccounts; i++)
 		{
 
-			if (!strcmp(accounts[i].getCode(), code))
+			if (!strcmp(accounts[i].getCode(), code)) 
 			{
 
 				std::swap(accounts[i], accounts[countOfAccounts - 1]);
@@ -323,7 +301,7 @@ public:
 		for (int i = 0; i < countOfAccounts; i++)
 		{
 
-			if (!strcmp(accounts[i].getCode(), code))
+			if (!strcmp(accounts[i].getCode(), code)) 
 			{
 
 				return accounts[i].getAvailableMoney();
@@ -333,7 +311,7 @@ public:
 		}
 
 		return 0;
-
+		
 	}
 
 	double getAvailableMoneyByNameForAllAcc(const char* name)

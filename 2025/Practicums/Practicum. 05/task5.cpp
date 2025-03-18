@@ -7,7 +7,6 @@ namespace HELPERS
 
 	const int MAX_SIZE_NAME = 15;
 	const int MAX_SIZE_BANK_CODE = 30;
-	const int MAX_SIZE_BUFFER = 1024;
 
 }
 

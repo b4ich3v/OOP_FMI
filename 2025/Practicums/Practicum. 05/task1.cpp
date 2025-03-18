@@ -91,7 +91,7 @@ public:
     bool operator != (const Song& other) const
     {
 
-        return *this != other;
+        return !(*this == other);
 
     }
 

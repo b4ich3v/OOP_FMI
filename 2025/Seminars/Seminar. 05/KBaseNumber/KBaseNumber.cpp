@@ -53,7 +53,7 @@ void KBaseNumber::free()
 
 	delete[] strNumber;
 	strNumber = nullptr;
-	countingSystem = 2;
+	countingSystem = 10;
 	decimalNumber = 0;
 
 }

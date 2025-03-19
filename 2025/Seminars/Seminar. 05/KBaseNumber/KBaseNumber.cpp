@@ -28,16 +28,16 @@ void KBaseNumber::setDecimalNumber()
 	int len = strlen(strNumber);
 	int power = 1;
 
-	for (int i = len - 1; i >= 0; i--)
+	for (int i = len - 1; i >= 0; i--) 
 	{
 
 		int digit = HELPERS::charToDigit(strNumber[i]);
 
-		if (digit < 0 || digit >= countingSystem)
+		if (digit < 0 || digit >= countingSystem) 
 		{
 
 			decimalNumber = 0;
-			return;
+			return; 
 
 		}
 
@@ -85,10 +85,10 @@ void KBaseNumber::convertTo(int newCountingSystem)
 		buffer[1] = '\0';
 
 	}
-	else
+	else 
 	{
 
-		while (number > 0)
+		while (number > 0) 
 		{
 
 			buffer[index++] = HELPERS::PATTERN[number % newCountingSystem];
@@ -104,7 +104,7 @@ void KBaseNumber::convertTo(int newCountingSystem)
 			std::swap(buffer[i], buffer[index - i - 1]);
 
 		}
-
+			
 	}
 
 	setStrNumber(buffer);
@@ -196,17 +196,8 @@ void KBaseNumber::saveToFile(const char* fileName) const
 	if (!fileName) return;
 
 	std::ofstream file(fileName, std::ios::binary);
-
-	if (!file.is_open()) return;
-
-	int sizeOfStrNumber = strlen(strNumber);
-
-	file.write((const char*)&sizeOfStrNumber, sizeof(int));
-	file.write((const char*)strNumber, sizeOfStrNumber);
-	file.write((const char*)&countingSystem, sizeof(int));
-	file.write((const char*)&decimalNumber, sizeof(int));
-
-	file.close();
+	
+	saveToFile(file);
 
 }
 
@@ -224,7 +215,7 @@ void KBaseNumber::readFromFile(std::ifstream& file)
 	strNumber[sizeOfStrNumber] = '\0';
 	file.read((char*)&countingSystem, sizeof(int));
 	file.read((char*)&decimalNumber, sizeof(int));
-
+	
 	file.close();
 
 }
@@ -235,20 +226,8 @@ void KBaseNumber::readFromFile(const char* fileName)
 	if (!fileName) return;
 
 	std::ifstream file(fileName, std::ios::binary);
-
-	if (!file.is_open()) return;
-
-	free();
-	int sizeOfStrNumber = 0;
-
-	file.read((char*)&sizeOfStrNumber, sizeof(int));
-	strNumber = new char[sizeOfStrNumber + 1];
-	file.read((char*)strNumber, sizeOfStrNumber);
-	strNumber[sizeOfStrNumber] = '\0';
-	file.read((char*)&countingSystem, sizeof(int));
-	file.read((char*)&decimalNumber, sizeof(int));
-
-	file.close();
+	
+	readFromFile(file);
 
 }
 

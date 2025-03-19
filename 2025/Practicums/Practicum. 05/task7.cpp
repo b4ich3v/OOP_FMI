@@ -6,7 +6,6 @@ namespace HELPERS
 {
 
 	const int BITS_IN_ONE_BYTE = 8;
-	const int BITS_IN_TWO_BYTES = 16;
 
 }
 
@@ -38,7 +37,7 @@ private:
 
 		if (newCapacity <= capacity) return;
 
-		uint16_t* newData = new uint16_t[newCapacity];
+		uint16_t* newData = new uint16_t[newCapacity]{ 0 };
 
 		for (int i = 0; i < capacity; i++)
 		{
@@ -101,7 +100,7 @@ public:
 		capacity = 8;
 		size = 0;
 		maxNumber = number;
-		data = new uint16_t[capacity];
+		data = new uint16_t[capacity]{ 0 };
 
 		while (maxNumber >= capacity) resize(capacity * 2);
 
@@ -231,6 +230,32 @@ public:
 
 	}
 
+	MultiSetLessThanТhree getIntersection(const MultiSetLessThanТhree& other) 
+	{
+
+		MultiSetLessThanТhree result;
+		int newMaxNumber = std::min(maxNumber, other.maxNumber);
+
+		for (int i = 0; i <= maxNumber; i++)
+		{
+
+			int currentNumberCount1 = countOfNumber(i);
+			int currentNumberCount2 = other.countOfNumber(i);
+			int sizeForInnerCycle = std::min(currentNumberCount1, currentNumberCount2);
+
+			for (int j = 0; j < sizeForInnerCycle; j++)
+			{
+
+				result.addNumber(i);
+
+			}
+
+		}
+
+		return result;
+
+	}
+
 };
 
 int main()
@@ -254,6 +279,18 @@ int main()
 
 	ms1.addNumber(27);
 	ms1.print();
+
+	MultiSetLessThanТhree ms2;
+	ms2.addNumber(1);
+	ms2.addNumber(1);
+	ms2.addNumber(125);
+	ms2.addNumber(14);
+	ms2.addNumber(5);
+	ms2.addNumber(1);
+	ms2.print();
+
+	MultiSetLessThanТhree intersectionOfTwo = ms1.getIntersection(ms2);
+	intersectionOfTwo.print();
 
 	return 0;
 

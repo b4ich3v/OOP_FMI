@@ -6,6 +6,10 @@ namespace HELPERS
 {
 
 	const int BITS_IN_ONE_BYTE = 8;
+	const int MAX_COUNT_EQUAL_NUMBERS = 3;
+	const int MIN_COUNT_EQUAL_NUMBERS = 0;
+
+	const int TWO_BITS_MASKS[4] = { 0b00, 0b01, 0b10, 0b11 };
 
 }
 
@@ -145,37 +149,36 @@ public:
 
 		if (currentBucket >= capacity) return 0;
 
-		return (data[currentBucket] >> currentIndex) & 0b11;
+		return (data[currentBucket] >> currentIndex) & HELPERS::TWO_BITS_MASKS[3];
 
 	}
-
 
 	void proccesTwoBits(int currentBucket, int currentIndex, int number, bool pred)
 	{
 
 		uint16_t twoBitsMask = data[currentBucket];
-		(twoBitsMask >>= currentIndex) &= 0b11;
+		(twoBitsMask >>= currentIndex) &= HELPERS::TWO_BITS_MASKS[3];
 
 		if (pred)
 		{
 
-			if (twoBitsMask == 0b00) twoBitsMask = 0b01;
-			else if (twoBitsMask == 0b01) twoBitsMask = 0b10;
-			else if (twoBitsMask == 0b10) twoBitsMask = 0b11;
+			if (twoBitsMask == HELPERS::TWO_BITS_MASKS[0]) twoBitsMask = HELPERS::TWO_BITS_MASKS[1];
+			else if (twoBitsMask == HELPERS::TWO_BITS_MASKS[1]) twoBitsMask = HELPERS::TWO_BITS_MASKS[2];
+			else if (twoBitsMask == HELPERS::TWO_BITS_MASKS[2]) twoBitsMask = HELPERS::TWO_BITS_MASKS[3];
 			else return;
 
 		}
 		else
 		{
 
-			if (twoBitsMask == 0b11) twoBitsMask = 0b10;
-			else if (twoBitsMask == 0b10) twoBitsMask = 0b01;
-			else if (twoBitsMask == 0b01) twoBitsMask = 0b00;
+			if (twoBitsMask == HELPERS::TWO_BITS_MASKS[3]) twoBitsMask = HELPERS::TWO_BITS_MASKS[2];
+			else if (twoBitsMask == HELPERS::TWO_BITS_MASKS[2]) twoBitsMask = HELPERS::TWO_BITS_MASKS[1];
+			else if (twoBitsMask == HELPERS::TWO_BITS_MASKS[1]) twoBitsMask = HELPERS::TWO_BITS_MASKS[0];
 			else return;
 
 		}
 
-		data[currentBucket] &= (~(0b11 << currentIndex));
+		data[currentBucket] &= (~(HELPERS::TWO_BITS_MASKS[3] << currentIndex));
 		data[currentBucket] |= (twoBitsMask << currentIndex);
 
 	}
@@ -183,7 +186,7 @@ public:
 	void addNumber(int number)
 	{
 
-		if (countOfNumber(number) == 3 || number < 0) return;
+		if (countOfNumber(number) == HELPERS::MAX_COUNT_EQUAL_NUMBERS || number < 0) return;
 
 		int currentBucket = getBucket(number);
 		int currentIndex = getIndex(number);
@@ -199,7 +202,7 @@ public:
 	void removeNumber(int number)
 	{
 
-		if (countOfNumber(number) == 0 || number < 0) return;
+		if (countOfNumber(number) == HELPERS::MIN_COUNT_EQUAL_NUMBERS || number < 0) return;
 
 		int currentBucket = getBucket(number);
 		int currentIndex = getIndex(number);
@@ -267,7 +270,7 @@ public:
 
 			int currentNumberCount1 = countOfNumber(i);
 			int currentNumberCount2 = other.countOfNumber(i);
-			int sizeForInnerCycle = std::min(currentNumberCount1 + currentNumberCount2, 3);
+			int sizeForInnerCycle = std::min(currentNumberCount1 + currentNumberCount2, HELPERS::MAX_COUNT_EQUAL_NUMBERS);
 
 			for (int j = 0; j < sizeForInnerCycle; j++)
 			{

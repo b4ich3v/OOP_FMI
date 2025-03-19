@@ -18,7 +18,7 @@ private:
 
 	int decimalNumber = 0;
 	char* strNumber = nullptr;
-	int countingSystem = 2;
+	int countingSystem = 10;
 
 	void setStrNumber(const char* strNumber);
 

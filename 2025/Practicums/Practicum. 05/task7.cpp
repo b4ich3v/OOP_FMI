@@ -143,6 +143,8 @@ public:
 		int currentBucket = getBucket(number);
 		int currentIndex = getIndex(number);
 
+		if (currentBucket > capacity) return 0;
+
 		uint16_t twoBitsMask = data[currentBucket];
 		(twoBitsMask >>= currentIndex) &= 0b11;
 
@@ -256,6 +258,34 @@ public:
 
 	}
 
+	MultiSetLessThanТhree getUnion(const MultiSetLessThanТhree& other)
+	{
+
+		MultiSetLessThanТhree result;
+		int newMaxNumber = std::max(maxNumber, other.maxNumber);
+
+		for (int i = 0; i <= maxNumber; i++)
+		{
+
+			int currentNumberCount1 = countOfNumber(i);
+			int currentNumberCount2 = other.countOfNumber(i);
+			int sizeForInnerCycle = currentNumberCount1 + currentNumberCount2;
+
+			if (sizeForInnerCycle > 3) sizeForInnerCycle = 3;
+
+			for (int j = 0; j < sizeForInnerCycle; j++)
+			{
+
+				result.addNumber(i);
+
+			}
+
+		}
+
+		return result;
+
+	}
+
 };
 
 int main()
@@ -290,7 +320,9 @@ int main()
 	ms2.print();
 
 	MultiSetLessThanТhree intersectionOfTwo = ms1.getIntersection(ms2);
+	MultiSetLessThanТhree unionOfTwo = ms1.getUnion(ms2);
 	intersectionOfTwo.print();
+	unionOfTwo.print();
 
 	return 0;
 

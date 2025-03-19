@@ -9,7 +9,7 @@ namespace HELPERS
 
 }
 
-class MultiSetLessThanТhree 
+class MultiSetLessThanТhree
 {
 private:
 
@@ -18,21 +18,21 @@ private:
 	int capacity = 8;
 	int maxNumber = 0;
 
-	int getBucket(int number) const 
+	int getBucket(int number) const
 	{
 
 		return number / HELPERS::BITS_IN_ONE_BYTE;
 
 	}
 
-	int getIndex(int number) const 
+	int getIndex(int number) const
 	{
 
 		return (number % HELPERS::BITS_IN_ONE_BYTE) * 2;
 
 	}
 
-	void resize(int newCapacity) 
+	void resize(int newCapacity)
 	{
 
 		if (newCapacity <= capacity) return;
@@ -52,7 +52,7 @@ private:
 
 	}
 
-	void free() 
+	void free()
 	{
 
 		delete[] data;
@@ -63,7 +63,7 @@ private:
 
 	}
 
-	void copyFrom(const MultiSetLessThanТhree& other) 
+	void copyFrom(const MultiSetLessThanТhree& other)
 	{
 
 		data = new uint16_t[other.capacity];
@@ -83,7 +83,7 @@ private:
 
 public:
 
-	MultiSetLessThanТhree() 
+	MultiSetLessThanТhree()
 	{
 
 		maxNumber = 0;
@@ -94,7 +94,7 @@ public:
 
 	}
 
-	MultiSetLessThanТhree(int number) 
+	MultiSetLessThanТhree(int number)
 	{
 
 		capacity = 8;
@@ -108,14 +108,14 @@ public:
 
 	}
 
-	MultiSetLessThanТhree(const MultiSetLessThanТhree& other) 
+	MultiSetLessThanТhree(const MultiSetLessThanТhree& other)
 	{
 
 		copyFrom(other);
 
 	}
 
-	MultiSetLessThanТhree& operator = (const MultiSetLessThanТhree& other) 
+	MultiSetLessThanТhree& operator = (const MultiSetLessThanТhree& other)
 	{
 
 		if (this != &other)
@@ -143,16 +143,14 @@ public:
 		int currentBucket = getBucket(number);
 		int currentIndex = getIndex(number);
 
-		if (currentBucket > capacity) return 0;
+		if (currentBucket >= capacity) return 0;
 
-		uint16_t twoBitsMask = data[currentBucket];
-		(twoBitsMask >>= currentIndex) &= 0b11;
-
-		return twoBitsMask;
+		return (data[currentBucket] >> currentIndex) & 0b11;
 
 	}
 
-	void proccesTwoBits(int currentBucket, int currentIndex, int number, bool pred) 
+
+	void proccesTwoBits(int currentBucket, int currentIndex, int number, bool pred)
 	{
 
 		uint16_t twoBitsMask = data[currentBucket];
@@ -232,13 +230,13 @@ public:
 
 	}
 
-	MultiSetLessThanТhree getIntersection(const MultiSetLessThanТhree& other) 
+	MultiSetLessThanТhree getIntersection(const MultiSetLessThanТhree& other)
 	{
 
 		MultiSetLessThanТhree result;
 		int newMaxNumber = std::min(maxNumber, other.maxNumber);
 
-		for (int i = 0; i <= maxNumber; i++)
+		for (int i = 0; i <= newMaxNumber; i++)
 		{
 
 			int currentNumberCount1 = countOfNumber(i);
@@ -264,14 +262,12 @@ public:
 		MultiSetLessThanТhree result;
 		int newMaxNumber = std::max(maxNumber, other.maxNumber);
 
-		for (int i = 0; i <= maxNumber; i++)
+		for (int i = 0; i <= newMaxNumber; i++)
 		{
 
 			int currentNumberCount1 = countOfNumber(i);
 			int currentNumberCount2 = other.countOfNumber(i);
-			int sizeForInnerCycle = currentNumberCount1 + currentNumberCount2;
-
-			if (sizeForInnerCycle > 3) sizeForInnerCycle = 3;
+			int sizeForInnerCycle = std::min(currentNumberCount1 + currentNumberCount2, 3);
 
 			for (int j = 0; j < sizeForInnerCycle; j++)
 			{
@@ -300,13 +296,12 @@ int main()
 	ms1.addNumber(5);
 	ms1.addNumber(2);
 	ms1.print();
+	std::cout << std::endl;
 
 	ms1.removeNumber(1);
 	ms1.removeNumber(4);
 	ms1.removeNumber(4);
 	ms1.removeNumber(1);
-	ms1.print();
-
 	ms1.addNumber(27);
 	ms1.print();
 
@@ -318,6 +313,7 @@ int main()
 	ms2.addNumber(5);
 	ms2.addNumber(1);
 	ms2.print();
+	std::cout << std::endl;
 
 	MultiSetLessThanТhree intersectionOfTwo = ms1.getIntersection(ms2);
 	MultiSetLessThanТhree unionOfTwo = ms1.getUnion(ms2);

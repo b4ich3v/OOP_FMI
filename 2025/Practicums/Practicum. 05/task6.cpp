@@ -67,7 +67,7 @@ private:
 
 		uint8_t* newData = new uint8_t[newCapacity]{ 0 };
 
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < capacity; i++)
 		{
 
 			newData[i] = data[i];
@@ -153,10 +153,11 @@ public:
 	{
 
 		if (number < 0 || hasNumber(number)) return;
-		if (size == capacity) resize(capacity * 2);
 
 		int currentBucket = getBucket(number);
 		int currentIndex = getIndex(number);
+
+		if (currentBucket >= capacity) resize(capacity * 2);
 
 		data[currentBucket] |= (1 << currentIndex);
 		maxNumber = std::max(maxNumber, number);
@@ -207,7 +208,7 @@ public:
 		{
 
 			if (hasNumber(i)) result.addNumber(i);
-			
+
 
 		}
 
@@ -247,7 +248,7 @@ int main()
 
 	BitSet s1(5);
 	BitSet s2(17);
-	
+
 	s1.addNumber(3);
 	s1.addNumber(5);
 	s1.addNumber(1);

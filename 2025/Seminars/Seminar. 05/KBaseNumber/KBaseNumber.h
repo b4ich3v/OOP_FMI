@@ -6,9 +6,9 @@
 namespace HELPERS
 {
 
-	const char PATTERN[17] = "0123456789ABCDEF";
+    const char PATTERN[17] = "0123456789ABCDEF";
 
-	int charToDigit(char ch);
+    int charToDigit(char ch);
 
 }
 
@@ -16,42 +16,46 @@ class KBaseNumber
 {
 private:
 
-	char* strNumber = nullptr;
-	int countingSystem = 10;
-	int decimalNumber = 0;
+    char* strNumber = nullptr;
+    int countingSystem = 10;
+    int decimalNumber = 0;
 
-	void setStrNumber(const char* strNumber);
+    void setStrNumber(const char* strNumber);
 
-	void setCountingSystem(int countingSystem);
+    void setCountingSystem(int countingSystem);
 
-	void setDecimalNumber();
+    void setDecimalNumber();
 
-	void free();
+    void free();
 
-	void copyFrom(const KBaseNumber& other);
+    void copyFrom(const KBaseNumber& other);
 
 public:
 
-	KBaseNumber() = default;
+    KBaseNumber() = default;
 
-	KBaseNumber(const char* strNumber, int countingSystem);
+    KBaseNumber(const char* strNumber, int countingSystem);
 
-	KBaseNumber(const KBaseNumber& other);
+    KBaseNumber(const KBaseNumber& other);
 
-	KBaseNumber& operator = (const KBaseNumber& other);
+    KBaseNumber& operator = (const KBaseNumber& other);
 
-	~KBaseNumber();
+    ~KBaseNumber();
 
-	void update(const char* strNumber, int countingSystem);
+    void update(const char* strNumber, int countingSystem);
 
-	void print() const;
+    void print() const;
 
-	void convertTo(int newCountingSystem);
+    void convertTo(int newCountingSystem);
 
-	bool compareWith(const KBaseNumber& other) const;
+    bool compareWith(const KBaseNumber& other) const;
 
-	void saveToFile(std::ofstream& file) const;
+    void saveToFile(std::ofstream& file) const;
 
-	void readFromFile(std::ifstream& file);
+    void saveToFile(const char* fileName) const;
+
+    void readFromFile(std::ifstream& file);
+
+    void readFromFile(const char* fileName);
 
 };

@@ -17,7 +17,7 @@ size_t HELPERS::getCountOfDigits(int number)
 
 }
 
-bool HELPERS::isPrime(int number) 
+bool HELPERS::isPrime(int number)
 {
 
 	for (int i = 2; i < number; i++)
@@ -31,7 +31,7 @@ bool HELPERS::isPrime(int number)
 
 }
 
-bool HELPERS::hasDiffDigits(int number) 
+bool HELPERS::hasDiffDigits(int number)
 {
 
 	int digitsCounter[9]{ 0 };
@@ -82,7 +82,7 @@ bool HELPERS::isPalindrome(int number)
 
 }
 
-size_t HELPERS::getCountByCondition(int start, int end, predicate func) 
+size_t HELPERS::getCountByCondition(int start, int end, predicate func)
 {
 
 	size_t counter = 0;
@@ -98,7 +98,7 @@ size_t HELPERS::getCountByCondition(int start, int end, predicate func)
 
 }
 
-void Interval::setStart(int start) 
+void Interval::setStart(int start)
 {
 
 	this->start = start;
@@ -120,7 +120,7 @@ Interval::Interval()
 
 }
 
-Interval::Interval(int start, int end) 
+Interval::Interval(int start, int end)
 {
 
 	if (start <= end)
@@ -140,7 +140,7 @@ Interval::Interval(int start, int end)
 
 }
 
-bool Interval::isInInterval(int number) const 
+bool Interval::isInInterval(int number) const
 {
 
 	return number >= start && number <= end;
@@ -154,28 +154,28 @@ size_t Interval::getLen() const
 
 }
 
-size_t Interval::countOfPrimesInInterval() const 
+size_t Interval::countOfPrimesInInterval() const
 {
 
 	return HELPERS::getCountByCondition(start, end, HELPERS::isPrime);
 
 }
 
-size_t Interval::countOfNumbersWDDInInterval() const 
+size_t Interval::countOfNumbersWDDInInterval() const
 {
 
 	return HELPERS::getCountByCondition(start, end, HELPERS::hasDiffDigits);
 
 }
 
-size_t Interval::countOfPalindromesInInterval() const 
+size_t Interval::countOfPalindromesInInterval() const
 {
 
 	return HELPERS::getCountByCondition(start, end, HELPERS::isPalindrome);
 
 }
 
-bool Interval::areStartAndEndAPOT() const 
+bool Interval::areStartAndEndAPOT() const
 {
 
 	int mask = 0b1;
@@ -193,13 +193,14 @@ bool Interval::areStartAndEndAPOT() const
 
 }
 
-Interval& Interval::operator & (const Interval& other) 
+void Interval::intersection(const Interval &other)
 {
 
 	this->start = std::max(this->start, other.start);
 	this->end = std::min(this->end, other.end);
 
 }
+
 
 bool Interval::isSubinterval(const Interval& other) const
 {

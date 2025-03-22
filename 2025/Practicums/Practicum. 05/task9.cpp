@@ -416,7 +416,7 @@ class NavyHtmlTableGenerator
 private:
 
 	char fileName[HELPERS::MAX_FILE_SIZE + 1];
-	Navy* navy = nullptr;
+	const Navy* navy = nullptr;
 
 	void setFileName(const char* fileName)
 	{

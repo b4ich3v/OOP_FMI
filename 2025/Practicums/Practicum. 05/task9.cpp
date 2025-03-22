@@ -2,11 +2,11 @@
 #include <cstring>
 #include <fstream>
 
-namespace HELPERS 
+namespace HELPERS
 {
 
 	const char OPENING_SYMBOL = '>';
-	const char CLOSINGG_SYMBOL = '<';
+	const char CLOSING_SYMBOL = '<';
 
 	const int MAX_SIZE_SHIPS = 30;
 	const int MAX_FILE_SIZE = 128;
@@ -23,7 +23,7 @@ namespace HELPERS
 	const char CLOSING_TD[6] = "</td>";
 
 	const char ONE_TAB[2] = "	";
-	const char TWO_TAB[3] = "		";
+	const char TWO_TABS[3] = "		";
 
 }
 
@@ -44,10 +44,12 @@ private:
 	ClassOfShip classOfShip = ClassOfShip::battlecruiser;
 	int countOfGuns = 0;
 
-	void setName(const char* name) 
+	void setName(const char* name)
 	{
 
 		if (!name) return;
+
+		delete[] this->name;
 
 		this->name = new char[strlen(name) + 1];
 		strncpy(this->name, name, strlen(name));
@@ -55,7 +57,7 @@ private:
 
 	}
 
-	void setCountOfGuns(int countOfGuns) 
+	void setCountOfGuns(int countOfGuns)
 	{
 
 		if (countOfGuns < 0) return;
@@ -64,7 +66,7 @@ private:
 
 	}
 
-	void setYearOfLaunch(int yearOfLaunch) 
+	void setYearOfLaunch(int yearOfLaunch)
 	{
 
 		if (yearOfLaunch < 0) return;
@@ -73,14 +75,14 @@ private:
 
 	}
 
-	void setClassofShip(ClassOfShip classOfShip) 
+	void setClassofShip(ClassOfShip classOfShip)
 	{
 
 		this->classOfShip = classOfShip;
 
 	}
 
-	void free() 
+	void free()
 	{
 
 		delete[] name;
@@ -92,7 +94,7 @@ private:
 
 	}
 
-	void copyFrom(const Ship& other) 
+	void copyFrom(const Ship& other)
 	{
 
 		name = new char[strlen(other.name) + 1];
@@ -109,14 +111,14 @@ public:
 
 	Ship() = default;
 
-	Ship(const char* name, int countOfGuns, int yearOfLaunch, ClassOfShip classOfShip) 
+	Ship(const char* name, int countOfGuns, int yearOfLaunch, ClassOfShip classOfShip)
 	{
 
 		setName(name);
 		setCountOfGuns(countOfGuns);
 		setYearOfLaunch(yearOfLaunch);
 		setClassofShip(classOfShip);
-		
+
 	}
 
 	Ship(const Ship& other)
@@ -126,10 +128,10 @@ public:
 
 	}
 
-	Ship& operator = (const Ship& other) 
+	Ship& operator = (const Ship& other)
 	{
 
-		if (this != &other) 
+		if (this != &other)
 		{
 
 			free();
@@ -141,35 +143,35 @@ public:
 
 	}
 
-	~Ship() 
+	~Ship()
 	{
 
 		free();
 
 	}
 
-	const char* getName() const 
+	const char* getName() const
 	{
 
 		return name;
 
 	}
 
-	int getYearOfLaunch() const 
+	int getYearOfLaunch() const
 	{
 
 		return yearOfLaunch;
 
 	}
 
-	int getCountOfGuns() const 
+	int getCountOfGuns() const
 	{
 
 		return countOfGuns;
 
 	}
 
-	ClassOfShip getClassOfShip() const 
+	ClassOfShip getClassOfShip() const
 	{
 
 		return classOfShip;
@@ -189,7 +191,7 @@ public:
 		case ClassOfShip::battleship: std::cout << "battleship"; break;
 		case ClassOfShip::battlecruiser: std::cout << "battlecruiser"; break;
 		default: break;
-			
+
 		}
 
 		std::cout << std::endl;
@@ -209,7 +211,7 @@ private:
 	void copyFrom(const Navy& other)
 	{
 
-		if (other.countryName) 
+		if (other.countryName)
 		{
 
 			countryName = new char[strlen(other.countryName) + 1];
@@ -244,14 +246,14 @@ private:
 
 		delete[] countryName;
 
-		if (!name) 
+		if (!name)
 		{
 
 			countryName = new char[1];
 			countryName[0] = '\0';
 
 		}
-		else 
+		else
 		{
 
 			countryName = new char[strlen(name) + 1];
@@ -263,7 +265,7 @@ private:
 
 public:
 
-	Navy() 
+	Navy()
 	{
 
 		countryName = new char[1];
@@ -272,24 +274,24 @@ public:
 
 	}
 
-	Navy(const Navy& other) 
+	Navy(const Navy& other)
 	{
 
 		copyFrom(other);
 
 	}
 
-	Navy(const char* name) 
+	Navy(const char* name)
 	{
 
 		setCountryName(name);
 
 	}
 
-	Navy& operator = (const Navy& other) 
+	Navy& operator = (const Navy& other)
 	{
 
-		if (this != &other) 
+		if (this != &other)
 		{
 
 			free();
@@ -301,14 +303,14 @@ public:
 
 	}
 
-	~Navy() 
+	~Navy()
 	{
 
 		free();
 
 	}
 
-	void addShip(const Ship& ship) 
+	void addShip(const Ship& ship)
 	{
 
 		if (countOfShips == HELPERS::MAX_SIZE_SHIPS) return;
@@ -318,13 +320,13 @@ public:
 
 	}
 
-	void removeShip(const char* name) 
+	void removeShip(const char* name)
 	{
 
 		for (int i = 0; i < countOfShips; i++)
 		{
 
-			if (!strcmp(ships[i].getName(), name)) 
+			if (!strcmp(ships[i].getName(), name))
 			{
 
 				std::swap(ships[i], ships[countOfShips - 1]);
@@ -337,7 +339,7 @@ public:
 
 	}
 
-	const Ship* const getShipPtrByIndex(int index) 
+	const Ship* const getShipPtrByIndex(int index)
 	{
 
 		if (index < 0 || index >= countOfShips) return nullptr;
@@ -347,14 +349,14 @@ public:
 
 	}
 
-	int getCountOfShips() const 
+	int getCountOfShips() const
 	{
 
 		return countOfShips;
 
 	}
 
-	int getTotalCountOfGuns() const 
+	int getTotalCountOfGuns() const
 	{
 
 		int result = 0;
@@ -370,7 +372,7 @@ public:
 
 	}
 
-	int compareByCountOfGuns(const Navy& other) const 
+	int compareByCountOfGuns(const Navy& other) const
 	{
 
 		if (getTotalCountOfGuns() < other.getTotalCountOfGuns()) return -1;
@@ -379,7 +381,7 @@ public:
 
 	}
 
-	void printNavy() const 
+	void printNavy() const
 	{
 
 		for (int i = 0; i < countOfShips; i++)
@@ -393,14 +395,14 @@ public:
 
 	}
 
-	const Ship& getShipByIndex(int index) const 
+	const Ship& getShipByIndex(int index) const
 	{
 
 		return ships[index];
 
 	}
 
-	const char* getName() const 
+	const char* getName() const
 	{
 
 		return countryName;
@@ -409,14 +411,14 @@ public:
 
 };
 
-class NavyHtmlTableGenerator 
+class NavyHtmlTableGenerator
 {
 private:
 
 	char fileName[HELPERS::MAX_FILE_SIZE + 1];
-	Navy navy;
-	
-	void setFileName(const char* fileName) 
+	Navy* navy = nullptr;
+
+	void setFileName(const char* fileName)
 	{
 
 		if (!fileName) return;
@@ -426,7 +428,7 @@ private:
 
 	}
 
-	void setNavy(const Navy& navy) 
+	void setNavy(Navy* navy)
 	{
 
 		this->navy = navy;
@@ -436,9 +438,9 @@ private:
 	void writeShipName(std::ofstream& file, const char* name) const
 	{
 
-		file << HELPERS::TWO_TAB << HELPERS::OPENING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::OPENING_TD;
 		file << name;
-		file << HELPERS::TWO_TAB << HELPERS::CLOSING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::CLOSING_TD;
 		file << std::endl;
 
 	}
@@ -446,9 +448,9 @@ private:
 	void writeYearOfLaunch(std::ofstream& file, int yearOfLaunch) const
 	{
 
-		file << HELPERS::TWO_TAB << HELPERS::OPENING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::OPENING_TD;
 		file << yearOfLaunch;
-		file << HELPERS::TWO_TAB << HELPERS::CLOSING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::CLOSING_TD;
 		file << std::endl;
 
 	}
@@ -456,12 +458,12 @@ private:
 	void writeClassOfShip(std::ofstream& file, ClassOfShip classOfShip) const
 	{
 
-		file << HELPERS::TWO_TAB << HELPERS::OPENING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::OPENING_TD;
 
 		if ((int)classOfShip == (int)ClassOfShip::battlecruiser) file << "Battlecruiser";
 		else file << "Battleship";
 
-		file << HELPERS::TWO_TAB << HELPERS::CLOSING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::CLOSING_TD;
 		file << std::endl;
 
 	}
@@ -469,9 +471,9 @@ private:
 	void writeCountOfGuns(std::ofstream& file, int countOfGuns) const
 	{
 
-		file << HELPERS::TWO_TAB << HELPERS::OPENING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::OPENING_TD;
 		file << countOfGuns;
-		file << HELPERS::TWO_TAB << HELPERS::CLOSING_TD;
+		file << HELPERS::TWO_TABS << HELPERS::CLOSING_TD;
 		file << std::endl;
 
 	}
@@ -500,9 +502,9 @@ private:
 		file << HELPERS::ONE_TAB << HELPERS::OPENING_TR;
 		file << std::endl;
 
-		file << HELPERS::TWO_TAB << HELPERS::OPENING_TH;
+		file << HELPERS::TWO_TABS << HELPERS::OPENING_TH;
 		file << name;
-		file << HELPERS::TWO_TAB << HELPERS::CLOSING_TH;
+		file << HELPERS::TWO_TABS << HELPERS::CLOSING_TH;
 		file << std::endl;
 
 	}
@@ -510,9 +512,9 @@ private:
 	void writeNavyCountOfShipsFile(std::ofstream& file, int countOfShips) const
 	{
 
-		file << HELPERS::TWO_TAB << HELPERS::OPENING_TH;
+		file << HELPERS::TWO_TABS << HELPERS::OPENING_TH;
 		file << countOfShips;
-		file << HELPERS::TWO_TAB << HELPERS::CLOSING_TH;
+		file << HELPERS::TWO_TABS << HELPERS::CLOSING_TH;
 		file << std::endl;
 
 		file << HELPERS::ONE_TAB << HELPERS::CLOSING_TR;
@@ -520,7 +522,7 @@ private:
 
 	}
 
-	void writeNavyDataInFile(std::ofstream& file, const Navy& navy) const 
+	void writeNavyDataInFile(std::ofstream& file, const Navy& navy) const
 	{
 
 		writeNavyNameInFile(file, navy.getName());
@@ -530,17 +532,17 @@ private:
 
 	void trim(char* string) const
 	{
-		
+
 		int i = 0;
 
 		while (string[i] != '\0' && (string[i] == ' ' || string[i] == '\t')) i++;
-		
+
 		if (i > 0)
 		{
 
 			int j = 0;
 
-			while (string[i] != '\0') 
+			while (string[i] != '\0')
 			{
 
 				string[j++] = string[i++];
@@ -560,7 +562,7 @@ private:
 
 			int k = size - 1;
 
-			while (k >= 0 && (string[k] == ' ' || string[k] == '\t')) 
+			while (k >= 0 && (string[k] == ' ' || string[k] == '\t'))
 			{
 
 				string[k] = '\0';
@@ -574,10 +576,10 @@ private:
 
 	void processLine(char* currentLine, int bufferSize) const
 	{
-		
+
 		char* position1 = nullptr;
 
-		for (int i = 0; currentLine[i] != '\0'; i++) 
+		for (int i = 0; currentLine[i] != '\0'; i++)
 		{
 
 			if (currentLine[i] == HELPERS::OPENING_SYMBOL)
@@ -592,10 +594,10 @@ private:
 
 		char* position2 = nullptr;
 
-		for (int i = 0; currentLine[i] != '\0'; i++) 
+		for (int i = 0; currentLine[i] != '\0'; i++)
 		{
 
-			if (currentLine[i] == HELPERS::CLOSINGG_SYMBOL)
+			if (currentLine[i] == HELPERS::CLOSING_SYMBOL)
 			{
 
 				position2 = &currentLine[i];
@@ -604,9 +606,9 @@ private:
 
 		}
 
-		if (position1 != nullptr && position2 != nullptr && position2 > position1) 
+		if (position1 != nullptr && position2 != nullptr && position2 > position1)
 		{
-			
+
 			int prefixLen = position1 - currentLine + 1;
 			char prefix[HELPERS::MAX_BUFFER_SIZE];
 
@@ -640,7 +642,7 @@ private:
 
 			int i = 0;
 
-			while (i < (int)bufferSize - 1 && newLine[i] != '\0') 
+			while (i < (int)bufferSize - 1 && newLine[i] != '\0')
 			{
 
 				currentLine[i] = newLine[i];
@@ -656,7 +658,7 @@ private:
 
 public:
 
-	NavyHtmlTableGenerator(const char* fileName, const Navy& navy) 
+	NavyHtmlTableGenerator(const char* fileName, Navy* navy)
 	{
 
 		setFileName(fileName);
@@ -666,7 +668,7 @@ public:
 
 	void saveToHtmlTable() const
 	{
-		
+
 		const char* tempFileName = "temp.txt";
 		std::ofstream fileTemp(tempFileName);
 		if (!fileTemp.is_open()) return;
@@ -674,12 +676,12 @@ public:
 		fileTemp << HELPERS::OPENING_TABLE;
 		fileTemp << std::endl;
 
-		writeNavyDataInFile(fileTemp, navy);
+		writeNavyDataInFile(fileTemp, *navy);
 
-		for (int i = 0; i < navy.getCountOfShips(); i++)
+		for (int i = 0; i < (*navy).getCountOfShips(); i++)
 		{
 
-			writeShipInFile(fileTemp, navy, i);
+			writeShipInFile(fileTemp, *navy, i);
 
 		}
 
@@ -711,7 +713,7 @@ public:
 
 };
 
-int main() 
+int main()
 {
 
 	Ship ship1("Black Pearl", 30, 341, ClassOfShip::battleship);
@@ -729,7 +731,9 @@ int main()
 	navy1.addShip(ship2);
 	navy1.addShip(ship3);
 
-	NavyHtmlTableGenerator html("../result.txt", navy1);
+	Navy* ptr = &navy1;
+
+	NavyHtmlTableGenerator html("../result.txt", ptr);
 	html.saveToHtmlTable();
 
 	return 0;

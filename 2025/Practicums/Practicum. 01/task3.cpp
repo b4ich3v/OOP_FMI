@@ -17,7 +17,7 @@ public:
 
 	char* name = nullptr;
 	char* egn = nullptr;
-	Age age;
+	Age age = Age::none;
 
 	void copyFrom(const Student& other) 
 	{

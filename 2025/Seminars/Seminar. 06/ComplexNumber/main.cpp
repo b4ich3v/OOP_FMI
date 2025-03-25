@@ -10,19 +10,19 @@ int main()
 	ComplexNumber number4(-6, 1);
 
 	number1 *= number2;
-	number1.printNumber();
+	std::cout << number1;
 
 	number2 += number3;
-	number2.printNumber();
+	std::cout << number2;
 
 	number3 /= number1;
-	number3.printNumber();
+	std::cout << number3;
 
 	number4 -= number3;
-	number4.printNumber();
+	std::cout << number4;
 
-	ComplexNumber poweredNumber = number ^ (-3);
-	poweredNumber.printNumber();
+	ComplexNumber number1UpTo7 = number ^ (-3);
+	std::cout << number1UpTo7;
 
 	return 0;
 

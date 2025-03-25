@@ -21,8 +21,8 @@ int main()
 	number4 -= number3;
 	std::cout << number4;
 
-	ComplexNumber number1UpTo7 = number ^ (-3);
-	std::cout << number1UpTo7;
+	ComplexNumber poweredNumber = number ^ (-3);
+	std::cout << poweredNumber;
 
 	return 0;
 

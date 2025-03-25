@@ -21,8 +21,8 @@ int main()
 	number4 -= number3;
 	number4.printNumber();
 
-	ComplexNumber number1UpTo7 = number ^ (-3);
-	number1UpTo7.printNumber();
+	ComplexNumber poweredNumber = number ^ (-3);
+	poweredNumber.printNumber();
 
 	return 0;
 

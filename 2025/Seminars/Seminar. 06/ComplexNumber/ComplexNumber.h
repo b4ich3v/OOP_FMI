@@ -22,6 +22,10 @@ public:
 
 	ComplexNumber(double real, double imaginary);
 
+	double getRealPart() const;
+
+	double getImaginaryPart() const;
+
 	ComplexNumber& operator = (const ComplexNumber& other);
 
 	ComplexNumber& operator *= (const ComplexNumber& other);
@@ -34,11 +38,9 @@ public:
 
 	ComplexNumber& operator ^= (int power);
 
-	double getRealPart() const;
+	friend std::ostream& operator << (std::ostream& os, const ComplexNumber& number);
 
-	double getImaginaryPart() const;
-
-	void printNumber() const;
+	friend std::istream& operator >> (std::istream& is, ComplexNumber& number);
 
 };
 

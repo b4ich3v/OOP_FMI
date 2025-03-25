@@ -7,7 +7,7 @@ int main()
     SpecialCustomFunction func([](int num) -> int { return num * num + num; }, arr, 5);
 
     func.printSpecialNumbers();
-    std::cout << func(7) << std::endl << func(4) << std::endl; 
+    std::cout << func(7) << std::endl << func(-4) << std::endl; 
 
     func--; 
 

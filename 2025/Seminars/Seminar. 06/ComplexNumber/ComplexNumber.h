@@ -18,7 +18,7 @@ public:
 
 	ComplexNumber() = default;
 
-	ComplexNumber(const ComplexNumber& other);
+	explicit ComplexNumber(const ComplexNumber& other);
 
 	ComplexNumber(double real, double imaginary);
 

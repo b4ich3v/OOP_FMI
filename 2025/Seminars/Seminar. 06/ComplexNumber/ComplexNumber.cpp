@@ -212,6 +212,7 @@ std::ostream& operator << (std::ostream& os, const ComplexNumber& number)
 	os << number.imaginary;
 	os << 'i';
 	os << ')';
+	os << std::endl;
 
 	return os;
 
@@ -228,6 +229,7 @@ std::istream& operator >> (std::istream& is, ComplexNumber& number)
 	is >> number.imaginary;
 	is >> dummy;
 	is >> dummy;
+	is.ignore();
 
 	return is;
 

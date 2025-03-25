@@ -44,13 +44,6 @@ double ComplexNumber::getImaginaryPart() const
 
 }
 
-void ComplexNumber::printNumber() const 
-{
-
-	std::cout << "(" << real << "," << imaginary << "i" << ")" << std::endl;
-
-}
-
 ComplexNumber ComplexNumber::getConjugate() const 
 {
 
@@ -207,5 +200,35 @@ bool operator != (const ComplexNumber& left, const ComplexNumber& right)
 {
 
 	return !(left == right);
+
+}
+
+std::ostream& operator << (std::ostream& os, const ComplexNumber& number) 
+{
+
+	os << '(';
+	os << number.real;
+	os << ',';
+	os << number.imaginary;
+	os << 'i';
+	os << ')';
+
+	return os;
+
+}
+
+std::istream& operator >> (std::istream& is, ComplexNumber& number)
+{
+
+	char dummy;
+
+	is >> dummy;
+	is >> number.real;
+	is >> dummy;
+	is >> number.imaginary;
+	is >> dummy;
+	is >> dummy;
+
+	return is;
 
 }

@@ -18,9 +18,9 @@ public:
 
 	ComplexNumber() = default;
 
-	explicit ComplexNumber(const ComplexNumber& other);
+	ComplexNumber(const ComplexNumber& other);
 
-	ComplexNumber(double real, double imaginary);
+	explicit ComplexNumber(double real, double imaginary);
 
 	double getRealPart() const;
 

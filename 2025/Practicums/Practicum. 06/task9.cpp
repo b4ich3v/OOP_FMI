@@ -16,6 +16,7 @@ private:
 
 		if (!title || this->title == title) return;
 
+		delete[] this->title;
 		this->title = new char[strlen(title) + 1];
 		strncpy(this->title, title, strlen(title));
 		this->title[strlen(title)] = '\0';
@@ -161,6 +162,7 @@ public:
 		int sizeOfTitle = 0;
 
 		file.read((char*)&sizeOfTitle, sizeof(int));
+		delete[] title;
 		title = new char[sizeOfTitle + 1];
 		file.read((char*)title, sizeOfTitle);
 		title[sizeOfTitle] = '\0';
@@ -420,6 +422,7 @@ public:
 
 		file.read((char*)&countOfGames, sizeof(int));
 		games = new Game[countOfGames];
+		capacity = countOfGames;
 
 		for (int i = 0; i < countOfGames; i++)
 		{

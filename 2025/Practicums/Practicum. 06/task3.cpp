@@ -59,7 +59,7 @@ public:
 	int operator [] (int index) const
 	{
 
-		if (index < 0) throw std::logic_error("Error");
+		if (index < 1) throw std::logic_error("Error");
 
 		return first + (index - 1) * diff;
 

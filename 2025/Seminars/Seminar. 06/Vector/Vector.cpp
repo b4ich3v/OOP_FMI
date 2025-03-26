@@ -193,6 +193,7 @@ std::istream& operator >> (std::istream& is, Vector& vector)
 
 	Vector newVector(data, size);
 	vector = newVector;
+	delete[] data;
 
 	return is;
 
@@ -275,6 +276,16 @@ Vector operator - (const Vector& left, const Vector& right)
 }
 
 Vector operator * (const Vector& vector, double scalar)
+{
+
+	Vector result(vector);
+	result *= scalar;
+
+	return result;
+
+}
+
+Vector operator * (double scalar, const Vector& vector)
 {
 
 	Vector result(vector);

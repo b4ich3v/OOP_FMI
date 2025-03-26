@@ -104,6 +104,8 @@ public:
 	friend std::istream& operator >> (std::istream& is, Webpage& web)
 	{
 
+		web.free();
+
 		int size1 = 0;
 		int size2 = 0;
 

@@ -60,3 +60,5 @@ Vector operator + (const Vector& left, const Vector& right);
 Vector operator - (const Vector& left, const Vector& right);
 
 Vector operator * (const Vector& vector, double scalar);
+
+Vector operator * (double scalar, const Vector& vector);

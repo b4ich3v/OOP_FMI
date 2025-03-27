@@ -10,7 +10,6 @@ namespace HELPERS
     const int SECONDS_IN_ONE_HOUR = 3600;
     const int MINUTES_IN_ONE_HOUR = 60;
     const int SECONDS_IN_ONE_MINUTE = 60;
-    const int SECONDS_IN_ONE_DAY = 24 * SECONDS_IN_ONE_HOUR;
 
     const int DINNER_HOURS_LOWER = 20;
     const int DINNER_MINUTES_LOWER = 30;
@@ -71,5 +70,11 @@ public:
     bool isDinnerTime() const;
 
     bool isPartyTime() const;
+
+    int getHours() const;
+
+    int getMinutes() const;
+
+    int getSeconds() const;
 
 };

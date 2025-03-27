@@ -43,7 +43,7 @@ private:
 
     void setSeconds(int seconds);
 
-    int getSeconds() const;
+    int getAllDaySeconds() const;
 
     void printHours() const;
 

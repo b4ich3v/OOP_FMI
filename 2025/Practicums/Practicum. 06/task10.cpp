@@ -219,7 +219,7 @@ public:
 	void removeMagicAt(int index)
 	{
 
-		std::swap(magics[index], magics[countOfMonsters - 1]);
+		std::swap(magics[index], magics[countOfMagics - 1]);
 		countOfMagics -= 1;
 
 	}

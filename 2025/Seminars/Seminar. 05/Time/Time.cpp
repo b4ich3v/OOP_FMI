@@ -62,7 +62,7 @@ Time::Time(int hours, int minutes, int seconds)
 void Time::tick()
 {
 
-	int currentSeconds = getSeconds() + 1;
+	int currentSeconds = getAllDaySeconds() + 1;
 
 	this->hours = currentSeconds / HELPERS::SECONDS_IN_ONE_HOUR;
 	this->minutes = currentSeconds / HELPERS::MINUTES_IN_ONE_HOUR;
@@ -76,13 +76,13 @@ bool Time::compareByCondition(const Time& other, uint8_t choice) const
 	if (!choice) 
 	{
 
-		return getSeconds() > other.getSeconds();
+		return getAllDaySeconds() > other.getAllDaySeconds();
 
 	}
 	else
 	{
 
-		return !(getSeconds() > other.getSeconds());
+		return !(getAllDaySeconds() > other.getAllDaySeconds());
 
 	}
 
@@ -91,7 +91,7 @@ bool Time::compareByCondition(const Time& other, uint8_t choice) const
 Time Time::differenceOfTwo(const Time& other) const
 {
 
-	int diff = std::abs(getSeconds() - other.getSeconds());
+	int diff = std::abs(getAllDaySeconds() - other.getAllDaySeconds());
 
 	int newHours = diff / HELPERS::SECONDS_IN_ONE_HOUR;
 	int newMinutes = diff / HELPERS::SECONDS_IN_ONE_HOUR;

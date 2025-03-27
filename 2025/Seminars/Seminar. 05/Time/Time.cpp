@@ -34,7 +34,7 @@ void Time::setSeconds(int seconds)
 
 }
 
-int Time::getSeconds() const 
+int Time::getAllDaySeconds() const
 {
 
 	return seconds + minutes * 60 + hours * 3600;

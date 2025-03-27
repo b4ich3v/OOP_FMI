@@ -1,223 +1,212 @@
 #include "Time.h"
 
-bool HELPERS::isOneDigit(int number) 
+bool HELPERS::isOneDigit(int number)
 {
 
-	return number >= 0 && number <= 9;
+    return (number >= 0 && number <= 9);
 
 }
 
-void Time::setHours(int hours) 
+void Time::setHours(int hours)
 {
-
-	if (hours < 0 || hours > 24) return;
-
-	this->hours = hours;
+    
+    if (hours < 0 || hours > 23) return;
+    this->hours = hours;
 
 }
 
 void Time::setMinutes(int minutes)
 {
-
-	if (minutes < 0 || minutes > 60) return;
-
-	this->minutes = minutes;
+   
+    if (minutes < 0 || minutes > 59) return;
+    this->minutes = minutes;
 
 }
 
 void Time::setSeconds(int seconds)
 {
 
-	if (seconds < 0 || seconds > 60) return;
-
-	this->seconds = seconds;
+    if (seconds < 0 || seconds > 59) return;
+    this->seconds = seconds;
 
 }
 
 int Time::getAllDaySeconds() const
 {
 
-	return seconds + minutes * 60 + hours * 3600;
+    return seconds
+        + (minutes * HELPERS::SECONDS_IN_ONE_MINUTE)
+        + (hours * HELPERS::SECONDS_IN_ONE_HOUR);
 
 }
 
 Time::Time()
 {
 
-	setHours(0);
-	setMinutes(0);
-	setSeconds(0);
+    setHours(0);
+    setMinutes(0);
+    setSeconds(0);
 
 }
 
 Time::Time(int hours, int minutes, int seconds)
 {
 
-	setHours(hours);
-	setMinutes(minutes);
-	setSeconds(seconds);
+    setHours(hours);
+    setMinutes(minutes);
+    setSeconds(seconds);
 
 }
 
 void Time::tick()
 {
-
-	int currentSeconds = getAllDaySeconds() + 1;
-
-	this->hours = currentSeconds / HELPERS::SECONDS_IN_ONE_HOUR;
-	this->minutes = currentSeconds / HELPERS::MINUTES_IN_ONE_HOUR;
-	this->seconds = currentSeconds % HELPERS::SECONDS_IN_ONE_MINUTE;
+    
+    int currentSeconds = getAllDaySeconds() + 1;
+     
+    if (currentSeconds >= 24 * HELPERS::SECONDS_IN_ONE_HOUR) currentSeconds = 0;
+        
+    hours = currentSeconds / HELPERS::SECONDS_IN_ONE_HOUR;
+    int remainder = currentSeconds % HELPERS::SECONDS_IN_ONE_HOUR;
+    minutes = remainder / HELPERS::MINUTES_IN_ONE_HOUR;
+    seconds = remainder % HELPERS::SECONDS_IN_ONE_MINUTE;
 
 }
 
-bool Time::compareByCondition(const Time& other, uint8_t choice) const 
+bool Time::compareByCondition(const Time& other, uint8_t choice) const
 {
+   
+    if (choice == 0) 
+    {
 
-	if (!choice) 
-	{
+        return (getAllDaySeconds() > other.getAllDaySeconds());
 
-		return getAllDaySeconds() > other.getAllDaySeconds();
+    }
+    else 
+    {
 
-	}
-	else
-	{
+        return (getAllDaySeconds() <= other.getAllDaySeconds());
 
-		return !(getAllDaySeconds() > other.getAllDaySeconds());
-
-	}
+    }
 
 }
 
 Time Time::differenceOfTwo(const Time& other) const
 {
 
-	int diff = std::abs(getAllDaySeconds() - other.getAllDaySeconds());
+    int diff = std::abs(getAllDaySeconds() - other.getAllDaySeconds());
 
-	int newHours = diff / HELPERS::SECONDS_IN_ONE_HOUR;
-	int newMinutes = diff / HELPERS::SECONDS_IN_ONE_HOUR;
-	int newSeconds = diff % HELPERS::SECONDS_IN_ONE_MINUTE;
+    int newHours = diff / HELPERS::SECONDS_IN_ONE_HOUR;
+    int remainder = diff % HELPERS::SECONDS_IN_ONE_HOUR;
+    int newMinutes = remainder / HELPERS::MINUTES_IN_ONE_HOUR;
+    int newSeconds = remainder % HELPERS::SECONDS_IN_ONE_MINUTE;
 
-	return Time(newHours, newMinutes, newSeconds);
-
-}
-
-Time Time::timeLeftToMidnight() const 
-{
-
-	Time midnight(0, 0, 0);
-	return differenceOfTwo(midnight);
+    return Time(newHours, newMinutes, newSeconds);
 
 }
 
-void Time::printHours() const 
+Time Time::timeLeftToMidnight() const
 {
 
-	if (HELPERS::isOneDigit(hours)) 
-	{
+    int diffToMidnight = (24 * HELPERS::SECONDS_IN_ONE_HOUR) - getAllDaySeconds();
 
-		std::cout << 0 << hours << HELPERS::SEPARATOR;
+    if (diffToMidnight == 24 * HELPERS::SECONDS_IN_ONE_HOUR)  diffToMidnight = 0;
+       
+    int newHours = diffToMidnight / HELPERS::SECONDS_IN_ONE_HOUR;
+    int remainder = diffToMidnight % HELPERS::SECONDS_IN_ONE_HOUR;
+    int newMinutes = remainder / HELPERS::MINUTES_IN_ONE_HOUR;
+    int newSeconds = remainder % HELPERS::SECONDS_IN_ONE_MINUTE;
 
-	}
-	else
-	{
+    return Time(newHours, newMinutes, newSeconds);
 
-		std::cout << hours << HELPERS::SEPARATOR;
+}
 
-	}
+void Time::printHours() const
+{
 
+    if (HELPERS::isOneDigit(hours)) std::cout << 0 << hours << HELPERS::SEPARATOR;
+    else std::cout << hours << HELPERS::SEPARATOR;
+       
 }
 
 void Time::printMinutes() const
 {
 
-	if (HELPERS::isOneDigit(minutes))
-	{
-
-		std::cout << 0 << minutes << HELPERS::SEPARATOR;
-
-	}
-	else
-	{
-
-		std::cout << minutes << HELPERS::SEPARATOR;
-
-	}
-
+    if (HELPERS::isOneDigit(minutes)) std::cout << 0 << minutes << HELPERS::SEPARATOR;     
+    else std::cout << minutes << HELPERS::SEPARATOR;
+        
 }
 
 void Time::printSeconds() const
 {
 
-	if (HELPERS::isOneDigit(seconds))
-	{
-
-		std::cout << 0 << seconds << HELPERS::SEPARATOR;
-
-	}
-	else
-	{
-
-		std::cout << seconds << HELPERS::SEPARATOR;
-
-	}
-
+    if (HELPERS::isOneDigit(seconds)) std::cout << 0 << seconds; 
+    else std::cout << seconds;
+        
 }
 
 void Time::printTime() const
 {
 
-	printHours();
-	printMinutes();
-	printSeconds();
-	std::cout << std::endl;
+    printHours();
+    printMinutes();
+    printSeconds();
+    std::cout << std::endl;
 
 }
 
 bool Time::isDinnerTime() const
 {
+    
+    int current = getAllDaySeconds();
 
-	Time dinnerLower(HELPERS::DINNER_HOURS_LOWER, 
-		HELPERS::DINNER_MINUTES_LOWER, HELPERS::DINNER_SECONDS_LOWER);
+    int lower = HELPERS::DINNER_HOURS_LOWER * 3600
+        + HELPERS::DINNER_MINUTES_LOWER * 60
+        + HELPERS::DINNER_SECONDS_LOWER;
 
-	Time dinnerUpper(HELPERS::DINNER_HOURS_UPPER,
-		HELPERS::DINNER_MINUTES_UPPER, HELPERS::DINNER_SECONDS_UPPER);
+    int upper = HELPERS::DINNER_HOURS_UPPER * 3600
+        + HELPERS::DINNER_MINUTES_UPPER * 60
+        + HELPERS::DINNER_SECONDS_UPPER;
 
-	return compareByCondition(dinnerLower, 0) && compareByCondition(dinnerUpper, 1);
+    return (current >= lower && current <= upper);
 
 }
 
 bool Time::isPartyTime() const
 {
-	
-	Time partyLower(HELPERS::PARTY_HOURS_LOWER,
-		HELPERS::PARTY_MINUTES_LOWER, HELPERS::PARTY_SECONDS_LOWER);
+  
+    int current = getAllDaySeconds();
 
-	Time partyUpper(HELPERS::PARTY_HOURS_UPPER,
-		HELPERS::PARTY_MINUTES_UPPER, HELPERS::PARTY_SECONDS_UPPER);
+    int partyLower = HELPERS::PARTY_HOURS_LOWER * 3600
+        + HELPERS::PARTY_MINUTES_LOWER * 60
+        + HELPERS::PARTY_SECONDS_LOWER;  
 
-	return compareByCondition(partyLower, 0) && compareByCondition(partyUpper, 1);
+    int partyUpper = HELPERS::PARTY_HOURS_UPPER * 3600
+        + HELPERS::PARTY_MINUTES_UPPER * 60
+        + HELPERS::PARTY_SECONDS_UPPER;  
 
+
+    if (current >= partyLower || current < partyUpper)  return true;
+    else  return false;
+       
 }
 
-
-
-int Time::getHours() const 
+int Time::getHours() const
 {
 
-	return hours;
+    return hours;
 
 }
 
 int Time::getMinutes() const
 {
 
-	return minutes;
+    return minutes;
 
 }
 
 int Time::getSeconds() const
 {
 
-	return seconds;
+    return seconds;
 
 }

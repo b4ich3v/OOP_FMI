@@ -42,7 +42,7 @@ public:
 
 	Task(const Task& other);
 
-	Task& operator = (const Task& other) = delete;
+	Task& operator = (const Task& other);
 
 	~Task();
 

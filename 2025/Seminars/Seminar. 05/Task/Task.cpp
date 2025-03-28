@@ -77,7 +77,7 @@ void Task::readFromTxt(std::ifstream& file)
 	file >> minutes;
 	file >> seconds;
 	startTime = Time(hours, minutes, seconds);
-	file >> ch;
+	file >> ch >> ch;
 
 }
 

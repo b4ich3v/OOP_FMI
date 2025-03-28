@@ -84,7 +84,7 @@ bool Time::compareByCondition(const Time& other, uint8_t choice) const
     else 
     {
 
-        return (getAllDaySeconds() <= other.getAllDaySeconds());
+        return (getAllDaySeconds() < other.getAllDaySeconds());
 
     }
 

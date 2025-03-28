@@ -253,10 +253,17 @@ bool operator <= (const Task& t1, const Task& t2)
 
 }
 
-bool operator == (const Task& t1, const Task& t2) 
+bool operator == (const Task& t1, const Task& t2)
 {
+	
+	if (strcmp(t1.getDescription(), t2.getDescription()) != 0) return false;
+	if (t1.getPriority() != t2.getPriority()) return false;
+	if (t1.getDuration() != t2.getDuration()) return false;
+	if (t1.getStartTime().getHours() != t2.getStartTime().getHours())   return false;
+	if (t1.getStartTime().getMinutes() != t2.getStartTime().getMinutes()) return false;
+	if (t1.getStartTime().getSeconds() != t2.getStartTime().getSeconds()) return false;
 
-	return !((t1 < t2) && (t1 > t2));
+	return true; 
 
 }
 

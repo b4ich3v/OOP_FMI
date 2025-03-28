@@ -12,6 +12,18 @@ void Task::free()
 
 }
 
+void Task::copyFrom(const Task& other) 
+{
+
+	setDescription(other.description);
+	setDuration(other.duration);
+	setPriority(other.priority);
+
+	startTime = other.startTime;
+	status = false;
+
+}
+
 void Task::setDescription(const char* description) 
 {
 
@@ -37,6 +49,13 @@ void Task::setPriority(int priority)
 
 	if (priority < 0) throw std::logic_error("Error");
 	this->priority = priority;
+
+}
+
+Task::Task(const Task& other) 
+{
+
+	copyFrom(other);
 
 }
 

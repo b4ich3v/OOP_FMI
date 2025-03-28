@@ -24,6 +24,8 @@ private:
 
 	void free();
 
+	void copyFrom(const Task& other);
+
 	void setDescription(const char* description);
 
 	void setDuration(int duration);
@@ -38,7 +40,7 @@ public:
 
 	Task(std::ifstream& file);
 
-	Task(const Task& other) = delete;
+	Task(const Task& other);
 
 	Task& operator = (const Task& other) = delete;
 

@@ -134,6 +134,21 @@ Task::~Task()
 
 }
 
+Task& Task::operator = (const Task& other)
+{
+
+	if (this != &other)
+	{
+
+		free();
+		copyFrom(other);
+
+	}
+
+	return *this;
+
+}
+
 const char* Task::getDescription() const 
 {
 

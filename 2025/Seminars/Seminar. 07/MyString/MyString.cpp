@@ -16,7 +16,7 @@ MyString::MyString(const char* data)
 
 	this->capacity = 8;
 
-	this->data = new char[strlen(data) + 1];
+	this->data = new char[capacity];
 	strncpy(this->data, data, strlen(data));
 	this->data[strlen(data)] = '\0';
 	this->size = strlen(data);
@@ -78,7 +78,7 @@ void MyString::free()
 void MyString::copyFrom(const MyString& other) 
 {
 
-	data = new char[other.size + 1];
+	data = new char[other.capacity + 1];
 	strncpy(data, other.data, strlen(other.data));
 	data[strlen(other.data)] = '\0';
 	size = other.size;

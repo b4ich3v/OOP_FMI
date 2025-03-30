@@ -12,6 +12,12 @@ public:
 
 	Node() = default;
 
+	Node(const Node& other) = delete;
+
+	Node& operator = (const Node& other);
+
+	~Node() = default;
+
 	const char* getData() const;
 
 	void allocateData(const char* data);
@@ -33,8 +39,6 @@ private:
 	void resize(int newCapacity);
 
 	int getFirstFreeIndex() const;
-
-	bool alreadyInPool(const char* str) const;
 
 	int getCurrentIndex(const char* str) const;
 
@@ -59,4 +63,3 @@ public:
 	const char* unchainString(const char* str);
 
 };
-

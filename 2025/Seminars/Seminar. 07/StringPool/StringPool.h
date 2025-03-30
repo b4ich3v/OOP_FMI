@@ -38,8 +38,6 @@ private:
 
 	void resize(int newCapacity);
 
-	int getFirstFreeIndex() const;
-
 	int getCurrentIndex(const char* str) const;
 
 	void addToPool(int index, const char* str);

@@ -18,6 +18,8 @@ public:
 
 	String();
 
+	String(const char* data);
+
 	String(const String& other);
 
 	String& operator = (const String& other);

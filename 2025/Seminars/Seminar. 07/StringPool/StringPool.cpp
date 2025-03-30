@@ -22,6 +22,35 @@ void Node::allocateData(const char* data)
 
 }
 
+Node& Node::operator=(const Node& other)
+{
+
+	if (this == &other) return *this;
+		
+	releaseData();
+
+	if (other.data != nullptr)
+	{
+
+		size = other.size;
+		data = new char[size + 1];
+		strcpy(data, other.data);  
+		refCounter = other.refCounter;
+
+	}
+	else
+	{
+
+		data = nullptr;
+		size = 0;
+		refCounter = 0;
+
+	}
+
+	return *this;
+
+}
+
 const char* Node::getData() const 
 {
 
@@ -43,31 +72,18 @@ int StringPool::getFirstFreeIndex() const
 
 }
 
-int StringPool::getCurrentIndex(const char* str) const 
+int StringPool::getCurrentIndex(const char* str) const
 {
 
-	for (int i = 0; i < capacity; i++)
+	for (int i = 0; i < countOfNodes; i++)
 	{
 
-		if (!strcmp(nodes[i].getData(), str)) return i;
-
+		const char* nodeData = nodes[i].getData();
+		if (nodeData != nullptr && strcmp(nodeData, str) == 0) return i;
+			
 	}
 
 	return -1;
-
-}
-
-bool StringPool::alreadyInPool(const char* str) const 
-{
-
-	for (int i = 0; i < capacity; i++)
-	{
-
-		if (!strcmp(nodes[i].getData(), str)) return true;
-
-	}
-
-	return false;
 
 }
 
@@ -96,7 +112,7 @@ void StringPool::free()
 
 }
 
-void StringPool::resize(int newCapacity) 
+void StringPool::resize(int newCapacity)
 {
 
 	if (newCapacity <= capacity) return;
@@ -107,6 +123,7 @@ void StringPool::resize(int newCapacity)
 	{
 
 		newNodes[i].allocateData(nodes[i].getData());
+		newNodes[i].refCounter = nodes[i].refCounter;
 
 	}
 
@@ -165,46 +182,58 @@ int StringPool::getCountOfNodes() const
 
 }
 
-void StringPool::chainString(const char* str) 
+void StringPool::chainString(const char* str)
 {
 
 	int index = getCurrentIndex(str);
-	bool found = alreadyInPool(str);
 
-	if (found) nodes[index].refCounter += 1;
+	if (index != -1) nodes[index].refCounter += 1;
 	else
 	{
+		
+		if (countOfNodes >= capacity) resize(capacity * 2);
 
-		int indexToBeAdded = getFirstFreeIndex();
-		addToPool(indexToBeAdded, str);
+		nodes[countOfNodes].allocateData(str);
+		nodes[countOfNodes].refCounter = 1;
+		countOfNodes += 1;
 
 	}
 
 }
 
-const char* StringPool::unchainString(const char* str) 
+const char* StringPool::unchainString(const char* str)
 {
 
 	int index = getCurrentIndex(str);
-	bool found = alreadyInPool(str);
+	if (index == -1) return nullptr;  
 
-	if (!found) return nullptr;
+	if (nodes[index].refCounter > 1)
+	{
+
+		nodes[index].refCounter -= 1;
+		return nodes[index].getData();
+
+	}
 	else
 	{
 
-		if (nodes[index].refCounter > 1) 
+		int size = nodes[index].size;
+		char* result = new char[size + 1];
+		strncpy(result, nodes[index].getData(), size);
+		result[size] = '\0';
+
+		nodes[index].releaseData();
+
+		if (index != countOfNodes - 1)
 		{
 
-			nodes[index].refCounter -= 1;
-			return nodes[index].getData();
+			nodes[index] = nodes[countOfNodes - 1];
 
 		}
-		else
-		{
 
-			return removeFromPool(index);
+		countOfNodes -= 1;
 
-		}
+		return result;
 
 	}
 

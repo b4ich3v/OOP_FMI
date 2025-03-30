@@ -62,4 +62,7 @@ public:
 
 	const char* unchainString(const char* str);
 
+	void printPool() const;
+
 };
+

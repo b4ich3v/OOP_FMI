@@ -254,3 +254,24 @@ StringPool::~StringPool()
 	free();
 
 }
+
+void StringPool::printPool() const 
+{
+
+	for (int i = 0; i < countOfNodes; i++)
+	{
+
+		for (int j = 0; j < nodes[i].refCounter; j++)
+		{
+
+			std::cout << nodes[i].getData() << " ";
+
+		}
+
+		std::cout << std::endl;
+
+	}
+
+	std::cout << std::endl;
+
+}

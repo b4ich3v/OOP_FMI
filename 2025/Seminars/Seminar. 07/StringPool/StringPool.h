@@ -52,8 +52,11 @@ public:
 
 	~StringPool();
 
+	int getCountOfNodes() const;
+
 	void chainString(const char* str);
 
 	const char* unchainString(const char* str);
 
 };
+

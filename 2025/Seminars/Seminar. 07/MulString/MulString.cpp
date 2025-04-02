@@ -42,7 +42,7 @@ MulString& MulString::operator %= (const MulString& other)
 
 	MyString fictiveString(' ');
 
-	for (int i = 0; i <= 256; i++)
+	for (int i = 0; i < 256; i++)
 	{
 
 		if (contains[i])
@@ -59,6 +59,13 @@ MulString& MulString::operator %= (const MulString& other)
 	(*this) = result;
 
 	return *this;
+
+}
+
+const MyString& MulString::getStr() const
+{
+
+	return str;
 
 }
 
@@ -95,7 +102,7 @@ MulString operator % (const MulString& s1, const MulString& s2)
 bool operator == (const MulString& s1, const MulString& s2) 
 {
 
-	return strcmp(s1.getData(), s2.getData());
+	return strcmp(s1.getData(), s2.getData()) == 0;
 
 }
 
@@ -106,10 +113,10 @@ bool operator != (const MulString& s1, const MulString& s2)
 
 }
 
-std::ostream& operator << (std::ostream& os, const MulString s)
+std::ostream& operator << (std::ostream& os, const MulString& s)
 {
 
-	os << s.str;
+	os << s.getStr();
 	return os;
 
 }

@@ -42,7 +42,7 @@ public:
 
 	int getSize() const;
 
-	void changePtrIndex(int index);
+	void changePtrIndex(int offset);
 
 	friend std::ostream& operator << (std::ostream& os, const MyString& str);
 

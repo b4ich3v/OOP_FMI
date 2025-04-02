@@ -309,8 +309,6 @@ public:
 
 		}
 
-		std::cout << std::endl;
-
 	}
 
 	void saveToBinary(const char* fileName) const

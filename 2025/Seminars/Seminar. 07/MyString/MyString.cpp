@@ -25,6 +25,17 @@ MyString::MyString(const char* data)
 
 }
 
+MyString::MyString(const char letter) 
+{
+
+	capacity = 8;
+	size = 1;
+	data = new char[2];
+	data[0] = letter;
+	data[1] = '\0';
+
+}
+
 MyString::MyString(const MyString& other) 
 {
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cstring>
 #pragma once
 
@@ -36,4 +37,9 @@ public:
 
 	friend std::istream& operator >> (std::istream& os, Song& song);
 
+	void writeToBinary(std::ofstream& file) const;
+
+	void readFromBinary(std::ifstream& file);
+
 };
+

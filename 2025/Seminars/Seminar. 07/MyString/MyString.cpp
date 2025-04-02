@@ -69,6 +69,17 @@ MyString& MyString::operator += (const MyString& other)
 
 }
 
+MyString& MyString::operator += (const char letter)
+{
+
+	if (size + 1 >= capacity) resize(capacity * 2);
+	data[size] = letter;
+	size += 1;
+
+	return *this;
+
+}
+
 MyString::~MyString() 
 {
 

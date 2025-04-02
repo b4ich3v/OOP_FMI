@@ -15,13 +15,14 @@ MyString::MyString(const char* data)
 	if (!data) throw std::logic_error("Error");
 
 	this->capacity = 8;
+	this->size = 8;
+	this->data = new char[capacity] {0};
 
-	this->data = new char[capacity];
-	strncpy(this->data, data, strlen(data));
-	this->data[strlen(data)] = '\0';
-	this->size = strlen(data);
-	
-	while (size > capacity) resize(capacity * 2);
+	while (size >= capacity) resize(capacity * 2);
+
+	this->size = size;
+	strncpy(this->data, data, size);
+	this->data[size] = '\0';
 
 }
 
@@ -30,7 +31,7 @@ MyString::MyString(const char letter)
 
 	capacity = 8;
 	size = 1;
-	data = new char[2];
+	data = new char[capacity];
 	data[0] = letter;
 	data[1] = '\0';
 
@@ -61,7 +62,7 @@ MyString& MyString::operator = (const MyString& other)
 MyString& MyString::operator += (const MyString& other)
 {
 
-	while (size + other.size > capacity) resize(capacity * 2);
+	while (size + other.size + 1 > capacity) resize(capacity * 2);
 	strcat(data, other.data);
 	size = strlen(data);
 
@@ -75,6 +76,7 @@ MyString& MyString::operator += (const char letter)
 	if (size + 1 >= capacity) resize(capacity * 2);
 	data[size] = letter;
 	size += 1;
+	data[size] = '\0';
 
 	return *this;
 

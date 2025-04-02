@@ -35,7 +35,7 @@ public:
 
 	friend std::ostream& operator << (std::ostream& os, const Song& song);
 
-	friend std::istream& operator >> (std::istream& os, Song& song);
+	friend std::istream& operator >> (std::istream& is, Song& song);
 
 	void writeToBinary(std::ofstream& file) const;
 

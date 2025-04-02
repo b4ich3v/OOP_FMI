@@ -30,6 +30,8 @@ public:
 
 	MyString& operator += (const MyString& other);
 
+	MyString& operator += (const char letter);
+
 	~MyString();
 
 	char& operator [] (int index);

@@ -155,6 +155,13 @@ int MyString::getSize() const
 
 }
 
+void MyString::changePtrIndex(int index) 
+{
+
+	data += index;
+
+}
+
 bool operator >= (const MyString& str1, const MyString& str2) 
 {
 

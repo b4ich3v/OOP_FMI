@@ -18,8 +18,10 @@ public:
 	MulString& operator %= (const MulString& other);
 
 	const char* getData() const;
-		 
-	friend std::ostream& operator << (std::ostream& os, const MulString s);
+	
+	const MyString& getStr() const;
+
+	friend std::ostream& operator << (std::ostream& os, const MulString& s);
 
 };
 
@@ -32,4 +34,3 @@ MulString operator * (const MulString& s, int k);
 MulString operator * (int k, const MulString& s);
 
 MulString operator % (const MulString& s1, const MulString& s2);
-

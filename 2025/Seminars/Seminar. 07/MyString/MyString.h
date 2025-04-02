@@ -42,6 +42,8 @@ public:
 
 	int getSize() const;
 
+	void changePtrIndex(int index);
+
 	friend std::ostream& operator << (std::ostream& os, const MyString& str);
 
 	friend std::istream& operator >> (std::istream& is, MyString& str);

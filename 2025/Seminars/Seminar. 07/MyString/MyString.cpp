@@ -227,7 +227,6 @@ MyString operator + (const MyString& str1, const MyString& str2)
 std::ostream& operator << (std::ostream& os, const MyString& str) 
 {
 
-	os << str.getSize() << " ";
 	os << str.getData() << std::endl;
 
 	return os;
@@ -240,9 +239,8 @@ std::istream& operator >> (std::istream& is, MyString& str)
 	int size = 0;
 	char buffer[1024];
 
-	is >> size;
-	is >> buffer;
-	is.ignore(1);
+	is.getline(buffer, 1024);
+	size = strlen(buffer);
 
 	char* data = new char[size + 1];
 	strncpy(data, buffer, size);

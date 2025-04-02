@@ -22,6 +22,8 @@ public:
 
 	MyString(const char* data);
 
+	MyString(const char letter);
+
 	MyString(const MyString& other);
 
 	MyString& operator = (const MyString& other);

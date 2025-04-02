@@ -136,3 +136,40 @@ std::istream& operator >> (std::istream& is, Song& song)
 	return is;
 
 }
+
+void Song::writeToBinary(std::ofstream& file) const 
+{
+
+	int sizeOfName = strlen(name);
+	int sizeOfContractor = strlen(contractor);
+
+	file.write((const char*)&sizeOfName, sizeof(int));
+	file.write((const char*)name, sizeof(char) * sizeOfName);
+
+	file.write((const char*)&sizeOfContractor, sizeof(int));
+	file.write((const char*)contractor, sizeof(char) * sizeOfContractor);
+
+	file.write((const char*)&duration, sizeof(double));
+
+}
+
+void Song::readFromBinary(std::ifstream& file) 
+{
+
+	int sizeOfName = 0;
+	int sizeOfContractor = 0;
+
+	delete[] this->name;
+	delete[] this->contractor;
+
+	file.read((char*)&sizeOfName, sizeof(int));
+	this->name = new char[sizeOfName];
+	file.read((char*)this->name, sizeof(char) * sizeOfName);
+
+	file.read((char*)&sizeOfContractor, sizeof(int));
+	this->contractor = new char[sizeOfContractor];
+	file.read((char*)this->contractor, sizeof(char) * sizeOfContractor);
+
+	file.read((char*)&duration, sizeof(double));
+
+}

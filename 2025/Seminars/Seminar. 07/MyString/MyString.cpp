@@ -17,10 +17,11 @@ MyString::MyString(const char* data)
 	this->capacity = 8;
 	this->size = 8;
 	this->data = new char[capacity] {0};
+	int newSize = strlen(data);
 
-	while (size >= capacity) resize(capacity * 2);
+	while (newSize >= capacity) resize(capacity * 2);
 
-	this->size = size;
+	this->size = newSize;
 	strncpy(this->data, data, size);
 	this->data[size] = '\0';
 

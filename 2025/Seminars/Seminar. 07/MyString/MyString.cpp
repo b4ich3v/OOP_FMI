@@ -155,10 +155,17 @@ int MyString::getSize() const
 
 }
 
-void MyString::changePtrIndex(int index) 
+void MyString::changePtrIndex(int offset) 
 {
 
-	data += index;
+	size = size - offset;
+	char* newData = new char[size + 1];
+	char* fictivePtr = data + offset;
+	strncpy(newData, fictivePtr, size);
+	newData[size] = '\0';
+
+	delete[] data;
+	data = newData;
 
 }
 

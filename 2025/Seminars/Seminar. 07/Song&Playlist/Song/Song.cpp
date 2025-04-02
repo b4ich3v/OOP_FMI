@@ -165,10 +165,12 @@ void Song::readFromBinary(std::ifstream& file)
 	file.read((char*)&sizeOfName, sizeof(int));
 	this->name = new char[sizeOfName];
 	file.read((char*)this->name, sizeof(char) * sizeOfName);
+	this->name[sizeOfName] = '\0';
 
 	file.read((char*)&sizeOfContractor, sizeof(int));
 	this->contractor = new char[sizeOfContractor];
 	file.read((char*)this->contractor, sizeof(char) * sizeOfContractor);
+	this->contractor[sizeOfContractor] = '\0';
 
 	file.read((char*)&duration, sizeof(double));
 

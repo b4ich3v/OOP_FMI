@@ -442,6 +442,7 @@ public:
 				current1 = current1->next;
 
 			}
+			
 			if (current2 != nullptr)
 			{
 
@@ -527,6 +528,7 @@ public:
 				current1 = current1->next;
 
 			}
+			
 			if (current2 != nullptr)
 			{
 

@@ -266,7 +266,7 @@ private:
 		int digits2 = number.getCountOfDigits();
 
 		if (digits1 < digits2) return -1;
-		if (digits1 > digits2) return +1;
+		if (digits1 > digits2) return 1;
 
 		Node* leftNode = this->root;
 		Node* rightNode = number.root;

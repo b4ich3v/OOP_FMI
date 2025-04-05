@@ -701,6 +701,7 @@ int main()
 
 	std::cout << number1 + number2;
 	std::cout << number1 - number2;
+	
 	std::cout << std::endl;
 
 	std::cout << number1 + number3;

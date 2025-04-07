@@ -7,28 +7,14 @@ namespace HELPERS
 
 	const int COUNT_OF_BITS_IN_BYTE = 8;
 
-	void upperCurrentBit(char& byte, int index) 
+	void upperCurrentBit(char& byte, int index)
 	{
 
 		byte |= (1 << index);
 
 	}
 
-	void lowerCurrentBit(char& byte, int index)
-	{
-
-		byte &= (~(1 << index));
-
-	}
-
-	bool isUpper(char byte, int index)
-	{
-
-		return (byte & (1 << index));
-
-	}
-
-	bool isUpper(uint8_t byte, int index)
+	bool isUpperInt(uint8_t byte, int index)
 	{
 
 		return (byte & (1 << index));
@@ -48,13 +34,13 @@ enum class Genre : uint8_t
 
 };
 
-class Content 
+class Content
 {
 private:
 
 	char* data = nullptr;
 
-	void free() 
+	void free()
 	{
 
 		delete[] data;
@@ -62,7 +48,7 @@ private:
 
 	}
 
-	void copyFrom(const Content& other) 
+	void copyFrom(const Content& other)
 	{
 
 		data = new char[strlen(other.data) + 1] {0};
@@ -84,7 +70,7 @@ public:
 
 	}
 
-	Content(std::ifstream& file) 
+	Content(std::ifstream& file)
 	{
 
 		if (!file.is_open()) throw std::logic_error("Error");
@@ -100,14 +86,14 @@ public:
 
 	}
 
-	Content(const Content& other) 
+	Content(const Content& other)
 	{
 
 		copyFrom(other);
 
 	}
 
-	Content& operator  = (const Content& other) 
+	Content& operator  = (const Content& other)
 	{
 
 		if (this != &other)
@@ -122,6 +108,20 @@ public:
 
 	}
 
+	char& operator [] (int index)
+	{
+
+		return data[index];
+
+	}
+
+	const char& operator [] (int index) const
+	{
+
+		return data[index];
+
+	}
+
 	~Content()
 	{
 
@@ -129,18 +129,18 @@ public:
 
 	}
 
-	void addRythm(int k) 
-	{					
+	void addRythm(int k)
+	{
 
 		if (k < 0) return;
 
 		int size = strlen(data);
 		int countOfBits = HELPERS::COUNT_OF_BITS_IN_BYTE * size;
-		
+
 		for (int i = 0; i < countOfBits; i++)
 		{
 
-			if ((i + 1) % k == 0) 
+			if ((i + 1) % k == 0)
 			{
 
 				int byteIndex = i / HELPERS::COUNT_OF_BITS_IN_BYTE;
@@ -153,28 +153,28 @@ public:
 
 	}
 
-	int getSize() const 
+	int getSize() const
 	{
 
 		return strlen(data);
 
 	}
-		 
-	void printContent() const 
+
+	void printContent() const
 	{
 
 		std::cout << data << std::endl;
 
 	}
 
-	char getCurrentByte(int index) const
+	char getCurrentByteCopy(int index) const
 	{
 
 		return data[index];
 
 	}
 
-	char& getCurrentByte(int index)
+	char& getCurrentByteRef(int index)
 	{
 
 		return data[index];
@@ -192,7 +192,7 @@ private:
 	uint8_t genre = 0;
 	Content content;
 
-	void free() 
+	void free()
 	{
 
 		delete[] name;
@@ -201,7 +201,7 @@ private:
 
 	}
 
-	void copyFrom(const Song& other) 
+	void copyFrom(const Song& other)
 	{
 
 		this->name = new char[strlen(other.name) + 1];
@@ -229,17 +229,17 @@ public:
 
 	}
 
-	Song(const Song& other) 
+	Song(const Song& other)
 	{
 
 		copyFrom(other);
 
 	}
 
-	Song& operator = (const Song& other) 
+	Song& operator = (const Song& other)
 	{
 
-		if (this != &other) 
+		if (this != &other)
 		{
 
 			free();
@@ -258,7 +258,7 @@ public:
 
 	}
 
-	void mixWithOtherSong(const Song& other) 
+	void mixWithOtherSong(const Song& other)
 	{
 
 		int iter = std::min(content.getSize(), other.content.getSize());
@@ -266,26 +266,12 @@ public:
 		for (int i = 0; i < iter; i++)
 		{
 
-			for (int j = 0; j < HELPERS::COUNT_OF_BITS_IN_BYTE; j++)
-			{
-
-				bool predicate1 = HELPERS::isUpper(content.getCurrentByte(i), j) && HELPERS::isUpper(other.content.getCurrentByte(i), j);
-				bool predicate2 = !HELPERS::isUpper(content.getCurrentByte(i), j) && !HELPERS::isUpper(other.content.getCurrentByte(i), j);
-
-				if (predicate1 || predicate2) 
-				{
-
-					HELPERS::lowerCurrentBit(content.getCurrentByte(i), j);
-
-				}
-
-			}
-
+			content[i] ^= other.content[i];
 		}
 
 	}
 
-	void combineWithOtherGenre(Genre genre) 
+	void combineWithOtherGenre(Genre genre)
 	{
 
 		this->genre |= (uint8_t)genre;
@@ -310,7 +296,7 @@ public:
 		for (int i = 0; i < HELPERS::COUNT_OF_BITS_IN_BYTE; i++)
 		{
 
-			if (HELPERS::isUpper(genre, i))
+			if (HELPERS::isUpperInt(genre, i))
 			{
 
 				switch ((Genre)(1 << i))
@@ -340,7 +326,7 @@ public:
 
 };
 
-int main() 
+int main()
 {
 
 	const int size1 = 69;
@@ -380,4 +366,3 @@ int main()
 	return 0;
 
 }
-

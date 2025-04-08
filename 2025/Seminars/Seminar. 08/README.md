@@ -11,5 +11,4 @@
 * std::out_of_range
 * друго → std::logic_error
 
-В caller() прихващайте само int и double
-В main() прихващайте std::out_of_range, std::exception, и останалото (...)
+В caller() прихващайте само int и double. В main() прихващайте std::out_of_range, std::exception, и останалото (...)

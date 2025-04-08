@@ -18,7 +18,7 @@
 
 Всеки ред от файла е във формат:
 
-* "<ID>;<timestamp>;<temperature>;<humidity>"
+* <ID> ; <timestamp> ; <temperature> ; <humidity>
 
 Където:
 
@@ -34,5 +34,7 @@
 * C77Q1;2025-04-06 13:22:10;105.0;50
 
 Обработка: Валидните редове да се записват във файл processedReadings.txt в следния формат:
-<ID> at <timestamp>: Temp=<temperature>°C, Humidity=<humidity>%
+
+* <ID> at <timestamp>: Temp=<temperature>°C, Humidity=<humidity>%
+
 Невалидните редове да се записват във файл invalidReadings.log с информация за типа грешка.

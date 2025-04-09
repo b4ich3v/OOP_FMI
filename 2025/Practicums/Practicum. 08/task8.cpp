@@ -278,6 +278,14 @@ public:
 
 	}
 
+	friend std::ostream& operator << (std::ostream& os, const ImmutableString& str) 
+	{
+
+		os << str.c_str();
+		return os;
+
+	}
+
 	static void printPoolFromStr() 
 	{
 
@@ -362,9 +370,10 @@ int main()
 	ImmutableString res = str1 + str10;
 	ImmutableString::printPoolFromStr();
 
+	std::cout << res;
+	
 	return 0;
 
 }
-
 
 

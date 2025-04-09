@@ -167,7 +167,7 @@ public:
 		{
 
 			addStringToPool(str);
-			return nodes[countOfNodes].data;
+			return nodes[countOfNodes - 1].data;
 
 		}
 		else

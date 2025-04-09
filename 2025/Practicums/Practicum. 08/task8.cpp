@@ -370,7 +370,7 @@ int main()
 	ImmutableString res = str1 + str10;
 	ImmutableString::printPoolFromStr();
 
-	std::cout << res;
+	std::cout << res << std::endl;
 	
 	return 0;
 

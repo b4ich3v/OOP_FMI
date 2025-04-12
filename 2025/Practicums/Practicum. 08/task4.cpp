@@ -1,5 +1,51 @@
 #include <iostream>
 #include <algorithm> 
+#include <cstring> 
+
+namespace HELPERS
+{
+
+    const int MAX_BUFFER_SIZE = 1024;
+
+    char toChar(int digit) 
+    {
+
+        return digit + '0';
+
+    }
+
+    int countOfDigits(int number) 
+    {
+
+        if (!number) return 1;
+
+        int counter = 0;
+        
+        while (number)
+        {
+
+            counter += 1;
+            number /= 10;
+
+        }
+
+        return counter;
+
+    }
+
+    void reverseStr(char* ptr, int count) 
+    {
+
+        for (int i = 0; i < count / 2; i++)
+        {
+
+            std::swap(ptr[i], ptr[count - i - 1]);
+
+        }
+
+    }
+
+}
 
 struct Term
 {
@@ -86,6 +132,45 @@ private:
 
     }
 
+    char* makeStr() const 
+    {
+
+        char* result = new char[HELPERS::MAX_BUFFER_SIZE];
+        int currentIndex = 0;
+
+        for (int i = 0; i < degree; i++)
+        {
+
+            result[currentIndex++] = '(';
+            int currentCountOfDigitsForNumber = HELPERS::countOfDigits(terms[i].value);
+            int copyOfCurrentNumber = terms[i].value;
+            char* ptr = result;
+            ptr += currentIndex;
+
+            for (int j = 0; j < currentCountOfDigitsForNumber; j++)
+            {
+
+                int currentDigit = copyOfCurrentNumber % 10;
+                result[currentIndex++] = HELPERS::toChar(currentDigit);
+                copyOfCurrentNumber /= 10;
+
+            }
+
+            HELPERS::reverseStr(ptr, currentCountOfDigitsForNumber);
+            result[currentIndex++] = ')';
+            result[currentIndex++] = '^';
+            result[currentIndex++] = HELPERS::toChar(i);
+            result[currentIndex++] = '+';
+
+        }
+
+        if(result[currentIndex - 1] == '+') result[currentIndex - 1] = '\0';
+        else result[currentIndex] = '\0';
+        
+        return result;
+
+    }
+
 public:
 
     Polynom()
@@ -142,6 +227,43 @@ public:
     {
 
         free();
+
+    }
+
+    const int& operator [] (int index) const
+    {
+
+        if (index < 0 || index >= degree) throw std::logic_error("Error");
+        return terms[index].value;
+
+    }
+
+    int& operator [] (int index)
+    {
+
+        if (index < 0 || index >= degree) throw std::logic_error("Error");
+        return terms[index].value;
+
+    }
+
+    int operator () (int param) const 
+    {
+
+        int result = 0;
+
+        for (int i = 0; i < degree; i++)
+        {
+
+            if (terms[i].used) 
+            {
+                    
+                result += terms[i].value * param;
+            
+            }
+
+        }
+
+        return result;
 
     }
 
@@ -227,6 +349,81 @@ public:
 
     }
 
+    friend bool operator == (const Polynom& p1, const Polynom& p2)
+    {
+
+        char* ptr1 = p1.makeStr();
+        char* ptr2 = p2.makeStr();
+
+        bool pred = strcmp(ptr1, ptr2) == 0;
+
+        delete[] ptr1;
+        delete[] ptr2;
+
+        return pred;
+
+    }
+
+    friend bool operator != (const Polynom& p1, const Polynom& p2)
+    {
+
+        return !(p1 == p2);
+
+    }
+
+    friend bool operator > (const Polynom& p1, const Polynom& p2)
+    {
+
+        char* ptr1 = p1.makeStr();
+        char* ptr2 = p2.makeStr();
+
+        bool pred = strcmp(ptr1, ptr2) > 0;
+
+        delete[] ptr1;
+        delete[] ptr2;
+
+        return pred;
+
+    }
+
+    friend bool operator <= (const Polynom& p1, const Polynom& p2)
+    {
+
+        return !(p1 > p2);
+
+    }
+
+    friend bool operator < (const Polynom& p1, const Polynom& p2)
+    {
+
+        char* ptr1 = p1.makeStr();
+        char* ptr2 = p2.makeStr();
+
+        bool pred = strcmp(ptr1, ptr2) < 0;
+
+        delete[] ptr1;
+        delete[] ptr2;
+
+        return pred;
+
+    }
+
+    friend bool operator >= (const Polynom& p1, const Polynom& p2)
+    {
+
+        return !(p1 < p2);
+
+    }
+
+    void printInStrVariant() const 
+    {
+
+        char* str = makeStr();
+        std::cout << str << std::endl;
+        delete[] str;
+
+    }
+
 };
 
 int main()
@@ -252,10 +449,13 @@ int main()
 
     std::cout << p1 << std::endl;
     std::cout << (~p1) << std::endl;
+    std::cout << (p1 == p2) << std::endl;
+    std::cout << (p1 > p2) << std::endl;
+
+    p1.printInStrVariant();
 
     delete[] terms1;
     delete[] terms2;
     return 0;
 
 }
-

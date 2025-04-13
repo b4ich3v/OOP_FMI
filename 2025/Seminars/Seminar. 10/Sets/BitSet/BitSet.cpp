@@ -257,3 +257,15 @@ void BitSet::printSet() const
 	std::cout << std::endl;
 
 }
+
+void BitSet::removeAllNumbers() 
+{
+
+	for (int i = 0; i < capacity * CONSTANTS::countOfBitsInOneByte; i++)
+	{
+
+		removeNumber(i);
+
+	}
+
+}

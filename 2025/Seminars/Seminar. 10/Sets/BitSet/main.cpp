@@ -1,66 +1,30 @@
-#include <iostream>
-#include <utility>
-#pragma once
+#include "BitSet.h"
 
-namespace CONSTANTS 
+int main()
 {
 
-	const int countOfBitsInOneByte = 8;
+	BitSet s1(100);
+	s1.addNumber(1);
+	s1.addNumber(13);
+	s1.addNumber(67);
+	s1.addNumber(3);
+	s1.addNumber(11);
+
+	BitSet s2(3);
+	s2.addNumber(1);
+	s2.addNumber(13);
+	s2.addNumber(67);
+	s2.addNumber(56);
+	s2.addNumber(111);
+	s2.addNumber(0);
+
+	BitSet unionOfTwo = s1 | s2;
+	BitSet intersectionOfTwo = s1 & s2;
+
+	unionOfTwo.printSet();
+	std::cout << std::endl;
+	intersectionOfTwo.printSet();
+
+	return 0;
 
 }
-
-class BitSet
-{
-private:
-
-	uint8_t* data = nullptr;
-	int size = 0;
-	int capacity = 8;
-
-	void resize(int newCapacity);
-
-	void free();
-
-	void copyFrom(const BitSet& other);
-
-	void moveTo(BitSet&& other);
-
-	int getBucketIndex(int number) const;
-
-	int indexInBucket(int number) const;
-
-public:
-
-	BitSet();
-
-	BitSet(int maxNumber);
-
-	BitSet(const BitSet& other);
-
-	BitSet& operator = (const BitSet& other);
-
-	BitSet(BitSet&& other) noexcept;
-
-	BitSet& operator = (BitSet&& other) noexcept;
-
-	~BitSet();
-
-	BitSet& operator &= (const BitSet& other);
-
-	BitSet& operator |= (const BitSet& other);
-
-	void addNumber(int number);
-
-	void removeNumber(int number);
-
-	bool hasNumber(int number) const;
-	
-	void removeAllNumbers();
-
-	void printSet() const;
-
-};
-
-BitSet operator & (const BitSet& s1, const BitSet& s2);
-
-BitSet operator | (const BitSet& s1, const BitSet& s2);

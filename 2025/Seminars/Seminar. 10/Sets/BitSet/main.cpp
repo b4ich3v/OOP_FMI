@@ -25,6 +25,10 @@ int main()
 	std::cout << std::endl;
 	intersectionOfTwo.printSet();
 
+	intersectionOfTwo.removeNumber(13);
+	intersectionOfTwo.removeNumber(67);
+	intersectionOfTwo.printSet();
+
 	return 0;
 
 }

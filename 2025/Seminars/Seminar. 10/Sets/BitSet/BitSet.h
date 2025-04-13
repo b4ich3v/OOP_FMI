@@ -55,6 +55,8 @@ public:
 
 	bool hasNumber(int number) const;
 	
+	void removeAllNumbers();
+
 	void printSet() const;
 
 };

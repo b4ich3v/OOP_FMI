@@ -35,6 +35,8 @@ public:
 
 	explicit operator char();
 
+	int getNumberValue() const;
+
 };
 
 WrapperInt operator + (const WrapperInt& number1, const WrapperInt& number2);
@@ -44,3 +46,15 @@ WrapperInt operator - (const WrapperInt& number1, const WrapperInt& number2);
 WrapperInt operator * (const WrapperInt& number1, const WrapperInt& number2);
 
 WrapperInt operator / (const WrapperInt& number1, const WrapperInt& number2);
+
+bool operator > (const WrapperInt& number1, const WrapperInt& number2);
+
+bool operator >= (const WrapperInt& number1, const WrapperInt& number2);
+
+bool operator < (const WrapperInt& number1, const WrapperInt& number2);
+
+bool operator <= (const WrapperInt& number1, const WrapperInt& number2);
+
+bool operator == (const WrapperInt& number1, const WrapperInt& number2);
+
+bool operator != (const WrapperInt& number1, const WrapperInt& number2);

@@ -137,3 +137,52 @@ WrapperInt::operator char()
 	return (char)number;
 
 }
+
+int WrapperInt::getNumberValue() const 
+{
+
+	return number;
+
+}
+
+bool operator > (const WrapperInt& number1, const WrapperInt& number2) 
+{
+
+	return number1.getNumberValue() > number2.getNumberValue();
+
+}
+
+bool operator >= (const WrapperInt& number1, const WrapperInt& number2)
+{
+
+	return !(number1 < number2);
+
+}
+
+bool operator < (const WrapperInt& number1, const WrapperInt& number2) 
+{
+
+	return number1.getNumberValue() < number2.getNumberValue();
+
+}
+
+bool operator <= (const WrapperInt& number1, const WrapperInt& number2)
+{
+
+	return !(number1 > number2);
+
+}
+
+bool operator == (const WrapperInt& number1, const WrapperInt& number2) 
+{
+
+	return number1.getNumberValue() == number2.getNumberValue();
+
+}
+
+bool operator != (const WrapperInt& number1, const WrapperInt& number2) 
+{
+
+	return !(number1 == number2);
+
+}

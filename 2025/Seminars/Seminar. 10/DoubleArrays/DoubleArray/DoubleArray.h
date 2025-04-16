@@ -39,6 +39,12 @@ public:
 
 	bool isEmpty() const;
 
+	int getSize() const;
+
+	double& operator [] (int index);
+
+	const double operator [] (int index) const;
+
 	friend bool operator == (const DoubleArray& arr1, const DoubleArray& arr2);
 
 	friend bool operator != (const DoubleArray& arr1, const DoubleArray& arr2);

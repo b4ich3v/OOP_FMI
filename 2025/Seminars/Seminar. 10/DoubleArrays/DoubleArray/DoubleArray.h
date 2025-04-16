@@ -41,6 +41,8 @@ public:
 
 	int getSize() const;
 
+	const double* getArr() const;
+
 	double& operator [] (int index);
 
 	const double operator [] (int index) const;

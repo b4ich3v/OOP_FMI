@@ -9,7 +9,28 @@ DigitUnoCard::DigitUnoCard(int number, Color color): UnoCard(color)
 
 }
 
-void DigitUnoCard::printDigitUnoCard() const 
+bool DigitUnoCard::isDigitUnoCard(const UnoCard* ptr) const
+{
+
+	return true;
+
+}
+
+bool DigitUnoCard::isSpecialUnoCard(const UnoCard* ptr) const 
+{
+
+	return false;
+
+}
+
+bool DigitUnoCard::isWithdrawalUnoCard(const UnoCard* ptr) const 
+{
+
+	return false;
+
+}
+
+void DigitUnoCard::printCard(const UnoCard* ptr) const 
 {
 
 	std::cout << number << " ";
@@ -27,5 +48,12 @@ void DigitUnoCard::printDigitUnoCard() const
 	}
 
 	std::cout << std::endl;
+
+}
+
+UnoCard* DigitUnoCard::clone() const 
+{
+
+	return new DigitUnoCard(*this);
 
 }

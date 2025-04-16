@@ -2,7 +2,28 @@
 
 SpecialUnoCard::SpecialUnoCard(Action action, Color color): UnoCard(color), action(action) {}
 
-void SpecialUnoCard::printSpecialUnoCard() const 
+bool SpecialUnoCard::isDigitUnoCard(const UnoCard* ptr) const 
+{
+
+	return false;
+
+}
+
+bool SpecialUnoCard::isSpecialUnoCard(const UnoCard* ptr) const 
+{
+
+	return true;
+
+}
+
+bool SpecialUnoCard::isWithdrawalUnoCard(const UnoCard* ptr) const 
+{
+
+	return false;
+
+}
+
+void SpecialUnoCard::printCard(const UnoCard* ptr) const 
 {
 
 	switch (action)
@@ -28,5 +49,12 @@ void SpecialUnoCard::printSpecialUnoCard() const
 	}
 
 	std::cout << std::endl;
+
+}
+
+UnoCard* SpecialUnoCard::clone() const 
+{
+
+	return new SpecialUnoCard(*this);
 
 }

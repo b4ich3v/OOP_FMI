@@ -51,8 +51,10 @@ void DoubleArray::setArray(double* array, int size)
 
 	if (this->array == array || !array) throw std::logic_error("Error");
 
+	while (capacity <= size) capacity *= 2;
+
 	delete[] this->array;
-	this->array = new double[size];
+	this->array = new double[capacity];
 
 	for (int i = 0; i < size; i++)
 	{
@@ -93,7 +95,6 @@ DoubleArray::DoubleArray(double* array, int size)
 {
 
 	setArray(array, size);
-	this->capacity = 8;
 
 }
 
@@ -213,5 +214,40 @@ const double* DoubleArray::getArr() const
 {
 
 	return array;
+
+}
+
+void DoubleArray::incrementSize() 
+{
+
+	size += 1;
+
+}
+
+void DoubleArray::decrementSize() 
+{
+
+	size -= 1;
+
+}
+
+void DoubleArray::publicResize() 
+{
+
+	resize(capacity * 2);
+
+}
+
+double*& DoubleArray::getArr() 
+{
+
+	return array;
+
+}
+
+int DoubleArray::getCapacity() const 
+{
+
+	return capacity;
 
 }

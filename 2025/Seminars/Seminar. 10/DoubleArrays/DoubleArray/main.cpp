@@ -9,6 +9,8 @@ int main()
 
 	std::cout << (db1 == db2) << std::endl;
 	std::cout << db1.isEmpty() << std::endl;
+	std::cout << db1[3] << std::endl;
+	std::cout << db2.getSize() << std::endl;
 
 	return 0;
 

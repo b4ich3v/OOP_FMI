@@ -208,3 +208,10 @@ int DoubleArray::getSize() const
 	return size;
 
 }
+
+const double* DoubleArray::getArr() const 
+{
+
+	return array;
+
+}

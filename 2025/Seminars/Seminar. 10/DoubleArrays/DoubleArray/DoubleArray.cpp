@@ -183,3 +183,28 @@ bool operator != (const DoubleArray& arr1, const DoubleArray& arr2)
 	return !(arr1 == arr2);
 
 }
+
+double& DoubleArray::operator [] (int index) 
+{
+
+	if (index < 0 || index >= size) throw std::logic_error("Error");
+
+	return array[index];
+
+}
+
+const double DoubleArray::operator [] (int index) const
+{
+
+	if (index < 0 || index >= size) throw std::logic_error("Error");
+
+	return array[index];
+
+}
+
+int DoubleArray::getSize() const 
+{
+
+	return size;
+
+}

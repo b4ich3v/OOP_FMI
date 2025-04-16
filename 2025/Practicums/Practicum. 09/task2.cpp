@@ -107,7 +107,7 @@ class Vehicle
 private:
 
 	char* description = nullptr;
-	Registration registration = HELPERS::DEFAULT_REGISTER;
+	Registration& registration;
 
 	void free()
 	{
@@ -121,23 +121,18 @@ private:
 	{
 
 		this->description = other.description;
-		this->registration = other.registration;
-
 		other.description = nullptr;
-		other.registration = HELPERS::DEFAULT_REGISTER;
 
 	}
 
 	void copyFrom(const Vehicle& other) 
 	{
 
-		if (!other.description || this->description == other.description) throw std::logic_error("Error");
-
+		if (!other.description) throw std::logic_error("Error");
+			
 		this->description = new char[strlen(other.description) + 1];
-		strncpy(this->description, other.description, strlen(other.description));
+		std::strncpy(description, other.description, strlen(other.description));
 		this->description[strlen(other.description)] = '\0';
-
-		this->registration = other.registration;
 
 	}
 
@@ -145,7 +140,7 @@ public:
 
 	Vehicle() = delete;
 
-	Vehicle(const char* description, Registration registration) 
+	Vehicle(const char* description, Registration& registration): registration(registration)
 	{
 
 		if (!description || this->description == description) throw std::logic_error("Error");
@@ -154,18 +149,16 @@ public:
 		strncpy(this->description, description, strlen(description));
 		this->description[strlen(description)] = '\0';
 
-		this->registration = registration;
-
 	}
 
-	Vehicle(const Vehicle& other) 
+	Vehicle(const Vehicle& other): registration(other.registration)
 	{
 
 		copyFrom(other);
 
 	}
 
-	Vehicle(Vehicle&& other) noexcept 
+	Vehicle(Vehicle&& other) noexcept: registration(other.registration)
 	{
 
 		moveTo(std::move(other));
@@ -222,8 +215,11 @@ public:
 int main()
 {
 
-	Vehicle v1("Neshto si versiq 1", "PK7777PK");
-	Vehicle v2("Neshto si versiq 2", "A1234AK");
+	Registration r1("PK7777PK");
+	Registration r2("A1234AK");
+
+	Vehicle v1("Neshto si versiq 1", r1);
+	Vehicle v2("Neshto si versiq 2", r2);
 
 	v1.printVehicle();
 	v2.printVehicle();
@@ -231,4 +227,3 @@ int main()
 	return 0;
 
 }
-

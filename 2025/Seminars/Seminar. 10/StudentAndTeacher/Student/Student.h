@@ -6,7 +6,7 @@ class Student: public Person
 {
 private:
 
-    char id[ID_SIZE + 1] = "0MI060032";
+    char id[ID_SIZE + 1] = "0MI0600328";
 
 public:
 

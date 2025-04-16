@@ -11,6 +11,12 @@ enum class Color
 
 };
 
+class DigitUnoCard;
+
+class SpecialUnoCard;
+
+class WithdrawalUnoCard;
+
 class UnoCard
 {
 private:
@@ -22,6 +28,18 @@ public:
 	UnoCard(Color color);
 
 	Color getColor() const;
+
+	virtual bool isDigitUnoCard(const UnoCard* ptr) const;
+
+	virtual bool isSpecialUnoCard(const UnoCard* ptr) const;
+
+	virtual bool isWithdrawalUnoCard(const UnoCard* ptr) const;
+
+	virtual void printCard(const UnoCard* ptr) const;
+
+	virtual UnoCard* clone() const = 0;
+
+	virtual ~UnoCard() = default;
 
 };
 

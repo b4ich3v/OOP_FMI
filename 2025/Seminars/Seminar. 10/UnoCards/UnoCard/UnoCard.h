@@ -16,14 +16,12 @@ class UnoCard
 private:
 
 	Color color;
-	int number = 0;
 
 public:
 
-	UnoCard(int number, Color color);
+	UnoCard(Color color);
 
-	void printCard() const;
+	Color getColor() const;
 
 };
-
 

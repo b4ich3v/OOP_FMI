@@ -41,7 +41,17 @@ public:
 
 	int getSize() const;
 
+	int getCapacity() const;
+
 	const double* getArr() const;
+
+	double*& getArr();
+
+	void incrementSize();
+
+	void decrementSize();
+
+	void publicResize();
 
 	double& operator [] (int index);
 

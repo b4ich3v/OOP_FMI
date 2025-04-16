@@ -153,3 +153,33 @@ DoubleArray& DoubleArray::operator = (DoubleArray&& other) noexcept
 	return *this;
 
 }
+
+bool DoubleArray::isEmpty() const 
+{
+
+	return size == 0;
+
+}
+
+bool operator == (const DoubleArray& arr1, const DoubleArray& arr2) 
+{
+
+	if (arr1.size != arr2.size) return false;
+
+	for (int i = 0; i < arr1.size; i++)
+	{
+
+		if (arr1.array[i] != arr2.array[i]) return false;
+
+	}
+
+	return true;
+
+}
+
+bool operator != (const DoubleArray& arr1, const DoubleArray& arr2) 
+{
+
+	return !(arr1 == arr2);
+
+}

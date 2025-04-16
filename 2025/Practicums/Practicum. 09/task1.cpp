@@ -84,6 +84,20 @@ public:
 
 	}
 
+	friend bool operator == (const Registration& r1, const Registration& r2) 
+	{
+
+		return strcmp(r1.getData(), r2.getData()) == 0;
+
+	}
+
+	friend bool operator != (const Registration& r1, const Registration& r2)
+	{
+
+		return !(r1 == r2);
+
+	}
+
 };
 
 int main()
@@ -94,11 +108,14 @@ int main()
 
 		Registration r1("C1234AB");
 		Registration r2("XY1111YX"); 
+		Registration r3 = r1;
 
 		std::cout << r1.getData() << std::endl;
 		std::cout << r2.getData() << std::endl;
+		std::cout << (r1 == r2) << std::endl;
+		std::cout << (r1 == r3) << std::endl;
 
-		Registration r3("111145");
+		Registration r4("111145");
 
 	}
 	catch (const std::exception& e)
@@ -112,4 +129,3 @@ int main()
 	return 0;
 
 }
-

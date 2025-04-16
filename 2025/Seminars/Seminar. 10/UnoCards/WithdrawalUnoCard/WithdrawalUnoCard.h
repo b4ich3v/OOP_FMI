@@ -19,8 +19,15 @@ public:
 
 	WithdrawalUnoCard(CountOfCardToBeDrawn count, Color color);
 
-	void printWithdrawalUnoCard() const;
+	bool isDigitUnoCard(const UnoCard* ptr) const override;
+
+	bool isSpecialUnoCard(const UnoCard* ptr) const override;
+
+	bool isWithdrawalUnoCard(const UnoCard* ptr) const override;
+
+	UnoCard* clone() const override;
+
+	void printCard(const UnoCard* ptr) const override;
 
 };
-
 

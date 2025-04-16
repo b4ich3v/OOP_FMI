@@ -37,5 +37,11 @@ public:
 
 	~DoubleArray();
 
+	bool isEmpty() const;
+
+	friend bool operator == (const DoubleArray& arr1, const DoubleArray& arr2);
+
+	friend bool operator != (const DoubleArray& arr1, const DoubleArray& arr2);
+
 };
 

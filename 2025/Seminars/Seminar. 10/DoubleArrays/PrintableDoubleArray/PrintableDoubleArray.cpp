@@ -1,5 +1,9 @@
 #include "PrintableDoubleArray.h"
 
+PrintableDoubleArray::PrintableDoubleArray(): DoubleArray() {}
+
+PrintableDoubleArray::PrintableDoubleArray(double* array, int size): DoubleArray(array, size) {}
+
 std::istream& operator >> (std::istream& is, DoubleArray& db) 
 {
 

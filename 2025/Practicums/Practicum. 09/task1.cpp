@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cstring>
 
-namespace HELPERS 
+namespace HELPERS
 {
 
 	const int SIZE_FOR_REGISTER = 8;

@@ -249,7 +249,7 @@ public:
 
 	}
 
-	unsigned int getHourPower() const 
+	unsigned int getHorsePower() const 
 	{
 
 		return horsepower;
@@ -443,7 +443,7 @@ public:
 
 	}
 
-	const FuelTank& getFuelTank() 
+	const FuelTank& getFuelTank() const
 	{
 
 		return fuel;
@@ -466,7 +466,7 @@ public:
 		if ((car1->fuel.isEmpty()) && (car2->fuel.isEmpty()))
 		{
 
-			if (car1->engine.getHourPower() / car1->weight > car2->engine.getHourPower()) 
+			if (car1->engine.getHorsePower() / car1->weight > car2->engine.getHorsePower() / car2->weight) 
 			{
 
 				return car1;

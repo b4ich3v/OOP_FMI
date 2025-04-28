@@ -1,5 +1,16 @@
 #include "Drink.h"
 
+Drink::Drink() 
+{
+
+	this->name = new char[strlen("default") + 1];
+	strncpy(this->name, "default", strlen("default"));
+	this->name[strlen("default")] = '\0';
+
+	this->quantity = 0;
+
+}
+
 Drink::Drink(const Drink& other) 
 {
 

@@ -15,3 +15,17 @@ double AlcoholicDrink::getAlcPer() const
 
 }
 
+void AlcoholicDrink::print() const 
+{
+
+	std::cout << alcPer << " ";
+	Drink::print();
+
+}
+
+Drink* AlcoholicDrink::clone() const 
+{
+
+	return new AlcoholicDrink(*this);
+
+}

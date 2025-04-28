@@ -29,12 +29,15 @@ public:
 
 	Drink& operator = (Drink&& other) noexcept;
 
-	~Drink();
-
 	const char* getName() const;
 
 	double getQuantity() const;
 
-};
+	virtual ~Drink();
 
+	virtual void print() const;
+
+	virtual Drink* clone() const;
+
+};
 

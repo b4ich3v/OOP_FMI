@@ -13,6 +13,9 @@ public:
 
 	double getAlcPer() const;
 
-};
+	void print() const override;
 
+	Drink* clone() const override;
+
+};
 

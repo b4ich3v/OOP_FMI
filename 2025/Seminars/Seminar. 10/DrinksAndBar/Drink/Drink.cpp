@@ -111,3 +111,17 @@ double Drink::getQuantity() const
 
 }
 
+void Drink::print() const 
+{
+
+	std::cout << name << " ";
+	std::cout << quantity << std::endl;
+
+}
+
+Drink* Drink::clone() const 
+{
+
+	return new Drink(*this);
+
+}

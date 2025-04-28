@@ -57,7 +57,7 @@ public:
     bool isIn(const Point& point) const 
     {
 
-        if (point.getDistanceBetween({ 0,0 }) <= radius) return true;
+        if (point.getDistanceBetween(point) <= radius) return true;
         return false;
 
     }
@@ -157,5 +157,4 @@ int main()
     return 0;
 
 }
-
 

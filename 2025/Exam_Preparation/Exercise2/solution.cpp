@@ -2,7 +2,7 @@
 #include <cstring>
 
 class Relation;
-std::ostream& operator<<(std::ostream& os, const Relation& r);
+std::ostream& operator << (std::ostream& os, const Relation& r);
 
 struct historyComposition 
 {
@@ -180,18 +180,23 @@ public:
 
 int main() 
 {
-
+    
     Relation r1("loves", 1, 2);
     Relation r2("hates", 2, 3);
 
     Relation r3 = r1 * r2;
-    std::cout << "r1 * r2 = " << r3 << std::endl;
+    std::cout << r3 << std::endl;
 
     Relation r4("knows", 4, 5);
     Relation r5 = r1 * r4;
-    std::cout << "r1 * r4 = " << r5 << std::endl;
- 
+    std::cout << r5 << std::endl;
 
+    Relation small("is smaller than", 2, 6);
+    Relation div("is divisible by", 6, 3);
+
+    Relation comp = small * div;
+    std::cout << comp << std::endl;
+ 
     return 0;
 
 }

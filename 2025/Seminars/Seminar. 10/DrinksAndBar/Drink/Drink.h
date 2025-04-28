@@ -17,7 +17,7 @@ private:
 
 public:
 
-	Drink() = default;
+	Drink();
 
 	Drink(const char* name, double quantity);
 

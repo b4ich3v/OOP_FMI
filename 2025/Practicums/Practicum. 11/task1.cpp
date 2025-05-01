@@ -168,7 +168,7 @@ public:
 	void printDetails() const override
 	{
 
-		std::cout << getName() << " " << getPrice() << powerOfSound << std::endl;
+		std::cout << getName() << " " << getPrice() << " " << powerOfSound << std::endl;
 
 	}
 
@@ -435,3 +435,7 @@ int main()
 	return 0;
 
 }
+
+
+
+

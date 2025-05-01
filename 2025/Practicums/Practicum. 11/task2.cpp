@@ -513,11 +513,9 @@ int main()
 	std::cout << config;
 	std::cout << config.price() << std::endl;
 
+	delete cpu;
+	delete memory;
+	
 	return 0;
 
 }
-
-
-
-
-

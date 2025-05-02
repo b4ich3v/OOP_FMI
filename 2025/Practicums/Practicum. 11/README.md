@@ -67,3 +67,36 @@ Computer Components Configuration
 
 * bool insert(int x) - добавя числото x към множеството. Ако капацитетът е изчерпан или числото се съдържа в множеството вече, връща лъжа. Връща истина в противен слуай.
 * bool remove(int x) - премахва числото x от множеството. Ако елементът не съществува, резултатът е лъжа. Резултатът е истина в противен случай.
+  
+# Задача 4:
+Да се разработи програма, която позволява четене, обработка и запис на масиви от цели числа между файлове с различни формати (текстови, бинарни и CSV).
+Програмата трябва да бъде реализирана с помощта на добре структурирана йерархия, полиморфизъм и прилагане на Factory Method .
+
+Базови абстрактни класове:
+FileReader:
+
+* Съдържа име на файл (MyString fileName).
+* Декларира чисто виртуална функция:
+* virtual void read(int*& arr, size_t& size) const = 0;
+
+FileWriter:
+
+* Съдържа име на файл (MyString fileName).
+* Декларира чисто виртуална функция:
+* virtual void write(const int* arr, size_t size) const = 0;
+
+Производни класове за различни файлови формати:
+Формат	Reader клас	Writer клас	Формат на съдържанието
+Текстов файл (с интервали)	ArrayFileReader	ArrayFileWriter	Числата са разделени с интервали.
+Бинарен файл	BinaryFileReader	BinaryFileWriter	Числата са записани/четени в двоичен (binary) формат.
+CSV файл	CSVFileReader	CSVFileWriter	Числата са разделени със запетаи ,.
+
+Обекти се създават чрез (Factory Pattern):
+* FileReader* fileReaderFactory(const MyString& fileName)
+* FileWriter* fileWriterFactory(const MyString& fileName)
+Тези функции трябва да създават подходящ FileReader или FileWriter обект в зависимост от разширението на файла (.csv, .dat, .arr).
+
+Операция по трансфер на данни:
+Имплементирайте функция:
+
+* void transfer(const MyString& fromName, const MyString& toName);

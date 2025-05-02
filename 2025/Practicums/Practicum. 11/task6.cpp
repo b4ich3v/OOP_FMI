@@ -10,6 +10,7 @@ enum class Stars
     TWO = 2,
     THREE = 3,
     FOUR = 4,
+    FIVE  = 5
 
 };
 
@@ -35,9 +36,9 @@ static PointStarTable staticTableDefault[5]
 
     {1, Stars::ONE, false},
     {256, Stars::TWO, true},
-    {512, Stars::TWO, true},
-    {1024, Stars::THREE, true},
-    {2048, Stars::FOUR, true}
+    {512, Stars::THREE, true},
+    {1024, Stars::FOUR, true},
+    {2048, Stars::FIVE, true}
 
 };
 
@@ -46,9 +47,9 @@ static PointStarTable staticTablePremium[5]
 
     {1, Stars::ONE, false},
     {256, Stars::TWO, true},
-    {256, Stars::TWO, true},
     {256, Stars::THREE, true},
-    {256, Stars::FOUR, true}
+    {256, Stars::FOUR, true},
+    {256, Stars::FIVE, true}
 
 };
 
@@ -359,6 +360,5 @@ int main()
     return 0;
 
 }
-
 
 

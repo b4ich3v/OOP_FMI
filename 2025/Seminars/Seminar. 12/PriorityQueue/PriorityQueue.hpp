@@ -44,11 +44,27 @@ private:
 
     Node* remove(Node* node, const P& key);
 
+    Node* cloneNode(Node* node);
+
     void clear(Node* node);
+
+    void free();
+
+    void copyFrom(const PriorityQueue& other);
+
+    void moveTo(PriorityQueue&& other);
 
 public:
 
     PriorityQueue() = default;
+
+    PriorityQueue(const PriorityQueue& other);
+
+    PriorityQueue(PriorityQueue&& other) noexcept;
+
+    PriorityQueue& operator = (const PriorityQueue& other);
+
+    PriorityQueue& operator = (PriorityQueue&& other) noexcept;
 
     ~PriorityQueue();
 
@@ -314,5 +330,111 @@ size_t PriorityQueue<T, P>::size() const
 {
 
     return totalSize;
+
+}
+
+template<typename T, typename P>
+
+PriorityQueue<T, P>::Node* PriorityQueue<T, P>::cloneNode(Node* node)
+{
+
+    if (!node) return nullptr;
+
+    Node* newNode = new Node(node->q.front(), node->key);
+    newNode->q = node->q;        
+    newNode->height = node->height;
+
+    newNode->left = cloneNode(node->left);
+    newNode->right = cloneNode(node->right);
+
+    return newNode;
+
+}
+
+template<typename T, typename P>
+
+void PriorityQueue<T, P>::free() 
+{
+
+    clear(root);
+    root = nullptr;
+    totalSize = 0;
+
+}
+
+template<typename T, typename P>
+
+void PriorityQueue<T, P>::copyFrom(const PriorityQueue& other) 
+{
+
+    free();
+    root = cloneNode(other.root);
+    totalSize = other.totalSize;
+
+}
+
+template<typename T, typename P>
+
+void PriorityQueue<T, P>::moveTo(PriorityQueue&& other) noexcept 
+{
+
+    free();
+
+    root = other.root;
+    totalSize = other.totalSize;
+    other.root = nullptr;
+    other.totalSize = 0;
+
+}
+
+template<typename T, typename P>
+
+PriorityQueue<T, P>::PriorityQueue(const PriorityQueue& other) 
+{
+
+    copyFrom(other);
+
+}
+
+template<typename T, typename P>
+
+PriorityQueue<T, P>::PriorityQueue(PriorityQueue&& other) noexcept 
+{
+
+    moveTo(std::move(other));
+
+}
+
+template<typename T, typename P>
+
+PriorityQueue<T, P>& PriorityQueue<T, P>::operator=(const PriorityQueue& other)
+{
+
+    if (this != &other) 
+    {
+
+        free();
+        copyFrom(other);
+
+    }
+
+    return *this;
+
+}
+
+template<typename T, typename P>
+
+PriorityQueue<T, P>& PriorityQueue<T, P>::operator=(PriorityQueue&& other) noexcept 
+{
+
+    if (this != &other) 
+    {
+
+        free();
+        moveTo(std::move(other));
+
+    }
+
+    return *this;
 
 }

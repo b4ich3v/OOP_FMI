@@ -3,7 +3,7 @@
 
 template <class T>
 
-class Queue 
+class Queue
 {
 private:
 
@@ -14,7 +14,7 @@ private:
 		T data;
 		Node* next = nullptr;
 		Node* prev = nullptr;
-		
+
 		explicit Node(const T& data);
 
 		explicit Node(const T& data, Node* next, Node* prev);
@@ -53,18 +53,18 @@ public:
 
 	bool empty() const;
 
-	size_t size();
+	size_t size() const;
 
 };
 
 template<class T>
 
-Queue<T>::Node::Node(const T& data): 
+Queue<T>::Node::Node(const T& data) :
 	data(data), next(nullptr), prev(nullptr) {}
 
 template<class T>
 
-Queue<T>::Node::Node(const T& data, Node* next, Node* prev): 
+Queue<T>::Node::Node(const T& data, Node* next, Node* prev) :
 	data(data), next(next), prev(prev) {}
 
 template <class T>
@@ -94,7 +94,7 @@ template <class T>
 void Queue<T>::copyFrom(const Queue<T>& other)
 {
 
-	free();  
+	free();
 
 	Node* prev = nullptr;
 	Node* current = other.head;
@@ -102,15 +102,15 @@ void Queue<T>::copyFrom(const Queue<T>& other)
 	head = nullptr;
 	tail = nullptr;
 
-	while (current != nullptr) 
+	while (current != nullptr)
 	{
-	
+
 		Node* newNode = new Node(current->data);
 		newNode->prev = prev;
 		newNode->next = nullptr;
 
 		if (prev) prev->next = newNode;
-		else head = newNode;   
+		else head = newNode;
 
 		prev = newNode;
 		current = current->next;
@@ -139,7 +139,7 @@ void Queue<T>::moveTo(Queue<T>&& other)
 
 template <class T>
 
-Queue<T>::Queue() 
+Queue<T>::Queue()
 {
 
 	this->head = nullptr;
@@ -150,7 +150,7 @@ Queue<T>::Queue()
 
 template <class T>
 
-Queue<T>::Queue(const Queue<T>& other) 
+Queue<T>::Queue(const Queue<T>& other)
 {
 
 	copyFrom(other);
@@ -159,7 +159,7 @@ Queue<T>::Queue(const Queue<T>& other)
 
 template <class T>
 
-Queue<T>::Queue(Queue&& other) noexcept 
+Queue<T>::Queue(Queue&& other) noexcept
 {
 
 	moveTo(std::move(other));
@@ -171,7 +171,7 @@ template <class T>
 Queue<T>& Queue<T>::operator = (const Queue<T>& other)
 {
 
-	if (this != &other) 
+	if (this != &other)
 	{
 
 		free();
@@ -202,7 +202,7 @@ Queue<T>& Queue<T>::operator = (Queue<T>&& other) noexcept
 
 template <class T>
 
-Queue<T>::~Queue() 
+Queue<T>::~Queue()
 {
 
 	free();
@@ -211,7 +211,7 @@ Queue<T>::~Queue()
 
 template <class T>
 
-const T& Queue<T>::front() const 
+const T& Queue<T>::front() const
 {
 
 	if (empty()) throw std::runtime_error("Queue is empty");
@@ -221,7 +221,7 @@ const T& Queue<T>::front() const
 
 template <class T>
 
-void Queue<T>::pop() 
+void Queue<T>::pop()
 {
 
 	if (empty()) throw std::runtime_error("Queue is empty");
@@ -239,7 +239,7 @@ void Queue<T>::pop()
 
 template <class T>
 
-void Queue<T>::push(const T& element) 
+void Queue<T>::push(const T& element)
 {
 
 	Node* newNode = new Node(element, nullptr, tail);
@@ -254,7 +254,7 @@ void Queue<T>::push(const T& element)
 
 template <class T>
 
-bool Queue<T>::empty() const 
+bool Queue<T>::empty() const
 {
 
 	return countOfNodes == 0;
@@ -263,7 +263,7 @@ bool Queue<T>::empty() const
 
 template <class T>
 
-size_t Queue<T>::size() 
+size_t Queue<T>::size() const
 {
 
 	return countOfNodes;

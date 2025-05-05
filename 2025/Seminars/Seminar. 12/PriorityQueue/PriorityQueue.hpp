@@ -30,7 +30,7 @@ private:
 
     int balanceFactor(Node* node) const;
 
-    void updateHeight(Node* node) ;
+    void updateHeight(Node* node);
 
     Node* rotateRight(Node* y);
 

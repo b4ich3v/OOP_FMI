@@ -17,7 +17,6 @@ public:
 
 };
 
-
 template <class T>
 
 class Container: public MaskContainer 
@@ -47,7 +46,6 @@ public:
     }
 
 };
-
 
 class Vector: public Container<double>
 {

@@ -34,9 +34,9 @@ public:
 
 	~HeterogeneousContainer();
 
-	void addElement(const HeterogeneousContainer& element);
+	void addElement(const T& element);
 
-	void addElement(HeterogeneousContainer* element);
+	void addElement(T* element);
 
 	void removeElement(size_t index);
 
@@ -199,7 +199,7 @@ void HeterogeneousContainer<T>::moveTo(HeterogeneousContainer<T>&& other)
 
 TT
 
-void HeterogeneousContainer<T>::addElement(const HeterogeneousContainer<T>& element) 
+void HeterogeneousContainer<T>::addElement(const T& element) 
 {
 
 	if (size == capacity) resize(capacity * 2);
@@ -211,7 +211,7 @@ void HeterogeneousContainer<T>::addElement(const HeterogeneousContainer<T>& elem
 
 TT
 
-void HeterogeneousContainer<T>::addElement(HeterogeneousContainer<T>* element) 
+void HeterogeneousContainer<T>::addElement(T* element) 
 {
 
 	if (!element) throw std::logic_error("Error");

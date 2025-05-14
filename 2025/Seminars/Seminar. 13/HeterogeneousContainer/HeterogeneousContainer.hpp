@@ -134,7 +134,6 @@ void HeterogeneousContainer<T>::resize(size_t newCapacity)
 	{
 
 		newData[i] = data[i];
-		data[i] = nullptr;
 
 	}
 

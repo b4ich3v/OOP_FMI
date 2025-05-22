@@ -238,7 +238,6 @@ void HeterogeneousContainer<T>::removeElement(size_t index)
 
 }
 
-
 TT
 
 size_t HeterogeneousContainer<T>::getSize() const 

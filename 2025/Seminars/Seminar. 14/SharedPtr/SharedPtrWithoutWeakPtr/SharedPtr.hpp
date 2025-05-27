@@ -18,8 +18,6 @@ private:
 
 public:
 
-	SharedPtr(const T* data);
-
 	SharedPtr(T* data);
 
 	SharedPtr(const SharedPtr& other);
@@ -42,35 +40,24 @@ public:
 
 	size_t getRefCount() const;
 
-	void reset(const T* ptr = nullptr);
+	void reset(T* ptr = nullptr);
 
 };
 
 template <class T>
 
-SharedPtr<T>::SharedPtr(const T* data)
+SharedPtr<T>::SharedPtr(T* data)
 {
 
 	if (!data) throw std::logic_error("Error");
-	this->data = new T(*data);
+	this->data = data;
 	this->refCounter = new size_t(1);
 
 }
 
 template <class T>
 
-SharedPtr<T>::SharedPtr(T* data) 
-{
-
-	if (!data) throw std::logic_error("Error");
-	this->data = new T(*data);
-	this->refCounter = new size_t(1);
-
-}
-
-template <class T>
-
-SharedPtr<T>::SharedPtr(const SharedPtr& other) 
+SharedPtr<T>::SharedPtr(const SharedPtr& other)
 {
 
 	copyFrom(other);
@@ -79,7 +66,7 @@ SharedPtr<T>::SharedPtr(const SharedPtr& other)
 
 template <class T>
 
-SharedPtr<T>::SharedPtr(SharedPtr&& other) noexcept 
+SharedPtr<T>::SharedPtr(SharedPtr&& other) noexcept
 {
 
 	moveTo(std::move(other));
@@ -88,10 +75,10 @@ SharedPtr<T>::SharedPtr(SharedPtr&& other) noexcept
 
 template <class T>
 
-SharedPtr<T>& SharedPtr<T>::operator = (const SharedPtr<T>& other) 
+SharedPtr<T>& SharedPtr<T>::operator = (const SharedPtr<T>& other)
 {
 
-	if (this != &other) 
+	if (this != &other)
 	{
 
 		free();
@@ -122,7 +109,7 @@ SharedPtr<T>& SharedPtr<T>::operator = (SharedPtr<T>&& other) noexcept
 
 template <class T>
 
-SharedPtr<T>::~SharedPtr() 
+SharedPtr<T>::~SharedPtr()
 {
 
 	free();
@@ -131,7 +118,7 @@ SharedPtr<T>::~SharedPtr()
 
 template <class T>
 
-const T* SharedPtr<T>::operator -> () const 
+const T* SharedPtr<T>::operator -> () const
 {
 
 	if (!data) throw std::logic_error("Error");
@@ -151,7 +138,7 @@ T* SharedPtr<T>::operator -> ()
 
 template <class T>
 
-const T& SharedPtr<T>::operator * () const 
+const T& SharedPtr<T>::operator * () const
 {
 
 	if (!data) throw std::logic_error("Error");
@@ -171,7 +158,7 @@ T& SharedPtr<T>::operator * ()
 
 template <class T>
 
-size_t SharedPtr<T>::getRefCount() const 
+size_t SharedPtr<T>::getRefCount() const
 {
 
 	if (!refCounter) throw std::logic_error("Error");
@@ -181,15 +168,15 @@ size_t SharedPtr<T>::getRefCount() const
 
 template <class T>
 
-void SharedPtr<T>::reset(const T* ptr) 
+void SharedPtr<T>::reset(T* ptr)
 {
 
 	free();
 
-	if(ptr != nullptr)
+	if (ptr != nullptr)
 	{
 
-		data = new T(*ptr);
+		data = ptr;
 		(*refCounter) = 1;
 
 	}
@@ -198,14 +185,14 @@ void SharedPtr<T>::reset(const T* ptr)
 
 template <class T>
 
-void SharedPtr<T>::free() 
+void SharedPtr<T>::free()
 {
 
 	if (!refCounter && !data) return;
 
 	(*refCounter) -= 1;
 
-	if ((*refCounter) == 0) 
+	if ((*refCounter) == 0)
 	{
 
 		delete data;
@@ -219,7 +206,7 @@ void SharedPtr<T>::free()
 
 template <class T>
 
-void SharedPtr<T>::copyFrom(const SharedPtr& other) 
+void SharedPtr<T>::copyFrom(const SharedPtr& other)
 {
 
 	data = other.data;
@@ -231,7 +218,7 @@ void SharedPtr<T>::copyFrom(const SharedPtr& other)
 
 template <class T>
 
-void SharedPtr<T>::moveTo(SharedPtr&& other) 
+void SharedPtr<T>::moveTo(SharedPtr&& other)
 {
 
 	data = other.data;

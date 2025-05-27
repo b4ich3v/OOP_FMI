@@ -1,74 +1,6 @@
 #include <iostream>
+#include "CommunicationPipe.h"
 #pragma once
-
-class CommunicationPipe
-{
-private:
-
-    size_t countOfSharedPtrs = 0;
-    size_t countOfWeakPtrs = 0;
-
-public:
-
-    void addSharedPtr()
-    {
-
-        countOfSharedPtrs += 1;
-        if (countOfSharedPtrs == 1) countOfWeakPtrs += 1;
-
-    }
-
-    void removeSharedPtr()
-    {
-
-        countOfSharedPtrs -= 1;
-        if (countOfSharedPtrs == 0) countOfWeakPtrs -= 1;
-
-    }
-
-    void addWeakPtr()
-    {
-
-        countOfWeakPtrs += 1;
-
-    }
-
-    void removeWeakPtr()
-    {
-
-        countOfWeakPtrs -= 1;
-
-    }
-
-    bool noOwners() const
-    {
-
-        return countOfSharedPtrs == 0;
-
-    }
-
-    bool noVisitors() const
-    {
-
-        return countOfWeakPtrs == 0;
-
-    }
-
-    size_t getCountOfSharedPtrs() const
-    {
-
-        return countOfSharedPtrs;
-
-    }
-
-    size_t getCountOfWeakPtrs() const
-    {
-
-        return countOfWeakPtrs;
-
-    }
-
-};
 
 template <class T>
 
@@ -280,4 +212,3 @@ void WeakPtr<T>::moveFrom(WeakPtr&& other)
     other.pipe = nullptr;
 
 }
-

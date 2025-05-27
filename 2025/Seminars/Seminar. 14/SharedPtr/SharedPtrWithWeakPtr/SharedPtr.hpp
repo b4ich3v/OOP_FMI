@@ -2,6 +2,8 @@
 #include "CommunicationPipe.h"
 #pragma
 
+template <class T>
+
 class WeakPtr;
 
 template <class T>
@@ -9,6 +11,8 @@ template <class T>
 class SharedPtr
 {
 private:
+
+	friend class WeakPtr;
 
 	T* data = nullptr;
 	CommunicationPipe* pipe = nullptr;
@@ -44,8 +48,6 @@ public:
 	size_t getRefCount() const;
 
 	void reset(T* ptr = nullptr);
-
-	friend class WeakPtr;
 
 };
 

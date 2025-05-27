@@ -1,74 +1,6 @@
 #include <iostream>
+#include "CommunicationPipe.h"
 #pragma
-
-class CommunicationPipe
-{
-private:
-
-	size_t countOfSharedPtrs = 0;
-	size_t countOfWeakPtrs = 0;
-
-public:
-
-	void addSharedPtr()
-	{
-
-		countOfSharedPtrs += 1;
-		if (countOfSharedPtrs == 1) countOfWeakPtrs += 1;
-
-	}
-
-	void removeSharedPtr()
-	{
-
-		countOfSharedPtrs -= 1;
-		if (countOfSharedPtrs == 0) countOfWeakPtrs -= 1;
-
-	}
-
-	void addWeakPtr()
-	{
-
-		countOfWeakPtrs += 1;
-
-	}
-
-	void removeWeakPtr()
-	{
-
-		countOfWeakPtrs -= 1;
-
-	}
-
-	bool noOwners() const
-	{
-
-		return countOfSharedPtrs == 0;
-
-	}
-
-	bool noVisitors() const
-	{
-
-		return countOfWeakPtrs == 0;
-
-	}
-
-	size_t getCountOfSharedPtrs() const
-	{
-
-		return countOfSharedPtrs;
-
-	}
-
-	size_t getCountOfWeakPtrs() const
-	{
-
-		return countOfWeakPtrs;
-
-	}
-
-};
 
 class WeakPtr;
 
@@ -119,7 +51,7 @@ public:
 
 template <class T>
 
-SharedPtr<T>::SharedPtr(T* data): data(data)
+SharedPtr<T>::SharedPtr(T* data) : data(data)
 {
 
 	if (!data) throw std::logic_error("Error");
@@ -246,7 +178,7 @@ void SharedPtr<T>::reset(T* ptr)
 
 	free();
 
-	if(ptr != nullptr)
+	if (ptr != nullptr)
 	{
 
 		data = ptr;
@@ -307,4 +239,3 @@ void SharedPtr<T>::moveTo(SharedPtr&& other)
 	other.pipe = nullptr;
 
 }
-

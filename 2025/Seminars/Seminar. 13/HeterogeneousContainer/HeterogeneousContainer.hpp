@@ -8,7 +8,7 @@ class HeterogeneousContainer
 {
 private:
 
-	T** data = nullptr
+	T** data = nullptr;
 	size_t size = 0;
 	size_t capacity = 8;
 

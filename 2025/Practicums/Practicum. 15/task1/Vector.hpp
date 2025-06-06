@@ -23,6 +23,8 @@ public:
 
 	Vector();
 
+	Vector(size_t capacity);
+
 	Vector(const Vector& other);
 
 	Vector(Vector&& other) noexcept;
@@ -60,6 +62,17 @@ void Vector<T>::free()
 	data = nullptr;
 	size = 0;
 	capacity = 0;
+
+}
+
+template <class T>
+
+Vector<T>::Vector(size_t capacity) 
+{
+
+	data = new T[capacity]{};
+	this->capacity = capacity;
+	this->size = 0;
 
 }
 
@@ -271,4 +284,3 @@ T& Vector<T>::operator [] (size_t index)
 	return data[index];
 
 }
-

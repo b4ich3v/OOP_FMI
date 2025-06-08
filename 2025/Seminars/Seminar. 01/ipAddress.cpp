@@ -3,7 +3,7 @@
 union ipAddress
 {
 
-	int number;
+	int number
 	uint8_t parts[4];
 
 };

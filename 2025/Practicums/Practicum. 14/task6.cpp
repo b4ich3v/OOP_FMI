@@ -878,12 +878,6 @@ int main()
 	container.deserialize("file.txt");
 	container.serialize("result.txt");
 
-	delete shiftLeftFunction;
-	delete xorFunction;
-	delete reverseBitsFunction;
-	delete flipBitsFunction;
-	delete reverseFlipBits;
-
 	return 0;
 
 }

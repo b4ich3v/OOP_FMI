@@ -271,7 +271,7 @@ public:
 
 		file.read((char*)&size, sizeof(size_t) * sizeof(char));
 		data = new uint32_t[size];
-		file.read((char*)data, size * sizeof(char));
+		file.read((char*)data, size * sizeof(uint32_t));
 		file.close();
 
 	}
@@ -691,7 +691,7 @@ public:
 		if (!file.is_open()) return;
 
 		sizeOfDataInfo = HELPERS::getFileSize(file) / sizeof(DataFileFormat);
-		file.read((char*)dataInfo, sizeOfDataInfo * sizeof(char));
+		file.read((char*)dataInfo, sizeOfDataInfo * sizeof(DataFileFormat));
 		file.close();
 
 	}
@@ -701,7 +701,7 @@ public:
 
 		if (!fileName) return;
 
-		std::ofstream file(fileName, std::ios::binary);
+		std::ofstream file(fileName, std::ios::binary | std::ios::trunc);
 		if (!file.is_open()) return;
 
 		for (int i = 0; i < sizeOfDataInfo; i++)
@@ -769,7 +769,9 @@ public:
 
 			}
 
-			return new XorFunction(data, size);
+			Uint* result = new XorFunction(data, size);
+			delete[] data;
+			return result;
 			break;
 
 		}
@@ -847,6 +849,12 @@ int main()
 
 	container.deserialize("file.txt");
 	container.serialize("result.txt");
+
+	delete shiftLeftFunction;
+	delete xorFunction;
+	delete reverseBitsFunction;
+	delete flipBitsFunction;
+	delete reverseFlipBits;
 
 	return 0;
 

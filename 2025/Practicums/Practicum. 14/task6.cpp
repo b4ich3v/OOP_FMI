@@ -8,7 +8,7 @@ namespace HELPERS
 
 	static constexpr size_t MAX_DATA_INFO_SIZE = 100;
 
-	static void reverseKBits(uint32_t& number, int K) 
+	static void reverseKBits(uint32_t& number, int K)
 	{
 
 		uint32_t mult1 = (1 << K) - 1;
@@ -25,7 +25,7 @@ namespace HELPERS
 
 	}
 
-	static void flipKBits(uint32_t& number, int M) 
+	static void flipKBits(uint32_t& number, int M)
 	{
 
 		for (int i = 0; i < M; i++)
@@ -38,7 +38,7 @@ namespace HELPERS
 
 	}
 
-	static size_t getFileSize(std::ifstream& file) 
+	static size_t getFileSize(std::ifstream& file)
 	{
 
 		size_t currentPos = file.tellg();
@@ -65,7 +65,7 @@ enum class FunctionType
 
 };
 
-class Uint 
+class Uint
 {
 public:
 
@@ -81,7 +81,7 @@ public:
 
 };
 
-class ShiftLeftFunction: public Uint
+class ShiftLeftFunction : public Uint
 {
 private:
 
@@ -89,7 +89,7 @@ private:
 
 public:
 
-	ShiftLeftFunction(uint32_t N): Uint(), N(N) {}
+	ShiftLeftFunction(uint32_t N) : Uint(), N(N) {}
 
 	uint32_t operator ()(uint32_t number) const override
 	{
@@ -107,12 +107,14 @@ public:
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = 0;
+		file.read((char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.read((char*)&N, sizeof(uint32_t) * sizeof(char));
 		file.close();
 
 	}
 
-	void serialize(const char* fileName) const override 
+	void serialize(const char* fileName) const override
 	{
 
 		if (!fileName) return;
@@ -120,6 +122,8 @@ public:
 		std::ofstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = (int)FunctionType::ShiftLeftFunction;
+		file.write((const char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.write((const char*)&N, sizeof(uint32_t) * sizeof(char));
 		file.close();
 
@@ -132,7 +136,6 @@ public:
 
 	}
 
-
 };
 
 class XorFunction: public Uint
@@ -142,7 +145,7 @@ private:
 	uint32_t* data = nullptr;
 	size_t size = 0;
 
-	void free() 
+	void free()
 	{
 
 		delete[] data;
@@ -166,7 +169,7 @@ private:
 
 	}
 
-	void moveTo(XorFunction&& other) 
+	void moveTo(XorFunction&& other)
 	{
 
 		data = other.data;
@@ -179,7 +182,7 @@ private:
 
 public:
 
-	XorFunction(const uint32_t* data, size_t size): Uint() 
+	XorFunction(const uint32_t* data, size_t size) : Uint()
 	{
 
 		if (!data || size <= 0) throw std::logic_error("Error");
@@ -196,24 +199,24 @@ public:
 
 	}
 
-	XorFunction(const XorFunction& other) 
+	XorFunction(const XorFunction& other)
 	{
 
 		copyFrom(other);
 
 	}
 
-	XorFunction(XorFunction&& other) noexcept 
+	XorFunction(XorFunction&& other) noexcept
 	{
 
 		moveTo(std::move(other));
 
 	}
 
-	XorFunction& operator = (const XorFunction& other) 
+	XorFunction& operator = (const XorFunction& other)
 	{
 
-		if (this != &other) 
+		if (this != &other)
 		{
 
 			free();
@@ -240,7 +243,7 @@ public:
 
 	}
 
-	~XorFunction() 
+	~XorFunction()
 	{
 
 		free();
@@ -269,9 +272,12 @@ public:
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = 0;
+		file.read((char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.read((char*)&size, sizeof(size_t) * sizeof(char));
 		data = new uint32_t[size];
 		file.read((char*)data, size * sizeof(uint32_t));
+		delete[] data;
 		file.close();
 
 	}
@@ -284,6 +290,8 @@ public:
 		std::ofstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = (int)FunctionType::XorFunction;
+		file.write((const char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.write((const char*)&size, sizeof(uint32_t) * sizeof(char));
 		file.write((const char*)data, size * sizeof(uint32_t));
 		file.close();
@@ -299,7 +307,7 @@ public:
 
 };
 
-class ReverseBitsFunction: virtual public Uint
+class ReverseBitsFunction : virtual public Uint
 {
 protected:
 
@@ -307,7 +315,7 @@ protected:
 
 public:
 
-	ReverseBitsFunction(uint32_t K): Uint(), K(K) {}
+	ReverseBitsFunction(uint32_t K) : Uint(), K(K) {}
 
 	uint32_t operator ()(uint32_t number) const override
 	{
@@ -325,6 +333,8 @@ public:
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = 0;
+		file.read((char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.read((char*)&K, sizeof(uint32_t) * sizeof(char));
 		file.close();
 
@@ -338,6 +348,8 @@ public:
 		std::ofstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = (int)FunctionType::ReverseBitsFunction;
+		file.write((const char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.write((const char*)&K, sizeof(uint32_t) * sizeof(char));
 		file.close();
 
@@ -352,7 +364,7 @@ public:
 
 };
 
-class FlipBitsFunction: virtual public Uint
+class FlipBitsFunction : virtual public Uint
 {
 protected:
 
@@ -378,6 +390,8 @@ public:
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = 0;
+		file.read((char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.read((char*)&M, sizeof(uint32_t) * sizeof(char));
 		file.close();
 
@@ -391,6 +405,8 @@ public:
 		std::ofstream file(fileName, std::ios::binary);
 		if (!file.is_open()) return;
 
+		int type = (int)FunctionType::FlipBitsFunction;
+		file.write((const char*)&type, sizeof(FunctionType) * sizeof(char));
 		file.write((const char*)&M, sizeof(uint32_t) * sizeof(char));
 		file.close();
 
@@ -405,11 +421,11 @@ public:
 
 };
 
-class ReverseFlipBits: public ReverseBitsFunction, public FlipBitsFunction
+class ReverseFlipBits : public ReverseBitsFunction, public FlipBitsFunction
 {
 public:
 
-	ReverseFlipBits(uint32_t K, uint32_t M): Uint(), ReverseBitsFunction(K), FlipBitsFunction(M) {}
+	ReverseFlipBits(uint32_t K, uint32_t M) : Uint(), ReverseBitsFunction(K), FlipBitsFunction(M) {}
 
 	uint32_t operator ()(uint32_t number) const override
 	{
@@ -423,6 +439,11 @@ public:
 	void deserialize(const char* fileName) override
 	{
 
+		std::ifstream file(fileName, std::ios::binary);
+		int type = 0;
+		file.read((char*)&type, sizeof(FunctionType) * sizeof(char));
+		file.close();
+
 		ReverseBitsFunction::deserialize(fileName);
 		FlipBitsFunction::deserialize(fileName);
 
@@ -430,6 +451,11 @@ public:
 
 	void serialize(const char* fileName) const override
 	{
+
+		std::ofstream file(fileName, std::ios::binary);
+		int type = (int)FunctionType::ReverseFlipBits;
+		file.write((const char*)&type, sizeof(FunctionType) * sizeof(char));
+		file.close();
 
 		ReverseBitsFunction::serialize(fileName);
 		FlipBitsFunction::serialize(fileName);
@@ -447,7 +473,7 @@ public:
 
 template <class T>
 
-class PolyContainer 
+class PolyContainer
 {
 private:
 
@@ -455,7 +481,7 @@ private:
 	size_t size = 0;
 	size_t capacity = 0;
 
-	void free() 
+	void free()
 	{
 
 		for (int i = 0; i < capacity; i++)
@@ -474,7 +500,7 @@ private:
 
 	}
 
-	void copyFrom(const PolyContainer& other) 
+	void copyFrom(const PolyContainer& other)
 	{
 
 		data = new T * [other.capacity] {nullptr};
@@ -492,7 +518,7 @@ private:
 
 	}
 
-	void moveTo(PolyContainer&& other) 
+	void moveTo(PolyContainer&& other)
 	{
 
 		data = other.data;
@@ -505,7 +531,7 @@ private:
 
 	}
 
-	void resize(size_t newCapacity) 
+	void resize(size_t newCapacity)
 	{
 
 		if (newCapacity <= capacity) return;
@@ -528,16 +554,16 @@ private:
 
 public:
 
-	PolyContainer() 
+	PolyContainer()
 	{
 
 		capacity = 8;
 		size = 0;
-		data = new T*[capacity]{ nullptr };
+		data = new T * [capacity] { nullptr };
 
 	}
 
-	PolyContainer(const PolyContainer& other) 
+	PolyContainer(const PolyContainer& other)
 	{
 
 		copyFrom(other);
@@ -551,7 +577,7 @@ public:
 
 	}
 
-	PolyContainer& operator = (const PolyContainer& other) 
+	PolyContainer& operator = (const PolyContainer& other)
 	{
 
 		if (this != &other)
@@ -566,10 +592,10 @@ public:
 
 	}
 
-	PolyContainer& operator = (PolyContainer&& other) noexcept 
+	PolyContainer& operator = (PolyContainer&& other) noexcept
 	{
 
-		if (this != &other) 
+		if (this != &other)
 		{
 
 			free();
@@ -581,14 +607,14 @@ public:
 
 	}
 
-	~PolyContainer() 
+	~PolyContainer()
 	{
 
 		free();
 
 	}
 
-	const T* operator [](size_t index) const 
+	const T* operator [](size_t index) const
 	{
 
 		if (index >= size || data[index] == nullptr) throw std::logic_error("Error");
@@ -604,17 +630,17 @@ public:
 
 	}
 
-	void push_back(T* element) 
+	void push_back(T* element)
 	{
 
 		if (!element) throw std::logic_error("Error");
 		if (size == capacity) resize(capacity * 2);
 
-		data[size++] = element->clone();
+		data[size++] = element;
 
 	}
 
-	void push_back(T* element, size_t index)
+	void push_at(T* element, size_t index)
 	{
 
 		if (!element || index >= capacity) throw std::logic_error("Error");
@@ -625,7 +651,7 @@ public:
 
 	}
 
-	void pop_back() 
+	void pop_back()
 	{
 
 		if (!size) throw std::logic_error("Error");
@@ -635,9 +661,9 @@ public:
 
 	size_t getSize() const
 	{
-	
+
 		return size;
-	
+
 	}
 
 	size_t getCapacity() const
@@ -649,7 +675,7 @@ public:
 
 };
 
-struct DataFileFormat 
+struct DataFileFormat
 {
 public:
 
@@ -658,7 +684,7 @@ public:
 
 };
 
-class FunctionContainer 
+class FunctionContainer
 {
 private:
 
@@ -668,7 +694,7 @@ private:
 
 public:
 
-	void operator += (Uint* element) 
+	void operator += (Uint* element)
 	{
 
 		data.push_back(element);
@@ -682,7 +708,7 @@ public:
 
 	}
 
-	void deserialize(const char* fileName) 
+	void deserialize(const char* fileName)
 	{
 
 		if (!fileName) return;
@@ -696,7 +722,7 @@ public:
 
 	}
 
-	void serialize(const char* fileName) const 
+	void serialize(const char* fileName) const
 	{
 
 		if (!fileName) return;
@@ -716,11 +742,11 @@ public:
 				file.write((const char*)&dataInfo[i].first, sizeof(uint32_t) * sizeof(char));
 
 			}
-			else 
+			else
 			{
 
 				uint32_t result = evalAt(index, number);
-				file.write((const char*)&result,sizeof(uint32_t) * sizeof(char));
+				file.write((const char*)&result, sizeof(uint32_t) * sizeof(char));
 
 			}
 
@@ -732,11 +758,11 @@ public:
 
 };
 
-class FunctionFactory 
+class FunctionFactory
 {
 public:
 
-	static Uint* createFuncion() 
+	static Uint* createFuncion()
 	{
 
 		size_t choiceMask = 0;
@@ -746,7 +772,7 @@ public:
 		switch (choice)
 		{
 
-		case FunctionType::ShiftLeftFunction: 
+		case FunctionType::ShiftLeftFunction:
 		{
 
 			uint32_t N = 0;
@@ -819,7 +845,7 @@ public:
 
 };
 
-int main() 
+int main()
 {
 
 	//DataFileFormat data[9] =

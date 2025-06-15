@@ -1,6 +1,61 @@
+#include <iostream>
+#include <fstream>
+
+class Base 
+{
+public:
+
+	virtual Base* clone() const = 0;
+
+	virtual void print() const = 0;
+
+	virtual ~Base() = default;
+
+};
+
+class Der1: public Base 
+{
+public:
+
+	void print() const override 
+	{
+
+		std::cout << "Der1" << std::endl;
+
+	}
+
+	Base* clone() const override 
+	{
+
+		return new Der1(*this);
+
+	}
+
+};
+
+class Der2: public Base
+{
+public:
+
+	void print() const override
+	{
+
+		std::cout << "Der2" << std::endl;
+
+	}
+
+	Base* clone() const override
+	{
+
+		return new Der2(*this);
+
+	}
+
+};
+
 template <class T>
 
-class PolyContainer 
+class PolyContainer
 {
 private:
 
@@ -8,7 +63,7 @@ private:
 	size_t size = 0;
 	size_t capacity = 0;
 
-	void free() 
+	void free()
 	{
 
 		for (int i = 0; i < capacity; i++)
@@ -27,7 +82,7 @@ private:
 
 	}
 
-	void copyFrom(const PolyContainer& other) 
+	void copyFrom(const PolyContainer& other)
 	{
 
 		data = new T * [other.capacity] {nullptr};
@@ -45,7 +100,7 @@ private:
 
 	}
 
-	void moveTo(PolyContainer&& other) 
+	void moveTo(PolyContainer&& other)
 	{
 
 		data = other.data;
@@ -58,7 +113,7 @@ private:
 
 	}
 
-	void resize(size_t newCapacity) 
+	void resize(size_t newCapacity)
 	{
 
 		if (newCapacity <= capacity) return;
@@ -81,16 +136,16 @@ private:
 
 public:
 
-	PolyContainer() 
+	PolyContainer()
 	{
 
 		capacity = 8;
 		size = 0;
-		data = new T*[capacity]{ nullptr };
+		data = new T * [capacity] { nullptr };
 
 	}
 
-	PolyContainer(const PolyContainer& other) 
+	PolyContainer(const PolyContainer& other)
 	{
 
 		copyFrom(other);
@@ -104,7 +159,7 @@ public:
 
 	}
 
-	PolyContainer& operator = (const PolyContainer& other) 
+	PolyContainer& operator = (const PolyContainer& other)
 	{
 
 		if (this != &other)
@@ -119,10 +174,10 @@ public:
 
 	}
 
-	PolyContainer& operator = (PolyContainer&& other) noexcept 
+	PolyContainer& operator = (PolyContainer&& other) noexcept
 	{
 
-		if (this != &other) 
+		if (this != &other)
 		{
 
 			free();
@@ -134,14 +189,14 @@ public:
 
 	}
 
-	~PolyContainer() 
+	~PolyContainer()
 	{
 
 		free();
 
 	}
 
-	const T* operator [](size_t index) const 
+	const T* operator [](size_t index) const
 	{
 
 		if (index >= size || data[index] == nullptr) throw std::logic_error("Error");
@@ -157,7 +212,7 @@ public:
 
 	}
 
-	void push_back(T* element) 
+	void push_back(T* element)
 	{
 
 		if (!element) throw std::logic_error("Error");
@@ -178,7 +233,7 @@ public:
 
 	}
 
-	void pop_back() 
+	void pop_back()
 	{
 
 		if (!size) throw std::logic_error("Error");
@@ -188,9 +243,9 @@ public:
 
 	size_t getSize() const
 	{
-	
+
 		return size;
-	
+
 	}
 
 	size_t getCapacity() const
@@ -201,3 +256,20 @@ public:
 	}
 
 };
+
+int main() 
+{
+
+	Base* d1 = new Der1();
+	Base* d2 = new Der2();
+
+	PolyContainer<Base> container;
+	container.push_back(d1);
+	container.push_back(d2);
+
+	container[0]->print();
+	container[1]->print();
+
+	return 0;
+
+}

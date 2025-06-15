@@ -655,6 +655,8 @@ public:
 	{
 
 		if (!size) throw std::logic_error("Error");
+		delete data[size - 1];
+		data[size - 1] = nullptr;
 		size -= 1;
 
 	}

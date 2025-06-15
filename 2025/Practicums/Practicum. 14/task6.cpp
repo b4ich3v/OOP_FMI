@@ -14,11 +14,11 @@ namespace HELPERS
 		uint32_t mult1 = (1 << K) - 1;
 		uint32_t mult2 = ((1 << K) - 1) << (HELPERS::COUNT_OF_BITS - K);
 
+		uint32_t leftKBits = (number & mult2) >> (HELPERS::COUNT_OF_BITS - K);
+		uint32_t rightKBits = (number & mult1) << (HELPERS::COUNT_OF_BITS - K);
+
 		number &= ~mult1;
 		number &= ~mult2;
-
-		uint32_t leftKBits = (number >> (HELPERS::COUNT_OF_BITS - K)) & mult2;
-		uint32_t rightKBits = number & mult1;
 
 		number |= leftKBits;
 		number |= rightKBits;

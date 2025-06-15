@@ -237,6 +237,8 @@ public:
 	{
 
 		if (!size) throw std::logic_error("Error");
+		delete data[size - 1];
+		data[size - 1] = nullptr;
 		size -= 1;
 
 	}
@@ -269,6 +271,22 @@ int main()
 
 	container[0]->print();
 	container[1]->print();
+
+	container.pop_back();
+	container[0]->print();
+
+	try
+	{
+
+		container[1]->print();
+
+	}
+	catch (const std::exception& e)
+	{
+
+		std::cout << "Deleted" << std::endl;
+
+	}
 
 	return 0;
 

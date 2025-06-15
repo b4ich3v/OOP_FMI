@@ -277,7 +277,6 @@ public:
 		file.read((char*)&size, sizeof(size_t) * sizeof(char));
 		data = new uint32_t[size];
 		file.read((char*)data, size * sizeof(uint32_t));
-		delete[] data;
 		file.close();
 
 	}
